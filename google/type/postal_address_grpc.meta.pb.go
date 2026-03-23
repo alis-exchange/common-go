@@ -3,7 +3,7 @@
 // Source: google/type/postal_address.proto
 // Plugin version: v0.0.1
 //
-// Generated on: 2026-03-23 14:01:04 UTC
+// Generated on: 2026-03-23 15:15:48 UTC
 
 package _type
 
