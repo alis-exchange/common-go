@@ -3,7 +3,7 @@
 // Source: google/api/apikeys/v2/resources.proto
 // Plugin version: v0.0.1
 //
-// Generated on: 2026-03-23 13:58:03 UTC
+// Generated on: 2026-03-23 14:01:04 UTC
 
 package v2
 
