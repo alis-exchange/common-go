@@ -3,7 +3,7 @@
 // Source: google/api/expr/v1alpha1/value.proto
 // Plugin version: v0.0.1
 //
-// Generated on: 2026-03-23 15:17:29 UTC
+// Generated on: 2026-03-24 07:46:07 UTC
 
 package v1alpha1
 
