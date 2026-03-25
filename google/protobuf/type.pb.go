@@ -279,6 +279,11 @@ func (Field_Cardinality) EnumDescriptor() ([]byte, []int) {
 }
 
 // A protocol buffer message type.
+//
+// New usages of this message as an alternative to DescriptorProto are strongly
+// discouraged. This message does not reliability preserve all information
+// necessary to model the schema and preserve semantics. Instead make use of
+// FileDescriptorSet which preserves the necessary information.
 type Type struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The fully qualified message name.
@@ -379,6 +384,11 @@ func (x *Type) GetEdition() string {
 }
 
 // A single field of a message type.
+//
+// New usages of this message as an alternative to FieldDescriptorProto are
+// strongly discouraged. This message does not reliability preserve all
+// information necessary to model the schema and preserve semantics. Instead
+// make use of FileDescriptorSet which preserves the necessary information.
 type Field struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The field type.
@@ -508,6 +518,11 @@ func (x *Field) GetDefaultValue() string {
 }
 
 // Enum type definition.
+//
+// New usages of this message as an alternative to EnumDescriptorProto are
+// strongly discouraged. This message does not reliability preserve all
+// information necessary to model the schema and preserve semantics. Instead
+// make use of FileDescriptorSet which preserves the necessary information.
 type Enum struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Enum type name.
@@ -599,6 +614,11 @@ func (x *Enum) GetEdition() string {
 }
 
 // Enum value definition.
+//
+// New usages of this message as an alternative to EnumValueDescriptorProto are
+// strongly discouraged. This message does not reliability preserve all
+// information necessary to model the schema and preserve semantics. Instead
+// make use of FileDescriptorSet which preserves the necessary information.
 type EnumValue struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Enum value name.
@@ -664,6 +684,10 @@ func (x *EnumValue) GetOptions() []*Option {
 
 // A protocol buffer option, which can be attached to a message, field,
 // enumeration, etc.
+//
+// New usages of this message as an alternative to FileOptions, MessageOptions,
+// FieldOptions, EnumOptions, EnumValueOptions, ServiceOptions, or MethodOptions
+// are strongly discouraged.
 type Option struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The option's name. For protobuf built-in options (options defined in

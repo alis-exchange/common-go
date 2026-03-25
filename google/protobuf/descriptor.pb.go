@@ -161,6 +161,70 @@ func (Edition) EnumDescriptor() ([]byte, []int) {
 	return file_google_protobuf_descriptor_proto_rawDescGZIP(), []int{0}
 }
 
+// Describes the 'visibility' of a symbol with respect to the proto import
+// system. Symbols can only be imported when the visibility rules do not prevent
+// it (ex: local symbols cannot be imported).  Visibility modifiers can only set
+// on `message` and `enum` as they are the only types available to be referenced
+// from other files.
+type SymbolVisibility int32
+
+const (
+	SymbolVisibility_VISIBILITY_UNSET  SymbolVisibility = 0
+	SymbolVisibility_VISIBILITY_LOCAL  SymbolVisibility = 1
+	SymbolVisibility_VISIBILITY_EXPORT SymbolVisibility = 2
+)
+
+// Enum value maps for SymbolVisibility.
+var (
+	SymbolVisibility_name = map[int32]string{
+		0: "VISIBILITY_UNSET",
+		1: "VISIBILITY_LOCAL",
+		2: "VISIBILITY_EXPORT",
+	}
+	SymbolVisibility_value = map[string]int32{
+		"VISIBILITY_UNSET":  0,
+		"VISIBILITY_LOCAL":  1,
+		"VISIBILITY_EXPORT": 2,
+	}
+)
+
+func (x SymbolVisibility) Enum() *SymbolVisibility {
+	p := new(SymbolVisibility)
+	*p = x
+	return p
+}
+
+func (x SymbolVisibility) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SymbolVisibility) Descriptor() protoreflect.EnumDescriptor {
+	return file_google_protobuf_descriptor_proto_enumTypes[1].Descriptor()
+}
+
+func (SymbolVisibility) Type() protoreflect.EnumType {
+	return &file_google_protobuf_descriptor_proto_enumTypes[1]
+}
+
+func (x SymbolVisibility) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Do not use.
+func (x *SymbolVisibility) UnmarshalJSON(b []byte) error {
+	num, err := protoimpl.X.UnmarshalJSONEnum(x.Descriptor(), b)
+	if err != nil {
+		return err
+	}
+	*x = SymbolVisibility(num)
+	return nil
+}
+
+// Deprecated: Use SymbolVisibility.Descriptor instead.
+func (SymbolVisibility) EnumDescriptor() ([]byte, []int) {
+	return file_google_protobuf_descriptor_proto_rawDescGZIP(), []int{1}
+}
+
 // The verification state of the extension range.
 type ExtensionRangeOptions_VerificationState int32
 
@@ -193,11 +257,11 @@ func (x ExtensionRangeOptions_VerificationState) String() string {
 }
 
 func (ExtensionRangeOptions_VerificationState) Descriptor() protoreflect.EnumDescriptor {
-	return file_google_protobuf_descriptor_proto_enumTypes[1].Descriptor()
+	return file_google_protobuf_descriptor_proto_enumTypes[2].Descriptor()
 }
 
 func (ExtensionRangeOptions_VerificationState) Type() protoreflect.EnumType {
-	return &file_google_protobuf_descriptor_proto_enumTypes[1]
+	return &file_google_protobuf_descriptor_proto_enumTypes[2]
 }
 
 func (x ExtensionRangeOptions_VerificationState) Number() protoreflect.EnumNumber {
@@ -309,11 +373,11 @@ func (x FieldDescriptorProto_Type) String() string {
 }
 
 func (FieldDescriptorProto_Type) Descriptor() protoreflect.EnumDescriptor {
-	return file_google_protobuf_descriptor_proto_enumTypes[2].Descriptor()
+	return file_google_protobuf_descriptor_proto_enumTypes[3].Descriptor()
 }
 
 func (FieldDescriptorProto_Type) Type() protoreflect.EnumType {
-	return &file_google_protobuf_descriptor_proto_enumTypes[2]
+	return &file_google_protobuf_descriptor_proto_enumTypes[3]
 }
 
 func (x FieldDescriptorProto_Type) Number() protoreflect.EnumNumber {
@@ -372,11 +436,11 @@ func (x FieldDescriptorProto_Label) String() string {
 }
 
 func (FieldDescriptorProto_Label) Descriptor() protoreflect.EnumDescriptor {
-	return file_google_protobuf_descriptor_proto_enumTypes[3].Descriptor()
+	return file_google_protobuf_descriptor_proto_enumTypes[4].Descriptor()
 }
 
 func (FieldDescriptorProto_Label) Type() protoreflect.EnumType {
-	return &file_google_protobuf_descriptor_proto_enumTypes[3]
+	return &file_google_protobuf_descriptor_proto_enumTypes[4]
 }
 
 func (x FieldDescriptorProto_Label) Number() protoreflect.EnumNumber {
@@ -433,11 +497,11 @@ func (x FileOptions_OptimizeMode) String() string {
 }
 
 func (FileOptions_OptimizeMode) Descriptor() protoreflect.EnumDescriptor {
-	return file_google_protobuf_descriptor_proto_enumTypes[4].Descriptor()
+	return file_google_protobuf_descriptor_proto_enumTypes[5].Descriptor()
 }
 
 func (FileOptions_OptimizeMode) Type() protoreflect.EnumType {
-	return &file_google_protobuf_descriptor_proto_enumTypes[4]
+	return &file_google_protobuf_descriptor_proto_enumTypes[5]
 }
 
 func (x FileOptions_OptimizeMode) Number() protoreflect.EnumNumber {
@@ -499,11 +563,11 @@ func (x FieldOptions_CType) String() string {
 }
 
 func (FieldOptions_CType) Descriptor() protoreflect.EnumDescriptor {
-	return file_google_protobuf_descriptor_proto_enumTypes[5].Descriptor()
+	return file_google_protobuf_descriptor_proto_enumTypes[6].Descriptor()
 }
 
 func (FieldOptions_CType) Type() protoreflect.EnumType {
-	return &file_google_protobuf_descriptor_proto_enumTypes[5]
+	return &file_google_protobuf_descriptor_proto_enumTypes[6]
 }
 
 func (x FieldOptions_CType) Number() protoreflect.EnumNumber {
@@ -561,11 +625,11 @@ func (x FieldOptions_JSType) String() string {
 }
 
 func (FieldOptions_JSType) Descriptor() protoreflect.EnumDescriptor {
-	return file_google_protobuf_descriptor_proto_enumTypes[6].Descriptor()
+	return file_google_protobuf_descriptor_proto_enumTypes[7].Descriptor()
 }
 
 func (FieldOptions_JSType) Type() protoreflect.EnumType {
-	return &file_google_protobuf_descriptor_proto_enumTypes[6]
+	return &file_google_protobuf_descriptor_proto_enumTypes[7]
 }
 
 func (x FieldOptions_JSType) Number() protoreflect.EnumNumber {
@@ -621,11 +685,11 @@ func (x FieldOptions_OptionRetention) String() string {
 }
 
 func (FieldOptions_OptionRetention) Descriptor() protoreflect.EnumDescriptor {
-	return file_google_protobuf_descriptor_proto_enumTypes[7].Descriptor()
+	return file_google_protobuf_descriptor_proto_enumTypes[8].Descriptor()
 }
 
 func (FieldOptions_OptionRetention) Type() protoreflect.EnumType {
-	return &file_google_protobuf_descriptor_proto_enumTypes[7]
+	return &file_google_protobuf_descriptor_proto_enumTypes[8]
 }
 
 func (x FieldOptions_OptionRetention) Number() protoreflect.EnumNumber {
@@ -704,11 +768,11 @@ func (x FieldOptions_OptionTargetType) String() string {
 }
 
 func (FieldOptions_OptionTargetType) Descriptor() protoreflect.EnumDescriptor {
-	return file_google_protobuf_descriptor_proto_enumTypes[8].Descriptor()
+	return file_google_protobuf_descriptor_proto_enumTypes[9].Descriptor()
 }
 
 func (FieldOptions_OptionTargetType) Type() protoreflect.EnumType {
-	return &file_google_protobuf_descriptor_proto_enumTypes[8]
+	return &file_google_protobuf_descriptor_proto_enumTypes[9]
 }
 
 func (x FieldOptions_OptionTargetType) Number() protoreflect.EnumNumber {
@@ -766,11 +830,11 @@ func (x MethodOptions_IdempotencyLevel) String() string {
 }
 
 func (MethodOptions_IdempotencyLevel) Descriptor() protoreflect.EnumDescriptor {
-	return file_google_protobuf_descriptor_proto_enumTypes[9].Descriptor()
+	return file_google_protobuf_descriptor_proto_enumTypes[10].Descriptor()
 }
 
 func (MethodOptions_IdempotencyLevel) Type() protoreflect.EnumType {
-	return &file_google_protobuf_descriptor_proto_enumTypes[9]
+	return &file_google_protobuf_descriptor_proto_enumTypes[10]
 }
 
 func (x MethodOptions_IdempotencyLevel) Number() protoreflect.EnumNumber {
@@ -828,11 +892,11 @@ func (x FeatureSet_FieldPresence) String() string {
 }
 
 func (FeatureSet_FieldPresence) Descriptor() protoreflect.EnumDescriptor {
-	return file_google_protobuf_descriptor_proto_enumTypes[10].Descriptor()
+	return file_google_protobuf_descriptor_proto_enumTypes[11].Descriptor()
 }
 
 func (FeatureSet_FieldPresence) Type() protoreflect.EnumType {
-	return &file_google_protobuf_descriptor_proto_enumTypes[10]
+	return &file_google_protobuf_descriptor_proto_enumTypes[11]
 }
 
 func (x FeatureSet_FieldPresence) Number() protoreflect.EnumNumber {
@@ -887,11 +951,11 @@ func (x FeatureSet_EnumType) String() string {
 }
 
 func (FeatureSet_EnumType) Descriptor() protoreflect.EnumDescriptor {
-	return file_google_protobuf_descriptor_proto_enumTypes[11].Descriptor()
+	return file_google_protobuf_descriptor_proto_enumTypes[12].Descriptor()
 }
 
 func (FeatureSet_EnumType) Type() protoreflect.EnumType {
-	return &file_google_protobuf_descriptor_proto_enumTypes[11]
+	return &file_google_protobuf_descriptor_proto_enumTypes[12]
 }
 
 func (x FeatureSet_EnumType) Number() protoreflect.EnumNumber {
@@ -946,11 +1010,11 @@ func (x FeatureSet_RepeatedFieldEncoding) String() string {
 }
 
 func (FeatureSet_RepeatedFieldEncoding) Descriptor() protoreflect.EnumDescriptor {
-	return file_google_protobuf_descriptor_proto_enumTypes[12].Descriptor()
+	return file_google_protobuf_descriptor_proto_enumTypes[13].Descriptor()
 }
 
 func (FeatureSet_RepeatedFieldEncoding) Type() protoreflect.EnumType {
-	return &file_google_protobuf_descriptor_proto_enumTypes[12]
+	return &file_google_protobuf_descriptor_proto_enumTypes[13]
 }
 
 func (x FeatureSet_RepeatedFieldEncoding) Number() protoreflect.EnumNumber {
@@ -1005,11 +1069,11 @@ func (x FeatureSet_Utf8Validation) String() string {
 }
 
 func (FeatureSet_Utf8Validation) Descriptor() protoreflect.EnumDescriptor {
-	return file_google_protobuf_descriptor_proto_enumTypes[13].Descriptor()
+	return file_google_protobuf_descriptor_proto_enumTypes[14].Descriptor()
 }
 
 func (FeatureSet_Utf8Validation) Type() protoreflect.EnumType {
-	return &file_google_protobuf_descriptor_proto_enumTypes[13]
+	return &file_google_protobuf_descriptor_proto_enumTypes[14]
 }
 
 func (x FeatureSet_Utf8Validation) Number() protoreflect.EnumNumber {
@@ -1064,11 +1128,11 @@ func (x FeatureSet_MessageEncoding) String() string {
 }
 
 func (FeatureSet_MessageEncoding) Descriptor() protoreflect.EnumDescriptor {
-	return file_google_protobuf_descriptor_proto_enumTypes[14].Descriptor()
+	return file_google_protobuf_descriptor_proto_enumTypes[15].Descriptor()
 }
 
 func (FeatureSet_MessageEncoding) Type() protoreflect.EnumType {
-	return &file_google_protobuf_descriptor_proto_enumTypes[14]
+	return &file_google_protobuf_descriptor_proto_enumTypes[15]
 }
 
 func (x FeatureSet_MessageEncoding) Number() protoreflect.EnumNumber {
@@ -1123,11 +1187,11 @@ func (x FeatureSet_JsonFormat) String() string {
 }
 
 func (FeatureSet_JsonFormat) Descriptor() protoreflect.EnumDescriptor {
-	return file_google_protobuf_descriptor_proto_enumTypes[15].Descriptor()
+	return file_google_protobuf_descriptor_proto_enumTypes[16].Descriptor()
 }
 
 func (FeatureSet_JsonFormat) Type() protoreflect.EnumType {
-	return &file_google_protobuf_descriptor_proto_enumTypes[15]
+	return &file_google_protobuf_descriptor_proto_enumTypes[16]
 }
 
 func (x FeatureSet_JsonFormat) Number() protoreflect.EnumNumber {
@@ -1147,6 +1211,136 @@ func (x *FeatureSet_JsonFormat) UnmarshalJSON(b []byte) error {
 // Deprecated: Use FeatureSet_JsonFormat.Descriptor instead.
 func (FeatureSet_JsonFormat) EnumDescriptor() ([]byte, []int) {
 	return file_google_protobuf_descriptor_proto_rawDescGZIP(), []int{19, 5}
+}
+
+type FeatureSet_EnforceNamingStyle int32
+
+const (
+	FeatureSet_ENFORCE_NAMING_STYLE_UNKNOWN FeatureSet_EnforceNamingStyle = 0
+	FeatureSet_STYLE2024                    FeatureSet_EnforceNamingStyle = 1
+	FeatureSet_STYLE_LEGACY                 FeatureSet_EnforceNamingStyle = 2
+)
+
+// Enum value maps for FeatureSet_EnforceNamingStyle.
+var (
+	FeatureSet_EnforceNamingStyle_name = map[int32]string{
+		0: "ENFORCE_NAMING_STYLE_UNKNOWN",
+		1: "STYLE2024",
+		2: "STYLE_LEGACY",
+	}
+	FeatureSet_EnforceNamingStyle_value = map[string]int32{
+		"ENFORCE_NAMING_STYLE_UNKNOWN": 0,
+		"STYLE2024":                    1,
+		"STYLE_LEGACY":                 2,
+	}
+)
+
+func (x FeatureSet_EnforceNamingStyle) Enum() *FeatureSet_EnforceNamingStyle {
+	p := new(FeatureSet_EnforceNamingStyle)
+	*p = x
+	return p
+}
+
+func (x FeatureSet_EnforceNamingStyle) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (FeatureSet_EnforceNamingStyle) Descriptor() protoreflect.EnumDescriptor {
+	return file_google_protobuf_descriptor_proto_enumTypes[17].Descriptor()
+}
+
+func (FeatureSet_EnforceNamingStyle) Type() protoreflect.EnumType {
+	return &file_google_protobuf_descriptor_proto_enumTypes[17]
+}
+
+func (x FeatureSet_EnforceNamingStyle) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Do not use.
+func (x *FeatureSet_EnforceNamingStyle) UnmarshalJSON(b []byte) error {
+	num, err := protoimpl.X.UnmarshalJSONEnum(x.Descriptor(), b)
+	if err != nil {
+		return err
+	}
+	*x = FeatureSet_EnforceNamingStyle(num)
+	return nil
+}
+
+// Deprecated: Use FeatureSet_EnforceNamingStyle.Descriptor instead.
+func (FeatureSet_EnforceNamingStyle) EnumDescriptor() ([]byte, []int) {
+	return file_google_protobuf_descriptor_proto_rawDescGZIP(), []int{19, 6}
+}
+
+type FeatureSet_VisibilityFeature_DefaultSymbolVisibility int32
+
+const (
+	FeatureSet_VisibilityFeature_DEFAULT_SYMBOL_VISIBILITY_UNKNOWN FeatureSet_VisibilityFeature_DefaultSymbolVisibility = 0
+	// Default pre-EDITION_2024, all UNSET visibility are export.
+	FeatureSet_VisibilityFeature_EXPORT_ALL FeatureSet_VisibilityFeature_DefaultSymbolVisibility = 1
+	// All top-level symbols default to export, nested default to local.
+	FeatureSet_VisibilityFeature_EXPORT_TOP_LEVEL FeatureSet_VisibilityFeature_DefaultSymbolVisibility = 2
+	// All symbols default to local.
+	FeatureSet_VisibilityFeature_LOCAL_ALL FeatureSet_VisibilityFeature_DefaultSymbolVisibility = 3
+	// All symbols local by default. Nested types cannot be exported.
+	// With special case caveat for message { enum {} reserved 1 to max; }
+	// This is the recommended setting for new protos.
+	FeatureSet_VisibilityFeature_STRICT FeatureSet_VisibilityFeature_DefaultSymbolVisibility = 4
+)
+
+// Enum value maps for FeatureSet_VisibilityFeature_DefaultSymbolVisibility.
+var (
+	FeatureSet_VisibilityFeature_DefaultSymbolVisibility_name = map[int32]string{
+		0: "DEFAULT_SYMBOL_VISIBILITY_UNKNOWN",
+		1: "EXPORT_ALL",
+		2: "EXPORT_TOP_LEVEL",
+		3: "LOCAL_ALL",
+		4: "STRICT",
+	}
+	FeatureSet_VisibilityFeature_DefaultSymbolVisibility_value = map[string]int32{
+		"DEFAULT_SYMBOL_VISIBILITY_UNKNOWN": 0,
+		"EXPORT_ALL":                        1,
+		"EXPORT_TOP_LEVEL":                  2,
+		"LOCAL_ALL":                         3,
+		"STRICT":                            4,
+	}
+)
+
+func (x FeatureSet_VisibilityFeature_DefaultSymbolVisibility) Enum() *FeatureSet_VisibilityFeature_DefaultSymbolVisibility {
+	p := new(FeatureSet_VisibilityFeature_DefaultSymbolVisibility)
+	*p = x
+	return p
+}
+
+func (x FeatureSet_VisibilityFeature_DefaultSymbolVisibility) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (FeatureSet_VisibilityFeature_DefaultSymbolVisibility) Descriptor() protoreflect.EnumDescriptor {
+	return file_google_protobuf_descriptor_proto_enumTypes[18].Descriptor()
+}
+
+func (FeatureSet_VisibilityFeature_DefaultSymbolVisibility) Type() protoreflect.EnumType {
+	return &file_google_protobuf_descriptor_proto_enumTypes[18]
+}
+
+func (x FeatureSet_VisibilityFeature_DefaultSymbolVisibility) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Do not use.
+func (x *FeatureSet_VisibilityFeature_DefaultSymbolVisibility) UnmarshalJSON(b []byte) error {
+	num, err := protoimpl.X.UnmarshalJSONEnum(x.Descriptor(), b)
+	if err != nil {
+		return err
+	}
+	*x = FeatureSet_VisibilityFeature_DefaultSymbolVisibility(num)
+	return nil
+}
+
+// Deprecated: Use FeatureSet_VisibilityFeature_DefaultSymbolVisibility.Descriptor instead.
+func (FeatureSet_VisibilityFeature_DefaultSymbolVisibility) EnumDescriptor() ([]byte, []int) {
+	return file_google_protobuf_descriptor_proto_rawDescGZIP(), []int{19, 0, 0}
 }
 
 // Represents the identified object's effect on the element in the original
@@ -1187,11 +1381,11 @@ func (x GeneratedCodeInfo_Annotation_Semantic) String() string {
 }
 
 func (GeneratedCodeInfo_Annotation_Semantic) Descriptor() protoreflect.EnumDescriptor {
-	return file_google_protobuf_descriptor_proto_enumTypes[16].Descriptor()
+	return file_google_protobuf_descriptor_proto_enumTypes[19].Descriptor()
 }
 
 func (GeneratedCodeInfo_Annotation_Semantic) Type() protoreflect.EnumType {
-	return &file_google_protobuf_descriptor_proto_enumTypes[16]
+	return &file_google_protobuf_descriptor_proto_enumTypes[19]
 }
 
 func (x GeneratedCodeInfo_Annotation_Semantic) Number() protoreflect.EnumNumber {
@@ -1272,6 +1466,9 @@ type FileDescriptorProto struct {
 	// Indexes of the weak imported files in the dependency list.
 	// For Google-internal migration only. Do not use.
 	WeakDependency []int32 `protobuf:"varint,11,rep,name=weak_dependency,json=weakDependency" json:"weak_dependency,omitempty"`
+	// Names of files imported by this file purely for the purpose of providing
+	// option extensions. These are excluded from the dependency list above.
+	OptionDependency []string `protobuf:"bytes,15,rep,name=option_dependency,json=optionDependency" json:"option_dependency,omitempty"`
 	// All top-level definitions in this file.
 	MessageType []*DescriptorProto        `protobuf:"bytes,4,rep,name=message_type,json=messageType" json:"message_type,omitempty"`
 	EnumType    []*EnumDescriptorProto    `protobuf:"bytes,5,rep,name=enum_type,json=enumType" json:"enum_type,omitempty"`
@@ -1287,8 +1484,14 @@ type FileDescriptorProto struct {
 	// The supported values are "proto2", "proto3", and "editions".
 	//
 	// If `edition` is present, this value must be "editions".
+	// WARNING: This field should only be used by protobuf plugins or special
+	// cases like the proto compiler. Other uses are discouraged and
+	// developers should rely on the protoreflect APIs for their client language.
 	Syntax *string `protobuf:"bytes,12,opt,name=syntax" json:"syntax,omitempty"`
 	// The edition of the proto file.
+	// WARNING: This field should only be used by protobuf plugins or special
+	// cases like the proto compiler. Other uses are discouraged and
+	// developers should rely on the protoreflect APIs for their client language.
 	Edition       *Edition `protobuf:"varint,14,opt,name=edition,enum=google.protobuf.Edition" json:"edition,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1355,6 +1558,13 @@ func (x *FileDescriptorProto) GetPublicDependency() []int32 {
 func (x *FileDescriptorProto) GetWeakDependency() []int32 {
 	if x != nil {
 		return x.WeakDependency
+	}
+	return nil
+}
+
+func (x *FileDescriptorProto) GetOptionDependency() []string {
+	if x != nil {
+		return x.OptionDependency
 	}
 	return nil
 }
@@ -1429,7 +1639,9 @@ type DescriptorProto struct {
 	ReservedRange  []*DescriptorProto_ReservedRange  `protobuf:"bytes,9,rep,name=reserved_range,json=reservedRange" json:"reserved_range,omitempty"`
 	// Reserved field names, which may not be used by fields in the same message.
 	// A given name may only be reserved once.
-	ReservedName  []string `protobuf:"bytes,10,rep,name=reserved_name,json=reservedName" json:"reserved_name,omitempty"`
+	ReservedName []string `protobuf:"bytes,10,rep,name=reserved_name,json=reservedName" json:"reserved_name,omitempty"`
+	// Support for `export` and `local` keywords on enums.
+	Visibility    *SymbolVisibility `protobuf:"varint,11,opt,name=visibility,enum=google.protobuf.SymbolVisibility" json:"visibility,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1532,6 +1744,13 @@ func (x *DescriptorProto) GetReservedName() []string {
 		return x.ReservedName
 	}
 	return nil
+}
+
+func (x *DescriptorProto) GetVisibility() SymbolVisibility {
+	if x != nil && x.Visibility != nil {
+		return *x.Visibility
+	}
+	return SymbolVisibility_VISIBILITY_UNSET
 }
 
 type ExtensionRangeOptions struct {
@@ -1846,7 +2065,9 @@ type EnumDescriptorProto struct {
 	ReservedRange []*EnumDescriptorProto_EnumReservedRange `protobuf:"bytes,4,rep,name=reserved_range,json=reservedRange" json:"reserved_range,omitempty"`
 	// Reserved enum value names, which may not be reused. A given name may only
 	// be reserved once.
-	ReservedName  []string `protobuf:"bytes,5,rep,name=reserved_name,json=reservedName" json:"reserved_name,omitempty"`
+	ReservedName []string `protobuf:"bytes,5,rep,name=reserved_name,json=reservedName" json:"reserved_name,omitempty"`
+	// Support for `export` and `local` keywords on enums.
+	Visibility    *SymbolVisibility `protobuf:"varint,6,opt,name=visibility,enum=google.protobuf.SymbolVisibility" json:"visibility,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1914,6 +2135,13 @@ func (x *EnumDescriptorProto) GetReservedName() []string {
 		return x.ReservedName
 	}
 	return nil
+}
+
+func (x *EnumDescriptorProto) GetVisibility() SymbolVisibility {
+	if x != nil && x.Visibility != nil {
+		return *x.Visibility
+	}
+	return SymbolVisibility_VISIBILITY_UNSET
 }
 
 // Describes a value within an enum.
@@ -2222,6 +2450,9 @@ type FileOptions struct {
 	// determining the ruby package.
 	RubyPackage *string `protobuf:"bytes,45,opt,name=ruby_package,json=rubyPackage" json:"ruby_package,omitempty"`
 	// Any features defined in the specific edition.
+	// WARNING: This field should only be used by protobuf plugins or special
+	// cases like the proto compiler. Other uses are discouraged and
+	// developers should rely on the protoreflect APIs for their client language.
 	Features *FeatureSet `protobuf:"bytes,50,opt,name=features" json:"features,omitempty"`
 	// The parser stores options it doesn't recognize here.
 	// See the documentation for the "Options" section above.
@@ -2492,6 +2723,9 @@ type MessageOptions struct {
 	// Deprecated: Marked as deprecated in google/protobuf/descriptor.proto.
 	DeprecatedLegacyJsonFieldConflicts *bool `protobuf:"varint,11,opt,name=deprecated_legacy_json_field_conflicts,json=deprecatedLegacyJsonFieldConflicts" json:"deprecated_legacy_json_field_conflicts,omitempty"`
 	// Any features defined in the specific edition.
+	// WARNING: This field should only be used by protobuf plugins or special
+	// cases like the proto compiler. Other uses are discouraged and
+	// developers should rely on the protoreflect APIs for their client language.
 	Features *FeatureSet `protobuf:"bytes,12,opt,name=features" json:"features,omitempty"`
 	// The parser stores options it doesn't recognize here. See above.
 	UninterpretedOption []*UninterpretedOption `protobuf:"bytes,999,rep,name=uninterpreted_option,json=uninterpretedOption" json:"uninterpreted_option,omitempty"`
@@ -2649,7 +2883,10 @@ type FieldOptions struct {
 	// for accessors, or it will be completely ignored; in the very least, this
 	// is a formalization for deprecating fields.
 	Deprecated *bool `protobuf:"varint,3,opt,name=deprecated,def=0" json:"deprecated,omitempty"`
+	// DEPRECATED. DO NOT USE!
 	// For Google-internal migration only. Do not use.
+	//
+	// Deprecated: Marked as deprecated in google/protobuf/descriptor.proto.
 	Weak *bool `protobuf:"varint,10,opt,name=weak,def=0" json:"weak,omitempty"`
 	// Indicate that the field value should not be printed out when using debug
 	// formats, e.g. when the field contains sensitive credentials.
@@ -2658,6 +2895,9 @@ type FieldOptions struct {
 	Targets         []FieldOptions_OptionTargetType `protobuf:"varint,19,rep,name=targets,enum=google.protobuf.FieldOptions_OptionTargetType" json:"targets,omitempty"`
 	EditionDefaults []*FieldOptions_EditionDefault  `protobuf:"bytes,20,rep,name=edition_defaults,json=editionDefaults" json:"edition_defaults,omitempty"`
 	// Any features defined in the specific edition.
+	// WARNING: This field should only be used by protobuf plugins or special
+	// cases like the proto compiler. Other uses are discouraged and
+	// developers should rely on the protoreflect APIs for their client language.
 	Features       *FeatureSet                  `protobuf:"bytes,21,opt,name=features" json:"features,omitempty"`
 	FeatureSupport *FieldOptions_FeatureSupport `protobuf:"bytes,22,opt,name=feature_support,json=featureSupport" json:"feature_support,omitempty"`
 	// The parser stores options it doesn't recognize here. See above.
@@ -2750,6 +2990,7 @@ func (x *FieldOptions) GetDeprecated() bool {
 	return Default_FieldOptions_Deprecated
 }
 
+// Deprecated: Marked as deprecated in google/protobuf/descriptor.proto.
 func (x *FieldOptions) GetWeak() bool {
 	if x != nil && x.Weak != nil {
 		return *x.Weak
@@ -2809,6 +3050,9 @@ func (x *FieldOptions) GetUninterpretedOption() []*UninterpretedOption {
 type OneofOptions struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Any features defined in the specific edition.
+	// WARNING: This field should only be used by protobuf plugins or special
+	// cases like the proto compiler. Other uses are discouraged and
+	// developers should rely on the protoreflect APIs for their client language.
 	Features *FeatureSet `protobuf:"bytes,1,opt,name=features" json:"features,omitempty"`
 	// The parser stores options it doesn't recognize here. See above.
 	UninterpretedOption []*UninterpretedOption `protobuf:"bytes,999,rep,name=uninterpreted_option,json=uninterpretedOption" json:"uninterpreted_option,omitempty"`
@@ -2881,6 +3125,9 @@ type EnumOptions struct {
 	// Deprecated: Marked as deprecated in google/protobuf/descriptor.proto.
 	DeprecatedLegacyJsonFieldConflicts *bool `protobuf:"varint,6,opt,name=deprecated_legacy_json_field_conflicts,json=deprecatedLegacyJsonFieldConflicts" json:"deprecated_legacy_json_field_conflicts,omitempty"`
 	// Any features defined in the specific edition.
+	// WARNING: This field should only be used by protobuf plugins or special
+	// cases like the proto compiler. Other uses are discouraged and
+	// developers should rely on the protoreflect APIs for their client language.
 	Features *FeatureSet `protobuf:"bytes,7,opt,name=features" json:"features,omitempty"`
 	// The parser stores options it doesn't recognize here. See above.
 	UninterpretedOption []*UninterpretedOption `protobuf:"bytes,999,rep,name=uninterpreted_option,json=uninterpretedOption" json:"uninterpreted_option,omitempty"`
@@ -2968,6 +3215,9 @@ type EnumValueOptions struct {
 	// this is a formalization for deprecating enum values.
 	Deprecated *bool `protobuf:"varint,1,opt,name=deprecated,def=0" json:"deprecated,omitempty"`
 	// Any features defined in the specific edition.
+	// WARNING: This field should only be used by protobuf plugins or special
+	// cases like the proto compiler. Other uses are discouraged and
+	// developers should rely on the protoreflect APIs for their client language.
 	Features *FeatureSet `protobuf:"bytes,2,opt,name=features" json:"features,omitempty"`
 	// Indicate that fields annotated with this enum value should not be printed
 	// out when using debug formats, e.g. when the field contains sensitive
@@ -3056,6 +3306,9 @@ func (x *EnumValueOptions) GetUninterpretedOption() []*UninterpretedOption {
 type ServiceOptions struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Any features defined in the specific edition.
+	// WARNING: This field should only be used by protobuf plugins or special
+	// cases like the proto compiler. Other uses are discouraged and
+	// developers should rely on the protoreflect APIs for their client language.
 	Features *FeatureSet `protobuf:"bytes,34,opt,name=features" json:"features,omitempty"`
 	// Is this service deprecated?
 	// Depending on the target platform, this can emit Deprecated annotations
@@ -3134,6 +3387,9 @@ type MethodOptions struct {
 	Deprecated       *bool                           `protobuf:"varint,33,opt,name=deprecated,def=0" json:"deprecated,omitempty"`
 	IdempotencyLevel *MethodOptions_IdempotencyLevel `protobuf:"varint,34,opt,name=idempotency_level,json=idempotencyLevel,enum=google.protobuf.MethodOptions_IdempotencyLevel,def=0" json:"idempotency_level,omitempty"`
 	// Any features defined in the specific edition.
+	// WARNING: This field should only be used by protobuf plugins or special
+	// cases like the proto compiler. Other uses are discouraged and
+	// developers should rely on the protoreflect APIs for their client language.
 	Features *FeatureSet `protobuf:"bytes,35,opt,name=features" json:"features,omitempty"`
 	// The parser stores options it doesn't recognize here. See above.
 	UninterpretedOption []*UninterpretedOption `protobuf:"bytes,999,rep,name=uninterpreted_option,json=uninterpretedOption" json:"uninterpreted_option,omitempty"`
@@ -3313,16 +3569,18 @@ func (x *UninterpretedOption) GetAggregateValue() string {
 // be designed and implemented to handle this, hopefully before we ever hit a
 // conflict here.
 type FeatureSet struct {
-	state                 protoimpl.MessageState            `protogen:"open.v1"`
-	FieldPresence         *FeatureSet_FieldPresence         `protobuf:"varint,1,opt,name=field_presence,json=fieldPresence,enum=google.protobuf.FeatureSet_FieldPresence" json:"field_presence,omitempty"`
-	EnumType              *FeatureSet_EnumType              `protobuf:"varint,2,opt,name=enum_type,json=enumType,enum=google.protobuf.FeatureSet_EnumType" json:"enum_type,omitempty"`
-	RepeatedFieldEncoding *FeatureSet_RepeatedFieldEncoding `protobuf:"varint,3,opt,name=repeated_field_encoding,json=repeatedFieldEncoding,enum=google.protobuf.FeatureSet_RepeatedFieldEncoding" json:"repeated_field_encoding,omitempty"`
-	Utf8Validation        *FeatureSet_Utf8Validation        `protobuf:"varint,4,opt,name=utf8_validation,json=utf8Validation,enum=google.protobuf.FeatureSet_Utf8Validation" json:"utf8_validation,omitempty"`
-	MessageEncoding       *FeatureSet_MessageEncoding       `protobuf:"varint,5,opt,name=message_encoding,json=messageEncoding,enum=google.protobuf.FeatureSet_MessageEncoding" json:"message_encoding,omitempty"`
-	JsonFormat            *FeatureSet_JsonFormat            `protobuf:"varint,6,opt,name=json_format,json=jsonFormat,enum=google.protobuf.FeatureSet_JsonFormat" json:"json_format,omitempty"`
-	extensionFields       protoimpl.ExtensionFields
-	unknownFields         protoimpl.UnknownFields
-	sizeCache             protoimpl.SizeCache
+	state                   protoimpl.MessageState                                `protogen:"open.v1"`
+	FieldPresence           *FeatureSet_FieldPresence                             `protobuf:"varint,1,opt,name=field_presence,json=fieldPresence,enum=google.protobuf.FeatureSet_FieldPresence" json:"field_presence,omitempty"`
+	EnumType                *FeatureSet_EnumType                                  `protobuf:"varint,2,opt,name=enum_type,json=enumType,enum=google.protobuf.FeatureSet_EnumType" json:"enum_type,omitempty"`
+	RepeatedFieldEncoding   *FeatureSet_RepeatedFieldEncoding                     `protobuf:"varint,3,opt,name=repeated_field_encoding,json=repeatedFieldEncoding,enum=google.protobuf.FeatureSet_RepeatedFieldEncoding" json:"repeated_field_encoding,omitempty"`
+	Utf8Validation          *FeatureSet_Utf8Validation                            `protobuf:"varint,4,opt,name=utf8_validation,json=utf8Validation,enum=google.protobuf.FeatureSet_Utf8Validation" json:"utf8_validation,omitempty"`
+	MessageEncoding         *FeatureSet_MessageEncoding                           `protobuf:"varint,5,opt,name=message_encoding,json=messageEncoding,enum=google.protobuf.FeatureSet_MessageEncoding" json:"message_encoding,omitempty"`
+	JsonFormat              *FeatureSet_JsonFormat                                `protobuf:"varint,6,opt,name=json_format,json=jsonFormat,enum=google.protobuf.FeatureSet_JsonFormat" json:"json_format,omitempty"`
+	EnforceNamingStyle      *FeatureSet_EnforceNamingStyle                        `protobuf:"varint,7,opt,name=enforce_naming_style,json=enforceNamingStyle,enum=google.protobuf.FeatureSet_EnforceNamingStyle" json:"enforce_naming_style,omitempty"`
+	DefaultSymbolVisibility *FeatureSet_VisibilityFeature_DefaultSymbolVisibility `protobuf:"varint,8,opt,name=default_symbol_visibility,json=defaultSymbolVisibility,enum=google.protobuf.FeatureSet_VisibilityFeature_DefaultSymbolVisibility" json:"default_symbol_visibility,omitempty"`
+	extensionFields         protoimpl.ExtensionFields
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *FeatureSet) Reset() {
@@ -3395,6 +3653,20 @@ func (x *FeatureSet) GetJsonFormat() FeatureSet_JsonFormat {
 		return *x.JsonFormat
 	}
 	return FeatureSet_JSON_FORMAT_UNKNOWN
+}
+
+func (x *FeatureSet) GetEnforceNamingStyle() FeatureSet_EnforceNamingStyle {
+	if x != nil && x.EnforceNamingStyle != nil {
+		return *x.EnforceNamingStyle
+	}
+	return FeatureSet_ENFORCE_NAMING_STYLE_UNKNOWN
+}
+
+func (x *FeatureSet) GetDefaultSymbolVisibility() FeatureSet_VisibilityFeature_DefaultSymbolVisibility {
+	if x != nil && x.DefaultSymbolVisibility != nil {
+		return *x.DefaultSymbolVisibility
+	}
+	return FeatureSet_VisibilityFeature_DEFAULT_SYMBOL_VISIBILITY_UNKNOWN
 }
 
 // A compiled specification for the defaults of a set of features.  These
@@ -4057,6 +4329,42 @@ func (x *UninterpretedOption_NamePart) GetIsExtension() bool {
 	return false
 }
 
+type FeatureSet_VisibilityFeature struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FeatureSet_VisibilityFeature) Reset() {
+	*x = FeatureSet_VisibilityFeature{}
+	mi := &file_google_protobuf_descriptor_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FeatureSet_VisibilityFeature) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FeatureSet_VisibilityFeature) ProtoMessage() {}
+
+func (x *FeatureSet_VisibilityFeature) ProtoReflect() protoreflect.Message {
+	mi := &file_google_protobuf_descriptor_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FeatureSet_VisibilityFeature.ProtoReflect.Descriptor instead.
+func (*FeatureSet_VisibilityFeature) Descriptor() ([]byte, []int) {
+	return file_google_protobuf_descriptor_proto_rawDescGZIP(), []int{19, 0}
+}
+
 // A map from every known edition with a unique set of defaults to its
 // defaults. Not all editions may be contained here.  For a given edition,
 // the defaults at the closest matching edition ordered at or before it should
@@ -4074,7 +4382,7 @@ type FeatureSetDefaults_FeatureSetEditionDefault struct {
 
 func (x *FeatureSetDefaults_FeatureSetEditionDefault) Reset() {
 	*x = FeatureSetDefaults_FeatureSetEditionDefault{}
-	mi := &file_google_protobuf_descriptor_proto_msgTypes[30]
+	mi := &file_google_protobuf_descriptor_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4086,7 +4394,7 @@ func (x *FeatureSetDefaults_FeatureSetEditionDefault) String() string {
 func (*FeatureSetDefaults_FeatureSetEditionDefault) ProtoMessage() {}
 
 func (x *FeatureSetDefaults_FeatureSetEditionDefault) ProtoReflect() protoreflect.Message {
-	mi := &file_google_protobuf_descriptor_proto_msgTypes[30]
+	mi := &file_google_protobuf_descriptor_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4222,7 +4530,7 @@ type SourceCodeInfo_Location struct {
 
 func (x *SourceCodeInfo_Location) Reset() {
 	*x = SourceCodeInfo_Location{}
-	mi := &file_google_protobuf_descriptor_proto_msgTypes[31]
+	mi := &file_google_protobuf_descriptor_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4234,7 +4542,7 @@ func (x *SourceCodeInfo_Location) String() string {
 func (*SourceCodeInfo_Location) ProtoMessage() {}
 
 func (x *SourceCodeInfo_Location) ProtoReflect() protoreflect.Message {
-	mi := &file_google_protobuf_descriptor_proto_msgTypes[31]
+	mi := &file_google_protobuf_descriptor_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4306,7 +4614,7 @@ type GeneratedCodeInfo_Annotation struct {
 
 func (x *GeneratedCodeInfo_Annotation) Reset() {
 	*x = GeneratedCodeInfo_Annotation{}
-	mi := &file_google_protobuf_descriptor_proto_msgTypes[32]
+	mi := &file_google_protobuf_descriptor_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4318,7 +4626,7 @@ func (x *GeneratedCodeInfo_Annotation) String() string {
 func (*GeneratedCodeInfo_Annotation) ProtoMessage() {}
 
 func (x *GeneratedCodeInfo_Annotation) ProtoReflect() protoreflect.Message {
-	mi := &file_google_protobuf_descriptor_proto_msgTypes[32]
+	mi := &file_google_protobuf_descriptor_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4375,7 +4683,7 @@ const file_google_protobuf_descriptor_proto_rawDesc = "" +
 	"\n" +
 	" google/protobuf/descriptor.proto\x12\x0fgoogle.protobuf\"[\n" +
 	"\x11FileDescriptorSet\x128\n" +
-	"\x04file\x18\x01 \x03(\v2$.google.protobuf.FileDescriptorProtoR\x04file*\f\b\x80\xec\xca\xff\x01\x10\x81\xec\xca\xff\x01\"\x98\x05\n" +
+	"\x04file\x18\x01 \x03(\v2$.google.protobuf.FileDescriptorProtoR\x04file*\f\b\x80\xec\xca\xff\x01\x10\x81\xec\xca\xff\x01\"\xc5\x05\n" +
 	"\x13FileDescriptorProto\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x18\n" +
 	"\apackage\x18\x02 \x01(\tR\apackage\x12\x1e\n" +
@@ -4384,7 +4692,8 @@ const file_google_protobuf_descriptor_proto_rawDesc = "" +
 	"dependency\x12+\n" +
 	"\x11public_dependency\x18\n" +
 	" \x03(\x05R\x10publicDependency\x12'\n" +
-	"\x0fweak_dependency\x18\v \x03(\x05R\x0eweakDependency\x12C\n" +
+	"\x0fweak_dependency\x18\v \x03(\x05R\x0eweakDependency\x12+\n" +
+	"\x11option_dependency\x18\x0f \x03(\tR\x10optionDependency\x12C\n" +
 	"\fmessage_type\x18\x04 \x03(\v2 .google.protobuf.DescriptorProtoR\vmessageType\x12A\n" +
 	"\tenum_type\x18\x05 \x03(\v2$.google.protobuf.EnumDescriptorProtoR\benumType\x12A\n" +
 	"\aservice\x18\x06 \x03(\v2'.google.protobuf.ServiceDescriptorProtoR\aservice\x12C\n" +
@@ -4392,7 +4701,7 @@ const file_google_protobuf_descriptor_proto_rawDesc = "" +
 	"\aoptions\x18\b \x01(\v2\x1c.google.protobuf.FileOptionsR\aoptions\x12I\n" +
 	"\x10source_code_info\x18\t \x01(\v2\x1f.google.protobuf.SourceCodeInfoR\x0esourceCodeInfo\x12\x16\n" +
 	"\x06syntax\x18\f \x01(\tR\x06syntax\x122\n" +
-	"\aedition\x18\x0e \x01(\x0e2\x18.google.protobuf.EditionR\aedition\"\xb9\x06\n" +
+	"\aedition\x18\x0e \x01(\x0e2\x18.google.protobuf.EditionR\aedition\"\xfc\x06\n" +
 	"\x0fDescriptorProto\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12;\n" +
 	"\x05field\x18\x02 \x03(\v2%.google.protobuf.FieldDescriptorProtoR\x05field\x12C\n" +
@@ -4406,7 +4715,10 @@ const file_google_protobuf_descriptor_proto_rawDesc = "" +
 	"\aoptions\x18\a \x01(\v2\x1f.google.protobuf.MessageOptionsR\aoptions\x12U\n" +
 	"\x0ereserved_range\x18\t \x03(\v2..google.protobuf.DescriptorProto.ReservedRangeR\rreservedRange\x12#\n" +
 	"\rreserved_name\x18\n" +
-	" \x03(\tR\freservedName\x1az\n" +
+	" \x03(\tR\freservedName\x12A\n" +
+	"\n" +
+	"visibility\x18\v \x01(\x0e2!.google.protobuf.SymbolVisibilityR\n" +
+	"visibility\x1az\n" +
 	"\x0eExtensionRange\x12\x14\n" +
 	"\x05start\x18\x01 \x01(\x05R\x05start\x12\x10\n" +
 	"\x03end\x18\x02 \x01(\x05R\x03end\x12@\n" +
@@ -4475,13 +4787,16 @@ const file_google_protobuf_descriptor_proto_rawDesc = "" +
 	"\x0eLABEL_REQUIRED\x10\x02\"c\n" +
 	"\x14OneofDescriptorProto\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x127\n" +
-	"\aoptions\x18\x02 \x01(\v2\x1d.google.protobuf.OneofOptionsR\aoptions\"\xe3\x02\n" +
+	"\aoptions\x18\x02 \x01(\v2\x1d.google.protobuf.OneofOptionsR\aoptions\"\xa6\x03\n" +
 	"\x13EnumDescriptorProto\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12?\n" +
 	"\x05value\x18\x02 \x03(\v2).google.protobuf.EnumValueDescriptorProtoR\x05value\x126\n" +
 	"\aoptions\x18\x03 \x01(\v2\x1c.google.protobuf.EnumOptionsR\aoptions\x12]\n" +
 	"\x0ereserved_range\x18\x04 \x03(\v26.google.protobuf.EnumDescriptorProto.EnumReservedRangeR\rreservedRange\x12#\n" +
-	"\rreserved_name\x18\x05 \x03(\tR\freservedName\x1a;\n" +
+	"\rreserved_name\x18\x05 \x03(\tR\freservedName\x12A\n" +
+	"\n" +
+	"visibility\x18\x06 \x01(\x0e2!.google.protobuf.SymbolVisibilityR\n" +
+	"visibility\x1a;\n" +
 	"\x11EnumReservedRange\x12\x14\n" +
 	"\x05start\x18\x01 \x01(\x05R\x05start\x12\x10\n" +
 	"\x03end\x18\x02 \x01(\x05R\x03end\"\x83\x01\n" +
@@ -4542,7 +4857,7 @@ const file_google_protobuf_descriptor_proto_rawDesc = "" +
 	"&deprecated_legacy_json_field_conflicts\x18\v \x01(\bB\x02\x18\x01R\"deprecatedLegacyJsonFieldConflicts\x127\n" +
 	"\bfeatures\x18\f \x01(\v2\x1b.google.protobuf.FeatureSetR\bfeatures\x12X\n" +
 	"\x14uninterpreted_option\x18\xe7\a \x03(\v2$.google.protobuf.UninterpretedOptionR\x13uninterpretedOption*\t\b\xe8\a\x10\x80\x80\x80\x80\x02J\x04\b\x04\x10\x05J\x04\b\x05\x10\x06J\x04\b\x06\x10\aJ\x04\b\b\x10\tJ\x04\b\t\x10\n" +
-	"\"\x9d\r\n" +
+	"\"\xa1\r\n" +
 	"\fFieldOptions\x12A\n" +
 	"\x05ctype\x18\x01 \x01(\x0e2#.google.protobuf.FieldOptions.CType:\x06STRINGR\x05ctype\x12\x16\n" +
 	"\x06packed\x18\x02 \x01(\bR\x06packed\x12G\n" +
@@ -4551,9 +4866,9 @@ const file_google_protobuf_descriptor_proto_rawDesc = "" +
 	"\x0funverified_lazy\x18\x0f \x01(\b:\x05falseR\x0eunverifiedLazy\x12%\n" +
 	"\n" +
 	"deprecated\x18\x03 \x01(\b:\x05falseR\n" +
-	"deprecated\x12\x19\n" +
+	"deprecated\x12\x1d\n" +
 	"\x04weak\x18\n" +
-	" \x01(\b:\x05falseR\x04weak\x12(\n" +
+	" \x01(\b:\x05falseB\x02\x18\x01R\x04weak\x12(\n" +
 	"\fdebug_redact\x18\x10 \x01(\b:\x05falseR\vdebugRedact\x12K\n" +
 	"\tretention\x18\x11 \x01(\x0e2-.google.protobuf.FieldOptions.OptionRetentionR\tretention\x12H\n" +
 	"\atargets\x18\x13 \x03(\x0e2..google.protobuf.FieldOptions.OptionTargetTypeR\atargets\x12W\n" +
@@ -4641,8 +4956,7 @@ const file_google_protobuf_descriptor_proto_rawDesc = "" +
 	"\x0faggregate_value\x18\b \x01(\tR\x0eaggregateValue\x1aJ\n" +
 	"\bNamePart\x12\x1b\n" +
 	"\tname_part\x18\x01 \x02(\tR\bnamePart\x12!\n" +
-	"\fis_extension\x18\x02 \x02(\bR\visExtension\"\xa7\n" +
-	"\n" +
+	"\fis_extension\x18\x02 \x02(\bR\visExtension\"\x8e\x0f\n" +
 	"\n" +
 	"FeatureSet\x12\x91\x01\n" +
 	"\x0efield_presence\x18\x01 \x01(\x0e2).google.protobuf.FeatureSet.FieldPresenceB?\x88\x01\x01\x98\x01\x04\x98\x01\x01\xa2\x01\r\x12\bEXPLICIT\x18\x84\a\xa2\x01\r\x12\bIMPLICIT\x18\xe7\a\xa2\x01\r\x12\bEXPLICIT\x18\xe8\a\xb2\x01\x03\b\xe8\aR\rfieldPresence\x12l\n" +
@@ -4652,7 +4966,19 @@ const file_google_protobuf_descriptor_proto_rawDesc = "" +
 	"\x10message_encoding\x18\x05 \x01(\x0e2+.google.protobuf.FeatureSet.MessageEncodingB&\x88\x01\x01\x98\x01\x04\x98\x01\x01\xa2\x01\x14\x12\x0fLENGTH_PREFIXED\x18\x84\a\xb2\x01\x03\b\xe8\aR\x0fmessageEncoding\x12\x82\x01\n" +
 	"\vjson_format\x18\x06 \x01(\x0e2&.google.protobuf.FeatureSet.JsonFormatB9\x88\x01\x01\x98\x01\x03\x98\x01\x06\x98\x01\x01\xa2\x01\x17\x12\x12LEGACY_BEST_EFFORT\x18\x84\a\xa2\x01\n" +
 	"\x12\x05ALLOW\x18\xe7\a\xb2\x01\x03\b\xe8\aR\n" +
-	"jsonFormat\"\\\n" +
+	"jsonFormat\x12\xab\x01\n" +
+	"\x14enforce_naming_style\x18\a \x01(\x0e2..google.protobuf.FeatureSet.EnforceNamingStyleBI\x88\x01\x02\x98\x01\x01\x98\x01\x02\x98\x01\x03\x98\x01\x04\x98\x01\x05\x98\x01\x06\x98\x01\a\x98\x01\b\x98\x01\t\xa2\x01\x11\x12\fSTYLE_LEGACY\x18\x84\a\xa2\x01\x0e\x12\tSTYLE2024\x18\xe9\a\xb2\x01\x03\b\xe9\aR\x12enforceNamingStyle\x12\xb9\x01\n" +
+	"\x19default_symbol_visibility\x18\b \x01(\x0e2E.google.protobuf.FeatureSet.VisibilityFeature.DefaultSymbolVisibilityB6\x88\x01\x02\x98\x01\x01\xa2\x01\x0f\x12\n" +
+	"EXPORT_ALL\x18\x84\a\xa2\x01\x15\x12\x10EXPORT_TOP_LEVEL\x18\xe9\a\xb2\x01\x03\b\xe9\aR\x17defaultSymbolVisibility\x1a\xa1\x01\n" +
+	"\x11VisibilityFeature\"\x81\x01\n" +
+	"\x17DefaultSymbolVisibility\x12%\n" +
+	"!DEFAULT_SYMBOL_VISIBILITY_UNKNOWN\x10\x00\x12\x0e\n" +
+	"\n" +
+	"EXPORT_ALL\x10\x01\x12\x14\n" +
+	"\x10EXPORT_TOP_LEVEL\x10\x02\x12\r\n" +
+	"\tLOCAL_ALL\x10\x03\x12\n" +
+	"\n" +
+	"\x06STRICT\x10\x04J\b\b\x01\x10\x80\x80\x80\x80\x02\"\\\n" +
 	"\rFieldPresence\x12\x1a\n" +
 	"\x16FIELD_PRESENCE_UNKNOWN\x10\x00\x12\f\n" +
 	"\bEXPLICIT\x10\x01\x12\f\n" +
@@ -4681,7 +5007,11 @@ const file_google_protobuf_descriptor_proto_rawDesc = "" +
 	"JsonFormat\x12\x17\n" +
 	"\x13JSON_FORMAT_UNKNOWN\x10\x00\x12\t\n" +
 	"\x05ALLOW\x10\x01\x12\x16\n" +
-	"\x12LEGACY_BEST_EFFORT\x10\x02*\x06\b\xe8\a\x10\x8bN*\x06\b\x8bN\x10\x90N*\x06\b\x90N\x10\x91NJ\x06\b\xe7\a\x10\xe8\a\"\xef\x03\n" +
+	"\x12LEGACY_BEST_EFFORT\x10\x02\"W\n" +
+	"\x12EnforceNamingStyle\x12 \n" +
+	"\x1cENFORCE_NAMING_STYLE_UNKNOWN\x10\x00\x12\r\n" +
+	"\tSTYLE2024\x10\x01\x12\x10\n" +
+	"\fSTYLE_LEGACY\x10\x02*\x06\b\xe8\a\x10\x8bN*\x06\b\x8bN\x10\x90N*\x06\b\x90N\x10\x91NJ\x06\b\xe7\a\x10\xe8\a\"\xef\x03\n" +
 	"\x12FeatureSetDefaults\x12X\n" +
 	"\bdefaults\x18\x01 \x03(\v2<.google.protobuf.FeatureSetDefaults.FeatureSetEditionDefaultR\bdefaults\x12A\n" +
 	"\x0fminimum_edition\x18\x04 \x01(\x0e2\x18.google.protobuf.EditionR\x0eminimumEdition\x12A\n" +
@@ -4726,7 +5056,11 @@ const file_google_protobuf_descriptor_proto_rawDesc = "" +
 	"\x17EDITION_99997_TEST_ONLY\x10\x9d\x8d\x06\x12\x1d\n" +
 	"\x17EDITION_99998_TEST_ONLY\x10\x9e\x8d\x06\x12\x1d\n" +
 	"\x17EDITION_99999_TEST_ONLY\x10\x9f\x8d\x06\x12\x13\n" +
-	"\vEDITION_MAX\x10\xff\xff\xff\xff\aBu\n" +
+	"\vEDITION_MAX\x10\xff\xff\xff\xff\a*U\n" +
+	"\x10SymbolVisibility\x12\x14\n" +
+	"\x10VISIBILITY_UNSET\x10\x00\x12\x14\n" +
+	"\x10VISIBILITY_LOCAL\x10\x01\x12\x15\n" +
+	"\x11VISIBILITY_EXPORT\x10\x02Bu\n" +
 	"\x13com.google.protobufB\x10DescriptorProtosH\x01Z$go.alis.build/common/google/protobuf\xf8\x01\x01\xa2\x02\x03GPB\xaa\x02\x1aGoogle.Protobuf.Reflection"
 
 var (
@@ -4741,143 +5075,151 @@ func file_google_protobuf_descriptor_proto_rawDescGZIP() []byte {
 	return file_google_protobuf_descriptor_proto_rawDescData
 }
 
-var file_google_protobuf_descriptor_proto_enumTypes = make([]protoimpl.EnumInfo, 17)
-var file_google_protobuf_descriptor_proto_msgTypes = make([]protoimpl.MessageInfo, 33)
+var file_google_protobuf_descriptor_proto_enumTypes = make([]protoimpl.EnumInfo, 20)
+var file_google_protobuf_descriptor_proto_msgTypes = make([]protoimpl.MessageInfo, 34)
 var file_google_protobuf_descriptor_proto_goTypes = []any{
-	(Edition)(0), // 0: google.protobuf.Edition
-	(ExtensionRangeOptions_VerificationState)(0),        // 1: google.protobuf.ExtensionRangeOptions.VerificationState
-	(FieldDescriptorProto_Type)(0),                      // 2: google.protobuf.FieldDescriptorProto.Type
-	(FieldDescriptorProto_Label)(0),                     // 3: google.protobuf.FieldDescriptorProto.Label
-	(FileOptions_OptimizeMode)(0),                       // 4: google.protobuf.FileOptions.OptimizeMode
-	(FieldOptions_CType)(0),                             // 5: google.protobuf.FieldOptions.CType
-	(FieldOptions_JSType)(0),                            // 6: google.protobuf.FieldOptions.JSType
-	(FieldOptions_OptionRetention)(0),                   // 7: google.protobuf.FieldOptions.OptionRetention
-	(FieldOptions_OptionTargetType)(0),                  // 8: google.protobuf.FieldOptions.OptionTargetType
-	(MethodOptions_IdempotencyLevel)(0),                 // 9: google.protobuf.MethodOptions.IdempotencyLevel
-	(FeatureSet_FieldPresence)(0),                       // 10: google.protobuf.FeatureSet.FieldPresence
-	(FeatureSet_EnumType)(0),                            // 11: google.protobuf.FeatureSet.EnumType
-	(FeatureSet_RepeatedFieldEncoding)(0),               // 12: google.protobuf.FeatureSet.RepeatedFieldEncoding
-	(FeatureSet_Utf8Validation)(0),                      // 13: google.protobuf.FeatureSet.Utf8Validation
-	(FeatureSet_MessageEncoding)(0),                     // 14: google.protobuf.FeatureSet.MessageEncoding
-	(FeatureSet_JsonFormat)(0),                          // 15: google.protobuf.FeatureSet.JsonFormat
-	(GeneratedCodeInfo_Annotation_Semantic)(0),          // 16: google.protobuf.GeneratedCodeInfo.Annotation.Semantic
-	(*FileDescriptorSet)(nil),                           // 17: google.protobuf.FileDescriptorSet
-	(*FileDescriptorProto)(nil),                         // 18: google.protobuf.FileDescriptorProto
-	(*DescriptorProto)(nil),                             // 19: google.protobuf.DescriptorProto
-	(*ExtensionRangeOptions)(nil),                       // 20: google.protobuf.ExtensionRangeOptions
-	(*FieldDescriptorProto)(nil),                        // 21: google.protobuf.FieldDescriptorProto
-	(*OneofDescriptorProto)(nil),                        // 22: google.protobuf.OneofDescriptorProto
-	(*EnumDescriptorProto)(nil),                         // 23: google.protobuf.EnumDescriptorProto
-	(*EnumValueDescriptorProto)(nil),                    // 24: google.protobuf.EnumValueDescriptorProto
-	(*ServiceDescriptorProto)(nil),                      // 25: google.protobuf.ServiceDescriptorProto
-	(*MethodDescriptorProto)(nil),                       // 26: google.protobuf.MethodDescriptorProto
-	(*FileOptions)(nil),                                 // 27: google.protobuf.FileOptions
-	(*MessageOptions)(nil),                              // 28: google.protobuf.MessageOptions
-	(*FieldOptions)(nil),                                // 29: google.protobuf.FieldOptions
-	(*OneofOptions)(nil),                                // 30: google.protobuf.OneofOptions
-	(*EnumOptions)(nil),                                 // 31: google.protobuf.EnumOptions
-	(*EnumValueOptions)(nil),                            // 32: google.protobuf.EnumValueOptions
-	(*ServiceOptions)(nil),                              // 33: google.protobuf.ServiceOptions
-	(*MethodOptions)(nil),                               // 34: google.protobuf.MethodOptions
-	(*UninterpretedOption)(nil),                         // 35: google.protobuf.UninterpretedOption
-	(*FeatureSet)(nil),                                  // 36: google.protobuf.FeatureSet
-	(*FeatureSetDefaults)(nil),                          // 37: google.protobuf.FeatureSetDefaults
-	(*SourceCodeInfo)(nil),                              // 38: google.protobuf.SourceCodeInfo
-	(*GeneratedCodeInfo)(nil),                           // 39: google.protobuf.GeneratedCodeInfo
-	(*DescriptorProto_ExtensionRange)(nil),              // 40: google.protobuf.DescriptorProto.ExtensionRange
-	(*DescriptorProto_ReservedRange)(nil),               // 41: google.protobuf.DescriptorProto.ReservedRange
-	(*ExtensionRangeOptions_Declaration)(nil),           // 42: google.protobuf.ExtensionRangeOptions.Declaration
-	(*EnumDescriptorProto_EnumReservedRange)(nil),       // 43: google.protobuf.EnumDescriptorProto.EnumReservedRange
-	(*FieldOptions_EditionDefault)(nil),                 // 44: google.protobuf.FieldOptions.EditionDefault
-	(*FieldOptions_FeatureSupport)(nil),                 // 45: google.protobuf.FieldOptions.FeatureSupport
-	(*UninterpretedOption_NamePart)(nil),                // 46: google.protobuf.UninterpretedOption.NamePart
-	(*FeatureSetDefaults_FeatureSetEditionDefault)(nil), // 47: google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault
-	(*SourceCodeInfo_Location)(nil),                     // 48: google.protobuf.SourceCodeInfo.Location
-	(*GeneratedCodeInfo_Annotation)(nil),                // 49: google.protobuf.GeneratedCodeInfo.Annotation
+	(Edition)(0),          // 0: google.protobuf.Edition
+	(SymbolVisibility)(0), // 1: google.protobuf.SymbolVisibility
+	(ExtensionRangeOptions_VerificationState)(0),              // 2: google.protobuf.ExtensionRangeOptions.VerificationState
+	(FieldDescriptorProto_Type)(0),                            // 3: google.protobuf.FieldDescriptorProto.Type
+	(FieldDescriptorProto_Label)(0),                           // 4: google.protobuf.FieldDescriptorProto.Label
+	(FileOptions_OptimizeMode)(0),                             // 5: google.protobuf.FileOptions.OptimizeMode
+	(FieldOptions_CType)(0),                                   // 6: google.protobuf.FieldOptions.CType
+	(FieldOptions_JSType)(0),                                  // 7: google.protobuf.FieldOptions.JSType
+	(FieldOptions_OptionRetention)(0),                         // 8: google.protobuf.FieldOptions.OptionRetention
+	(FieldOptions_OptionTargetType)(0),                        // 9: google.protobuf.FieldOptions.OptionTargetType
+	(MethodOptions_IdempotencyLevel)(0),                       // 10: google.protobuf.MethodOptions.IdempotencyLevel
+	(FeatureSet_FieldPresence)(0),                             // 11: google.protobuf.FeatureSet.FieldPresence
+	(FeatureSet_EnumType)(0),                                  // 12: google.protobuf.FeatureSet.EnumType
+	(FeatureSet_RepeatedFieldEncoding)(0),                     // 13: google.protobuf.FeatureSet.RepeatedFieldEncoding
+	(FeatureSet_Utf8Validation)(0),                            // 14: google.protobuf.FeatureSet.Utf8Validation
+	(FeatureSet_MessageEncoding)(0),                           // 15: google.protobuf.FeatureSet.MessageEncoding
+	(FeatureSet_JsonFormat)(0),                                // 16: google.protobuf.FeatureSet.JsonFormat
+	(FeatureSet_EnforceNamingStyle)(0),                        // 17: google.protobuf.FeatureSet.EnforceNamingStyle
+	(FeatureSet_VisibilityFeature_DefaultSymbolVisibility)(0), // 18: google.protobuf.FeatureSet.VisibilityFeature.DefaultSymbolVisibility
+	(GeneratedCodeInfo_Annotation_Semantic)(0),                // 19: google.protobuf.GeneratedCodeInfo.Annotation.Semantic
+	(*FileDescriptorSet)(nil),                                 // 20: google.protobuf.FileDescriptorSet
+	(*FileDescriptorProto)(nil),                               // 21: google.protobuf.FileDescriptorProto
+	(*DescriptorProto)(nil),                                   // 22: google.protobuf.DescriptorProto
+	(*ExtensionRangeOptions)(nil),                             // 23: google.protobuf.ExtensionRangeOptions
+	(*FieldDescriptorProto)(nil),                              // 24: google.protobuf.FieldDescriptorProto
+	(*OneofDescriptorProto)(nil),                              // 25: google.protobuf.OneofDescriptorProto
+	(*EnumDescriptorProto)(nil),                               // 26: google.protobuf.EnumDescriptorProto
+	(*EnumValueDescriptorProto)(nil),                          // 27: google.protobuf.EnumValueDescriptorProto
+	(*ServiceDescriptorProto)(nil),                            // 28: google.protobuf.ServiceDescriptorProto
+	(*MethodDescriptorProto)(nil),                             // 29: google.protobuf.MethodDescriptorProto
+	(*FileOptions)(nil),                                       // 30: google.protobuf.FileOptions
+	(*MessageOptions)(nil),                                    // 31: google.protobuf.MessageOptions
+	(*FieldOptions)(nil),                                      // 32: google.protobuf.FieldOptions
+	(*OneofOptions)(nil),                                      // 33: google.protobuf.OneofOptions
+	(*EnumOptions)(nil),                                       // 34: google.protobuf.EnumOptions
+	(*EnumValueOptions)(nil),                                  // 35: google.protobuf.EnumValueOptions
+	(*ServiceOptions)(nil),                                    // 36: google.protobuf.ServiceOptions
+	(*MethodOptions)(nil),                                     // 37: google.protobuf.MethodOptions
+	(*UninterpretedOption)(nil),                               // 38: google.protobuf.UninterpretedOption
+	(*FeatureSet)(nil),                                        // 39: google.protobuf.FeatureSet
+	(*FeatureSetDefaults)(nil),                                // 40: google.protobuf.FeatureSetDefaults
+	(*SourceCodeInfo)(nil),                                    // 41: google.protobuf.SourceCodeInfo
+	(*GeneratedCodeInfo)(nil),                                 // 42: google.protobuf.GeneratedCodeInfo
+	(*DescriptorProto_ExtensionRange)(nil),                    // 43: google.protobuf.DescriptorProto.ExtensionRange
+	(*DescriptorProto_ReservedRange)(nil),                     // 44: google.protobuf.DescriptorProto.ReservedRange
+	(*ExtensionRangeOptions_Declaration)(nil),                 // 45: google.protobuf.ExtensionRangeOptions.Declaration
+	(*EnumDescriptorProto_EnumReservedRange)(nil),             // 46: google.protobuf.EnumDescriptorProto.EnumReservedRange
+	(*FieldOptions_EditionDefault)(nil),                       // 47: google.protobuf.FieldOptions.EditionDefault
+	(*FieldOptions_FeatureSupport)(nil),                       // 48: google.protobuf.FieldOptions.FeatureSupport
+	(*UninterpretedOption_NamePart)(nil),                      // 49: google.protobuf.UninterpretedOption.NamePart
+	(*FeatureSet_VisibilityFeature)(nil),                      // 50: google.protobuf.FeatureSet.VisibilityFeature
+	(*FeatureSetDefaults_FeatureSetEditionDefault)(nil),       // 51: google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault
+	(*SourceCodeInfo_Location)(nil),                           // 52: google.protobuf.SourceCodeInfo.Location
+	(*GeneratedCodeInfo_Annotation)(nil),                      // 53: google.protobuf.GeneratedCodeInfo.Annotation
 }
 var file_google_protobuf_descriptor_proto_depIdxs = []int32{
-	18, // 0: google.protobuf.FileDescriptorSet.file:type_name -> google.protobuf.FileDescriptorProto
-	19, // 1: google.protobuf.FileDescriptorProto.message_type:type_name -> google.protobuf.DescriptorProto
-	23, // 2: google.protobuf.FileDescriptorProto.enum_type:type_name -> google.protobuf.EnumDescriptorProto
-	25, // 3: google.protobuf.FileDescriptorProto.service:type_name -> google.protobuf.ServiceDescriptorProto
-	21, // 4: google.protobuf.FileDescriptorProto.extension:type_name -> google.protobuf.FieldDescriptorProto
-	27, // 5: google.protobuf.FileDescriptorProto.options:type_name -> google.protobuf.FileOptions
-	38, // 6: google.protobuf.FileDescriptorProto.source_code_info:type_name -> google.protobuf.SourceCodeInfo
+	21, // 0: google.protobuf.FileDescriptorSet.file:type_name -> google.protobuf.FileDescriptorProto
+	22, // 1: google.protobuf.FileDescriptorProto.message_type:type_name -> google.protobuf.DescriptorProto
+	26, // 2: google.protobuf.FileDescriptorProto.enum_type:type_name -> google.protobuf.EnumDescriptorProto
+	28, // 3: google.protobuf.FileDescriptorProto.service:type_name -> google.protobuf.ServiceDescriptorProto
+	24, // 4: google.protobuf.FileDescriptorProto.extension:type_name -> google.protobuf.FieldDescriptorProto
+	30, // 5: google.protobuf.FileDescriptorProto.options:type_name -> google.protobuf.FileOptions
+	41, // 6: google.protobuf.FileDescriptorProto.source_code_info:type_name -> google.protobuf.SourceCodeInfo
 	0,  // 7: google.protobuf.FileDescriptorProto.edition:type_name -> google.protobuf.Edition
-	21, // 8: google.protobuf.DescriptorProto.field:type_name -> google.protobuf.FieldDescriptorProto
-	21, // 9: google.protobuf.DescriptorProto.extension:type_name -> google.protobuf.FieldDescriptorProto
-	19, // 10: google.protobuf.DescriptorProto.nested_type:type_name -> google.protobuf.DescriptorProto
-	23, // 11: google.protobuf.DescriptorProto.enum_type:type_name -> google.protobuf.EnumDescriptorProto
-	40, // 12: google.protobuf.DescriptorProto.extension_range:type_name -> google.protobuf.DescriptorProto.ExtensionRange
-	22, // 13: google.protobuf.DescriptorProto.oneof_decl:type_name -> google.protobuf.OneofDescriptorProto
-	28, // 14: google.protobuf.DescriptorProto.options:type_name -> google.protobuf.MessageOptions
-	41, // 15: google.protobuf.DescriptorProto.reserved_range:type_name -> google.protobuf.DescriptorProto.ReservedRange
-	35, // 16: google.protobuf.ExtensionRangeOptions.uninterpreted_option:type_name -> google.protobuf.UninterpretedOption
-	42, // 17: google.protobuf.ExtensionRangeOptions.declaration:type_name -> google.protobuf.ExtensionRangeOptions.Declaration
-	36, // 18: google.protobuf.ExtensionRangeOptions.features:type_name -> google.protobuf.FeatureSet
-	1,  // 19: google.protobuf.ExtensionRangeOptions.verification:type_name -> google.protobuf.ExtensionRangeOptions.VerificationState
-	3,  // 20: google.protobuf.FieldDescriptorProto.label:type_name -> google.protobuf.FieldDescriptorProto.Label
-	2,  // 21: google.protobuf.FieldDescriptorProto.type:type_name -> google.protobuf.FieldDescriptorProto.Type
-	29, // 22: google.protobuf.FieldDescriptorProto.options:type_name -> google.protobuf.FieldOptions
-	30, // 23: google.protobuf.OneofDescriptorProto.options:type_name -> google.protobuf.OneofOptions
-	24, // 24: google.protobuf.EnumDescriptorProto.value:type_name -> google.protobuf.EnumValueDescriptorProto
-	31, // 25: google.protobuf.EnumDescriptorProto.options:type_name -> google.protobuf.EnumOptions
-	43, // 26: google.protobuf.EnumDescriptorProto.reserved_range:type_name -> google.protobuf.EnumDescriptorProto.EnumReservedRange
-	32, // 27: google.protobuf.EnumValueDescriptorProto.options:type_name -> google.protobuf.EnumValueOptions
-	26, // 28: google.protobuf.ServiceDescriptorProto.method:type_name -> google.protobuf.MethodDescriptorProto
-	33, // 29: google.protobuf.ServiceDescriptorProto.options:type_name -> google.protobuf.ServiceOptions
-	34, // 30: google.protobuf.MethodDescriptorProto.options:type_name -> google.protobuf.MethodOptions
-	4,  // 31: google.protobuf.FileOptions.optimize_for:type_name -> google.protobuf.FileOptions.OptimizeMode
-	36, // 32: google.protobuf.FileOptions.features:type_name -> google.protobuf.FeatureSet
-	35, // 33: google.protobuf.FileOptions.uninterpreted_option:type_name -> google.protobuf.UninterpretedOption
-	36, // 34: google.protobuf.MessageOptions.features:type_name -> google.protobuf.FeatureSet
-	35, // 35: google.protobuf.MessageOptions.uninterpreted_option:type_name -> google.protobuf.UninterpretedOption
-	5,  // 36: google.protobuf.FieldOptions.ctype:type_name -> google.protobuf.FieldOptions.CType
-	6,  // 37: google.protobuf.FieldOptions.jstype:type_name -> google.protobuf.FieldOptions.JSType
-	7,  // 38: google.protobuf.FieldOptions.retention:type_name -> google.protobuf.FieldOptions.OptionRetention
-	8,  // 39: google.protobuf.FieldOptions.targets:type_name -> google.protobuf.FieldOptions.OptionTargetType
-	44, // 40: google.protobuf.FieldOptions.edition_defaults:type_name -> google.protobuf.FieldOptions.EditionDefault
-	36, // 41: google.protobuf.FieldOptions.features:type_name -> google.protobuf.FeatureSet
-	45, // 42: google.protobuf.FieldOptions.feature_support:type_name -> google.protobuf.FieldOptions.FeatureSupport
-	35, // 43: google.protobuf.FieldOptions.uninterpreted_option:type_name -> google.protobuf.UninterpretedOption
-	36, // 44: google.protobuf.OneofOptions.features:type_name -> google.protobuf.FeatureSet
-	35, // 45: google.protobuf.OneofOptions.uninterpreted_option:type_name -> google.protobuf.UninterpretedOption
-	36, // 46: google.protobuf.EnumOptions.features:type_name -> google.protobuf.FeatureSet
-	35, // 47: google.protobuf.EnumOptions.uninterpreted_option:type_name -> google.protobuf.UninterpretedOption
-	36, // 48: google.protobuf.EnumValueOptions.features:type_name -> google.protobuf.FeatureSet
-	45, // 49: google.protobuf.EnumValueOptions.feature_support:type_name -> google.protobuf.FieldOptions.FeatureSupport
-	35, // 50: google.protobuf.EnumValueOptions.uninterpreted_option:type_name -> google.protobuf.UninterpretedOption
-	36, // 51: google.protobuf.ServiceOptions.features:type_name -> google.protobuf.FeatureSet
-	35, // 52: google.protobuf.ServiceOptions.uninterpreted_option:type_name -> google.protobuf.UninterpretedOption
-	9,  // 53: google.protobuf.MethodOptions.idempotency_level:type_name -> google.protobuf.MethodOptions.IdempotencyLevel
-	36, // 54: google.protobuf.MethodOptions.features:type_name -> google.protobuf.FeatureSet
-	35, // 55: google.protobuf.MethodOptions.uninterpreted_option:type_name -> google.protobuf.UninterpretedOption
-	46, // 56: google.protobuf.UninterpretedOption.name:type_name -> google.protobuf.UninterpretedOption.NamePart
-	10, // 57: google.protobuf.FeatureSet.field_presence:type_name -> google.protobuf.FeatureSet.FieldPresence
-	11, // 58: google.protobuf.FeatureSet.enum_type:type_name -> google.protobuf.FeatureSet.EnumType
-	12, // 59: google.protobuf.FeatureSet.repeated_field_encoding:type_name -> google.protobuf.FeatureSet.RepeatedFieldEncoding
-	13, // 60: google.protobuf.FeatureSet.utf8_validation:type_name -> google.protobuf.FeatureSet.Utf8Validation
-	14, // 61: google.protobuf.FeatureSet.message_encoding:type_name -> google.protobuf.FeatureSet.MessageEncoding
-	15, // 62: google.protobuf.FeatureSet.json_format:type_name -> google.protobuf.FeatureSet.JsonFormat
-	47, // 63: google.protobuf.FeatureSetDefaults.defaults:type_name -> google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault
-	0,  // 64: google.protobuf.FeatureSetDefaults.minimum_edition:type_name -> google.protobuf.Edition
-	0,  // 65: google.protobuf.FeatureSetDefaults.maximum_edition:type_name -> google.protobuf.Edition
-	48, // 66: google.protobuf.SourceCodeInfo.location:type_name -> google.protobuf.SourceCodeInfo.Location
-	49, // 67: google.protobuf.GeneratedCodeInfo.annotation:type_name -> google.protobuf.GeneratedCodeInfo.Annotation
-	20, // 68: google.protobuf.DescriptorProto.ExtensionRange.options:type_name -> google.protobuf.ExtensionRangeOptions
-	0,  // 69: google.protobuf.FieldOptions.EditionDefault.edition:type_name -> google.protobuf.Edition
-	0,  // 70: google.protobuf.FieldOptions.FeatureSupport.edition_introduced:type_name -> google.protobuf.Edition
-	0,  // 71: google.protobuf.FieldOptions.FeatureSupport.edition_deprecated:type_name -> google.protobuf.Edition
-	0,  // 72: google.protobuf.FieldOptions.FeatureSupport.edition_removed:type_name -> google.protobuf.Edition
-	0,  // 73: google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault.edition:type_name -> google.protobuf.Edition
-	36, // 74: google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault.overridable_features:type_name -> google.protobuf.FeatureSet
-	36, // 75: google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault.fixed_features:type_name -> google.protobuf.FeatureSet
-	16, // 76: google.protobuf.GeneratedCodeInfo.Annotation.semantic:type_name -> google.protobuf.GeneratedCodeInfo.Annotation.Semantic
-	77, // [77:77] is the sub-list for method output_type
-	77, // [77:77] is the sub-list for method input_type
-	77, // [77:77] is the sub-list for extension type_name
-	77, // [77:77] is the sub-list for extension extendee
-	0,  // [0:77] is the sub-list for field type_name
+	24, // 8: google.protobuf.DescriptorProto.field:type_name -> google.protobuf.FieldDescriptorProto
+	24, // 9: google.protobuf.DescriptorProto.extension:type_name -> google.protobuf.FieldDescriptorProto
+	22, // 10: google.protobuf.DescriptorProto.nested_type:type_name -> google.protobuf.DescriptorProto
+	26, // 11: google.protobuf.DescriptorProto.enum_type:type_name -> google.protobuf.EnumDescriptorProto
+	43, // 12: google.protobuf.DescriptorProto.extension_range:type_name -> google.protobuf.DescriptorProto.ExtensionRange
+	25, // 13: google.protobuf.DescriptorProto.oneof_decl:type_name -> google.protobuf.OneofDescriptorProto
+	31, // 14: google.protobuf.DescriptorProto.options:type_name -> google.protobuf.MessageOptions
+	44, // 15: google.protobuf.DescriptorProto.reserved_range:type_name -> google.protobuf.DescriptorProto.ReservedRange
+	1,  // 16: google.protobuf.DescriptorProto.visibility:type_name -> google.protobuf.SymbolVisibility
+	38, // 17: google.protobuf.ExtensionRangeOptions.uninterpreted_option:type_name -> google.protobuf.UninterpretedOption
+	45, // 18: google.protobuf.ExtensionRangeOptions.declaration:type_name -> google.protobuf.ExtensionRangeOptions.Declaration
+	39, // 19: google.protobuf.ExtensionRangeOptions.features:type_name -> google.protobuf.FeatureSet
+	2,  // 20: google.protobuf.ExtensionRangeOptions.verification:type_name -> google.protobuf.ExtensionRangeOptions.VerificationState
+	4,  // 21: google.protobuf.FieldDescriptorProto.label:type_name -> google.protobuf.FieldDescriptorProto.Label
+	3,  // 22: google.protobuf.FieldDescriptorProto.type:type_name -> google.protobuf.FieldDescriptorProto.Type
+	32, // 23: google.protobuf.FieldDescriptorProto.options:type_name -> google.protobuf.FieldOptions
+	33, // 24: google.protobuf.OneofDescriptorProto.options:type_name -> google.protobuf.OneofOptions
+	27, // 25: google.protobuf.EnumDescriptorProto.value:type_name -> google.protobuf.EnumValueDescriptorProto
+	34, // 26: google.protobuf.EnumDescriptorProto.options:type_name -> google.protobuf.EnumOptions
+	46, // 27: google.protobuf.EnumDescriptorProto.reserved_range:type_name -> google.protobuf.EnumDescriptorProto.EnumReservedRange
+	1,  // 28: google.protobuf.EnumDescriptorProto.visibility:type_name -> google.protobuf.SymbolVisibility
+	35, // 29: google.protobuf.EnumValueDescriptorProto.options:type_name -> google.protobuf.EnumValueOptions
+	29, // 30: google.protobuf.ServiceDescriptorProto.method:type_name -> google.protobuf.MethodDescriptorProto
+	36, // 31: google.protobuf.ServiceDescriptorProto.options:type_name -> google.protobuf.ServiceOptions
+	37, // 32: google.protobuf.MethodDescriptorProto.options:type_name -> google.protobuf.MethodOptions
+	5,  // 33: google.protobuf.FileOptions.optimize_for:type_name -> google.protobuf.FileOptions.OptimizeMode
+	39, // 34: google.protobuf.FileOptions.features:type_name -> google.protobuf.FeatureSet
+	38, // 35: google.protobuf.FileOptions.uninterpreted_option:type_name -> google.protobuf.UninterpretedOption
+	39, // 36: google.protobuf.MessageOptions.features:type_name -> google.protobuf.FeatureSet
+	38, // 37: google.protobuf.MessageOptions.uninterpreted_option:type_name -> google.protobuf.UninterpretedOption
+	6,  // 38: google.protobuf.FieldOptions.ctype:type_name -> google.protobuf.FieldOptions.CType
+	7,  // 39: google.protobuf.FieldOptions.jstype:type_name -> google.protobuf.FieldOptions.JSType
+	8,  // 40: google.protobuf.FieldOptions.retention:type_name -> google.protobuf.FieldOptions.OptionRetention
+	9,  // 41: google.protobuf.FieldOptions.targets:type_name -> google.protobuf.FieldOptions.OptionTargetType
+	47, // 42: google.protobuf.FieldOptions.edition_defaults:type_name -> google.protobuf.FieldOptions.EditionDefault
+	39, // 43: google.protobuf.FieldOptions.features:type_name -> google.protobuf.FeatureSet
+	48, // 44: google.protobuf.FieldOptions.feature_support:type_name -> google.protobuf.FieldOptions.FeatureSupport
+	38, // 45: google.protobuf.FieldOptions.uninterpreted_option:type_name -> google.protobuf.UninterpretedOption
+	39, // 46: google.protobuf.OneofOptions.features:type_name -> google.protobuf.FeatureSet
+	38, // 47: google.protobuf.OneofOptions.uninterpreted_option:type_name -> google.protobuf.UninterpretedOption
+	39, // 48: google.protobuf.EnumOptions.features:type_name -> google.protobuf.FeatureSet
+	38, // 49: google.protobuf.EnumOptions.uninterpreted_option:type_name -> google.protobuf.UninterpretedOption
+	39, // 50: google.protobuf.EnumValueOptions.features:type_name -> google.protobuf.FeatureSet
+	48, // 51: google.protobuf.EnumValueOptions.feature_support:type_name -> google.protobuf.FieldOptions.FeatureSupport
+	38, // 52: google.protobuf.EnumValueOptions.uninterpreted_option:type_name -> google.protobuf.UninterpretedOption
+	39, // 53: google.protobuf.ServiceOptions.features:type_name -> google.protobuf.FeatureSet
+	38, // 54: google.protobuf.ServiceOptions.uninterpreted_option:type_name -> google.protobuf.UninterpretedOption
+	10, // 55: google.protobuf.MethodOptions.idempotency_level:type_name -> google.protobuf.MethodOptions.IdempotencyLevel
+	39, // 56: google.protobuf.MethodOptions.features:type_name -> google.protobuf.FeatureSet
+	38, // 57: google.protobuf.MethodOptions.uninterpreted_option:type_name -> google.protobuf.UninterpretedOption
+	49, // 58: google.protobuf.UninterpretedOption.name:type_name -> google.protobuf.UninterpretedOption.NamePart
+	11, // 59: google.protobuf.FeatureSet.field_presence:type_name -> google.protobuf.FeatureSet.FieldPresence
+	12, // 60: google.protobuf.FeatureSet.enum_type:type_name -> google.protobuf.FeatureSet.EnumType
+	13, // 61: google.protobuf.FeatureSet.repeated_field_encoding:type_name -> google.protobuf.FeatureSet.RepeatedFieldEncoding
+	14, // 62: google.protobuf.FeatureSet.utf8_validation:type_name -> google.protobuf.FeatureSet.Utf8Validation
+	15, // 63: google.protobuf.FeatureSet.message_encoding:type_name -> google.protobuf.FeatureSet.MessageEncoding
+	16, // 64: google.protobuf.FeatureSet.json_format:type_name -> google.protobuf.FeatureSet.JsonFormat
+	17, // 65: google.protobuf.FeatureSet.enforce_naming_style:type_name -> google.protobuf.FeatureSet.EnforceNamingStyle
+	18, // 66: google.protobuf.FeatureSet.default_symbol_visibility:type_name -> google.protobuf.FeatureSet.VisibilityFeature.DefaultSymbolVisibility
+	51, // 67: google.protobuf.FeatureSetDefaults.defaults:type_name -> google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault
+	0,  // 68: google.protobuf.FeatureSetDefaults.minimum_edition:type_name -> google.protobuf.Edition
+	0,  // 69: google.protobuf.FeatureSetDefaults.maximum_edition:type_name -> google.protobuf.Edition
+	52, // 70: google.protobuf.SourceCodeInfo.location:type_name -> google.protobuf.SourceCodeInfo.Location
+	53, // 71: google.protobuf.GeneratedCodeInfo.annotation:type_name -> google.protobuf.GeneratedCodeInfo.Annotation
+	23, // 72: google.protobuf.DescriptorProto.ExtensionRange.options:type_name -> google.protobuf.ExtensionRangeOptions
+	0,  // 73: google.protobuf.FieldOptions.EditionDefault.edition:type_name -> google.protobuf.Edition
+	0,  // 74: google.protobuf.FieldOptions.FeatureSupport.edition_introduced:type_name -> google.protobuf.Edition
+	0,  // 75: google.protobuf.FieldOptions.FeatureSupport.edition_deprecated:type_name -> google.protobuf.Edition
+	0,  // 76: google.protobuf.FieldOptions.FeatureSupport.edition_removed:type_name -> google.protobuf.Edition
+	0,  // 77: google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault.edition:type_name -> google.protobuf.Edition
+	39, // 78: google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault.overridable_features:type_name -> google.protobuf.FeatureSet
+	39, // 79: google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault.fixed_features:type_name -> google.protobuf.FeatureSet
+	19, // 80: google.protobuf.GeneratedCodeInfo.Annotation.semantic:type_name -> google.protobuf.GeneratedCodeInfo.Annotation.Semantic
+	81, // [81:81] is the sub-list for method output_type
+	81, // [81:81] is the sub-list for method input_type
+	81, // [81:81] is the sub-list for extension type_name
+	81, // [81:81] is the sub-list for extension extendee
+	0,  // [0:81] is the sub-list for field type_name
 }
 
 func init() { file_google_protobuf_descriptor_proto_init() }
@@ -4890,8 +5232,8 @@ func file_google_protobuf_descriptor_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_google_protobuf_descriptor_proto_rawDesc), len(file_google_protobuf_descriptor_proto_rawDesc)),
-			NumEnums:      17,
-			NumMessages:   33,
+			NumEnums:      20,
+			NumMessages:   34,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
