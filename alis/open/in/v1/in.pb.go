@@ -9,9 +9,9 @@ package v1
 import (
 	v11 "go.alis.build/common/alis/open/cx/v1"
 	v1 "go.alis.build/common/alis/open/px/v1"
-	protobuf "go.alis.build/common/google/protobuf"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -369,7 +369,7 @@ type Instrument struct {
 	// Boolean indicating whether the instrument has a Figi equal to its shareClass Figi
 	IsShareClassFigi bool `protobuf:"varint,19,opt,name=is_share_class_figi,json=isShareClassFigi,proto3" json:"is_share_class_figi,omitempty"`
 	// Time the Instrument was last updated
-	UpdateTime *protobuf.Timestamp `protobuf:"bytes,20,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	UpdateTime *timestamppb.Timestamp `protobuf:"bytes,20,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	// Exchange identifiers
 	ExchangeIdentifiers *Instrument_ExchangeIdentifiers `protobuf:"bytes,22,opt,name=exchange_identifiers,json=exchangeIdentifiers,proto3" json:"exchange_identifiers,omitempty"`
 	// Engines
@@ -531,7 +531,7 @@ func (x *Instrument) GetIsShareClassFigi() bool {
 	return false
 }
 
-func (x *Instrument) GetUpdateTime() *protobuf.Timestamp {
+func (x *Instrument) GetUpdateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdateTime
 	}
@@ -1172,7 +1172,7 @@ type Instrument_SourceMetaData struct {
 	// Source the attribute
 	Source Source `protobuf:"varint,1,opt,name=source,proto3,enum=alis.open.in.v1.Source" json:"source,omitempty"`
 	// Time Updated
-	UpdateTime    *protobuf.Timestamp `protobuf:"bytes,2,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	UpdateTime    *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1214,7 +1214,7 @@ func (x *Instrument_SourceMetaData) GetSource() Source {
 	return Source_SOURCE_UNSPECIFIED
 }
 
-func (x *Instrument_SourceMetaData) GetUpdateTime() *protobuf.Timestamp {
+func (x *Instrument_SourceMetaData) GetUpdateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdateTime
 	}
@@ -1386,7 +1386,7 @@ var file_alis_open_in_v1_in_proto_goTypes = []any{
 	nil,                                    // 9: alis.open.in.v1.Instrument.CustomAttributesEntry
 	nil,                                    // 10: alis.open.in.v1.Instrument.SourceMetaEntry
 	(*Instrument_SourceMetaData)(nil),      // 11: alis.open.in.v1.Instrument.SourceMetaData
-	(*protobuf.Timestamp)(nil),             // 12: google.protobuf.Timestamp
+	(*timestamppb.Timestamp)(nil),          // 12: google.protobuf.Timestamp
 	(*v1.Instrument)(nil),                  // 13: alis.open.px.v1.Instrument
 	(*v11.Instrument)(nil),                 // 14: alis.open.cx.v1.Instrument
 }

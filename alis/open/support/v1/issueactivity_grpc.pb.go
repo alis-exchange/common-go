@@ -9,10 +9,10 @@ package v1
 import (
 	context "context"
 	v1 "go.alis.build/common/alis/open/validation/v1"
-	protobuf "go.alis.build/common/google/protobuf"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -55,7 +55,7 @@ type IssueActivitiesServiceClient interface {
 	UpdateIssueActivity(ctx context.Context, in *UpdateIssueActivityRequest, opts ...grpc.CallOption) (*IssueActivity, error)
 	// Deletes a IssueActivity.
 	// Only called from alis-build.
-	DeleteIssueActivity(ctx context.Context, in *DeleteIssueActivityRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	DeleteIssueActivity(ctx context.Context, in *DeleteIssueActivityRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Lists IssueActivities. Results are sorted by name, ascending.
 	ListIssueActivities(ctx context.Context, in *ListIssueActivitiesRequest, opts ...grpc.CallOption) (*ListIssueActivitiesResponse, error)
 	// Adds a comment to the issue.
@@ -67,7 +67,7 @@ type IssueActivitiesServiceClient interface {
 	UpdateComment(ctx context.Context, in *UpdateCommentRequest, opts ...grpc.CallOption) (*IssueActivity, error)
 	// Deletes an existing comment.
 	// Only the creator of the comment can delete it.
-	DeleteComment(ctx context.Context, in *DeleteCommentRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	DeleteComment(ctx context.Context, in *DeleteCommentRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type issueActivitiesServiceClient struct {
@@ -128,9 +128,9 @@ func (c *issueActivitiesServiceClient) UpdateIssueActivity(ctx context.Context, 
 	return out, nil
 }
 
-func (c *issueActivitiesServiceClient) DeleteIssueActivity(ctx context.Context, in *DeleteIssueActivityRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *issueActivitiesServiceClient) DeleteIssueActivity(ctx context.Context, in *DeleteIssueActivityRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, IssueActivitiesService_DeleteIssueActivity_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -168,9 +168,9 @@ func (c *issueActivitiesServiceClient) UpdateComment(ctx context.Context, in *Up
 	return out, nil
 }
 
-func (c *issueActivitiesServiceClient) DeleteComment(ctx context.Context, in *DeleteCommentRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *issueActivitiesServiceClient) DeleteComment(ctx context.Context, in *DeleteCommentRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, IssueActivitiesService_DeleteComment_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -200,7 +200,7 @@ type IssueActivitiesServiceServer interface {
 	UpdateIssueActivity(context.Context, *UpdateIssueActivityRequest) (*IssueActivity, error)
 	// Deletes a IssueActivity.
 	// Only called from alis-build.
-	DeleteIssueActivity(context.Context, *DeleteIssueActivityRequest) (*protobuf.Empty, error)
+	DeleteIssueActivity(context.Context, *DeleteIssueActivityRequest) (*emptypb.Empty, error)
 	// Lists IssueActivities. Results are sorted by name, ascending.
 	ListIssueActivities(context.Context, *ListIssueActivitiesRequest) (*ListIssueActivitiesResponse, error)
 	// Adds a comment to the issue.
@@ -212,7 +212,7 @@ type IssueActivitiesServiceServer interface {
 	UpdateComment(context.Context, *UpdateCommentRequest) (*IssueActivity, error)
 	// Deletes an existing comment.
 	// Only the creator of the comment can delete it.
-	DeleteComment(context.Context, *DeleteCommentRequest) (*protobuf.Empty, error)
+	DeleteComment(context.Context, *DeleteCommentRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedIssueActivitiesServiceServer()
 }
 
@@ -238,7 +238,7 @@ func (UnimplementedIssueActivitiesServiceServer) GetIssueActivity(context.Contex
 func (UnimplementedIssueActivitiesServiceServer) UpdateIssueActivity(context.Context, *UpdateIssueActivityRequest) (*IssueActivity, error) {
 	return nil, status.Error(codes.Unimplemented, "method UpdateIssueActivity not implemented")
 }
-func (UnimplementedIssueActivitiesServiceServer) DeleteIssueActivity(context.Context, *DeleteIssueActivityRequest) (*protobuf.Empty, error) {
+func (UnimplementedIssueActivitiesServiceServer) DeleteIssueActivity(context.Context, *DeleteIssueActivityRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteIssueActivity not implemented")
 }
 func (UnimplementedIssueActivitiesServiceServer) ListIssueActivities(context.Context, *ListIssueActivitiesRequest) (*ListIssueActivitiesResponse, error) {
@@ -250,7 +250,7 @@ func (UnimplementedIssueActivitiesServiceServer) CreateComment(context.Context, 
 func (UnimplementedIssueActivitiesServiceServer) UpdateComment(context.Context, *UpdateCommentRequest) (*IssueActivity, error) {
 	return nil, status.Error(codes.Unimplemented, "method UpdateComment not implemented")
 }
-func (UnimplementedIssueActivitiesServiceServer) DeleteComment(context.Context, *DeleteCommentRequest) (*protobuf.Empty, error) {
+func (UnimplementedIssueActivitiesServiceServer) DeleteComment(context.Context, *DeleteCommentRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteComment not implemented")
 }
 func (UnimplementedIssueActivitiesServiceServer) mustEmbedUnimplementedIssueActivitiesServiceServer() {

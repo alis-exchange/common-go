@@ -8,9 +8,9 @@ package v1
 
 import (
 	v1 "go.alis.build/common/alis/open/pubsub/v1"
-	protobuf "go.alis.build/common/google/protobuf"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -518,7 +518,7 @@ var file_alis_open_support_v1_events_proto_goTypes = []any{
 	(*IssueResumedEvent)(nil),           // 7: alis.open.support.v1.IssueResumedEvent
 	(*IssueCommentAddedEvent)(nil),      // 8: alis.open.support.v1.IssueCommentAddedEvent
 	(*v1.PubSubMessage)(nil),            // 9: alis.open.pubsub.v1.PubSubMessage
-	(*protobuf.Empty)(nil),              // 10: google.protobuf.Empty
+	(*emptypb.Empty)(nil),               // 10: google.protobuf.Empty
 }
 var file_alis_open_support_v1_events_proto_depIdxs = []int32{
 	9,  // 0: alis.open.support.v1.EventsService.HandleEvent:input_type -> alis.open.pubsub.v1.PubSubMessage

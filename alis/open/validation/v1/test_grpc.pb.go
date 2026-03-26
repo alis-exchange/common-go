@@ -8,10 +8,10 @@ package v1
 
 import (
 	context "context"
-	protobuf "go.alis.build/common/google/protobuf"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -40,7 +40,7 @@ type BookServiceClient interface {
 	// Update a Book resource
 	UpdateBook(ctx context.Context, in *UpdateBookRequest, opts ...grpc.CallOption) (*Book, error)
 	// Delete a Book
-	DeleteBook(ctx context.Context, in *DeleteBookRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	DeleteBook(ctx context.Context, in *DeleteBookRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Lists Book resources
 	ListBooks(ctx context.Context, in *ListBooksRequest, opts ...grpc.CallOption) (*ListBooksResponse, error)
 }
@@ -83,9 +83,9 @@ func (c *bookServiceClient) UpdateBook(ctx context.Context, in *UpdateBookReques
 	return out, nil
 }
 
-func (c *bookServiceClient) DeleteBook(ctx context.Context, in *DeleteBookRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *bookServiceClient) DeleteBook(ctx context.Context, in *DeleteBookRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, BookService_DeleteBook_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -116,7 +116,7 @@ type BookServiceServer interface {
 	// Update a Book resource
 	UpdateBook(context.Context, *UpdateBookRequest) (*Book, error)
 	// Delete a Book
-	DeleteBook(context.Context, *DeleteBookRequest) (*protobuf.Empty, error)
+	DeleteBook(context.Context, *DeleteBookRequest) (*emptypb.Empty, error)
 	// Lists Book resources
 	ListBooks(context.Context, *ListBooksRequest) (*ListBooksResponse, error)
 	mustEmbedUnimplementedBookServiceServer()
@@ -138,7 +138,7 @@ func (UnimplementedBookServiceServer) CreateBook(context.Context, *CreateBookReq
 func (UnimplementedBookServiceServer) UpdateBook(context.Context, *UpdateBookRequest) (*Book, error) {
 	return nil, status.Error(codes.Unimplemented, "method UpdateBook not implemented")
 }
-func (UnimplementedBookServiceServer) DeleteBook(context.Context, *DeleteBookRequest) (*protobuf.Empty, error) {
+func (UnimplementedBookServiceServer) DeleteBook(context.Context, *DeleteBookRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteBook not implemented")
 }
 func (UnimplementedBookServiceServer) ListBooks(context.Context, *ListBooksRequest) (*ListBooksResponse, error) {

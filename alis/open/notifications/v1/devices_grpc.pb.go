@@ -10,11 +10,11 @@ import (
 	context "context"
 	v12 "go.alis.build/common/alis/open/iam/v1"
 	v1 "go.alis.build/common/alis/open/validation/v1"
-	v11 "go.alis.build/common/google/iam/v1"
-	protobuf "go.alis.build/common/google/protobuf"
+	v11 "google.golang.org/genproto/googleapis/iam/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -80,7 +80,7 @@ type DevicesServiceClient interface {
 	// Lists devices.
 	ListDevices(ctx context.Context, in *ListDevicesRequest, opts ...grpc.CallOption) (*ListDevicesResponse, error)
 	// Deletes a device.
-	DeleteDevice(ctx context.Context, in *DeleteDeviceRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	DeleteDevice(ctx context.Context, in *DeleteDeviceRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type devicesServiceClient struct {
@@ -191,9 +191,9 @@ func (c *devicesServiceClient) ListDevices(ctx context.Context, in *ListDevicesR
 	return out, nil
 }
 
-func (c *devicesServiceClient) DeleteDevice(ctx context.Context, in *DeleteDeviceRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *devicesServiceClient) DeleteDevice(ctx context.Context, in *DeleteDeviceRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, DevicesService_DeleteDevice_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -245,7 +245,7 @@ type DevicesServiceServer interface {
 	// Lists devices.
 	ListDevices(context.Context, *ListDevicesRequest) (*ListDevicesResponse, error)
 	// Deletes a device.
-	DeleteDevice(context.Context, *DeleteDeviceRequest) (*protobuf.Empty, error)
+	DeleteDevice(context.Context, *DeleteDeviceRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedDevicesServiceServer()
 }
 
@@ -286,7 +286,7 @@ func (UnimplementedDevicesServiceServer) GetDevice(context.Context, *GetDeviceRe
 func (UnimplementedDevicesServiceServer) ListDevices(context.Context, *ListDevicesRequest) (*ListDevicesResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListDevices not implemented")
 }
-func (UnimplementedDevicesServiceServer) DeleteDevice(context.Context, *DeleteDeviceRequest) (*protobuf.Empty, error) {
+func (UnimplementedDevicesServiceServer) DeleteDevice(context.Context, *DeleteDeviceRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteDevice not implemented")
 }
 func (UnimplementedDevicesServiceServer) mustEmbedUnimplementedDevicesServiceServer() {}

@@ -10,11 +10,11 @@ import (
 	context "context"
 	v12 "go.alis.build/common/alis/open/iam/v1"
 	v1 "go.alis.build/common/alis/open/validation/v1"
-	v11 "go.alis.build/common/google/iam/v1"
-	protobuf "go.alis.build/common/google/protobuf"
+	v11 "google.golang.org/genproto/googleapis/iam/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -75,12 +75,12 @@ type IssuesServiceClient interface {
 	ListIssues(ctx context.Context, in *ListIssuesRequest, opts ...grpc.CallOption) (*ListIssuesResponse, error)
 	// Deletes a Issue.
 	// Only called from alis-build.
-	DeleteIssue(ctx context.Context, in *DeleteIssueRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	DeleteIssue(ctx context.Context, in *DeleteIssueRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Edit all the details of a newly created issue
 	// Used by requesters to update the issue while no activities have been created under the issue
 	EditNewIssue(ctx context.Context, in *EditNewIssueRequest, opts ...grpc.CallOption) (*Issue, error)
 	// Cancel a new issue. This will delete the issue, so support will not even see it in closed issues.
-	CancelNewIssue(ctx context.Context, in *CancelNewIssueRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	CancelNewIssue(ctx context.Context, in *CancelNewIssueRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Set the assignee of an issue
 	SetIssueAssignee(ctx context.Context, in *SetIssueAssigneeRequest, opts ...grpc.CallOption) (*Issue, error)
 	// Set issue viewers. This will allow the specified users to view the issue in the case of a private issue.
@@ -208,9 +208,9 @@ func (c *issuesServiceClient) ListIssues(ctx context.Context, in *ListIssuesRequ
 	return out, nil
 }
 
-func (c *issuesServiceClient) DeleteIssue(ctx context.Context, in *DeleteIssueRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *issuesServiceClient) DeleteIssue(ctx context.Context, in *DeleteIssueRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, IssuesService_DeleteIssue_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -228,9 +228,9 @@ func (c *issuesServiceClient) EditNewIssue(ctx context.Context, in *EditNewIssue
 	return out, nil
 }
 
-func (c *issuesServiceClient) CancelNewIssue(ctx context.Context, in *CancelNewIssueRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *issuesServiceClient) CancelNewIssue(ctx context.Context, in *CancelNewIssueRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, IssuesService_CancelNewIssue_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -301,12 +301,12 @@ type IssuesServiceServer interface {
 	ListIssues(context.Context, *ListIssuesRequest) (*ListIssuesResponse, error)
 	// Deletes a Issue.
 	// Only called from alis-build.
-	DeleteIssue(context.Context, *DeleteIssueRequest) (*protobuf.Empty, error)
+	DeleteIssue(context.Context, *DeleteIssueRequest) (*emptypb.Empty, error)
 	// Edit all the details of a newly created issue
 	// Used by requesters to update the issue while no activities have been created under the issue
 	EditNewIssue(context.Context, *EditNewIssueRequest) (*Issue, error)
 	// Cancel a new issue. This will delete the issue, so support will not even see it in closed issues.
-	CancelNewIssue(context.Context, *CancelNewIssueRequest) (*protobuf.Empty, error)
+	CancelNewIssue(context.Context, *CancelNewIssueRequest) (*emptypb.Empty, error)
 	// Set the assignee of an issue
 	SetIssueAssignee(context.Context, *SetIssueAssigneeRequest) (*Issue, error)
 	// Set issue viewers. This will allow the specified users to view the issue in the case of a private issue.
@@ -357,13 +357,13 @@ func (UnimplementedIssuesServiceServer) GetIssue(context.Context, *GetIssueReque
 func (UnimplementedIssuesServiceServer) ListIssues(context.Context, *ListIssuesRequest) (*ListIssuesResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListIssues not implemented")
 }
-func (UnimplementedIssuesServiceServer) DeleteIssue(context.Context, *DeleteIssueRequest) (*protobuf.Empty, error) {
+func (UnimplementedIssuesServiceServer) DeleteIssue(context.Context, *DeleteIssueRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteIssue not implemented")
 }
 func (UnimplementedIssuesServiceServer) EditNewIssue(context.Context, *EditNewIssueRequest) (*Issue, error) {
 	return nil, status.Error(codes.Unimplemented, "method EditNewIssue not implemented")
 }
-func (UnimplementedIssuesServiceServer) CancelNewIssue(context.Context, *CancelNewIssueRequest) (*protobuf.Empty, error) {
+func (UnimplementedIssuesServiceServer) CancelNewIssue(context.Context, *CancelNewIssueRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method CancelNewIssue not implemented")
 }
 func (UnimplementedIssuesServiceServer) SetIssueAssignee(context.Context, *SetIssueAssigneeRequest) (*Issue, error) {

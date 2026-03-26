@@ -10,11 +10,11 @@ import (
 	context "context"
 	v12 "go.alis.build/common/alis/open/iam/v1"
 	v1 "go.alis.build/common/alis/open/validation/v1"
-	v11 "go.alis.build/common/google/iam/v1"
-	protobuf "go.alis.build/common/google/protobuf"
+	v11 "google.golang.org/genproto/googleapis/iam/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -65,7 +65,7 @@ type IssueSubscribersServiceClient interface {
 	// Gets a list of subscribers for an issue.
 	ListIssueSubscribers(ctx context.Context, in *ListIssueSubscribersRequest, opts ...grpc.CallOption) (*ListIssueSubscribersResponse, error)
 	// Deletes an issue subscription.
-	DeleteIssueSubscriber(ctx context.Context, in *DeleteIssueSubscriberRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	DeleteIssueSubscriber(ctx context.Context, in *DeleteIssueSubscriberRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type issueSubscribersServiceClient struct {
@@ -176,9 +176,9 @@ func (c *issueSubscribersServiceClient) ListIssueSubscribers(ctx context.Context
 	return out, nil
 }
 
-func (c *issueSubscribersServiceClient) DeleteIssueSubscriber(ctx context.Context, in *DeleteIssueSubscriberRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *issueSubscribersServiceClient) DeleteIssueSubscriber(ctx context.Context, in *DeleteIssueSubscriberRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, IssueSubscribersService_DeleteIssueSubscriber_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -215,7 +215,7 @@ type IssueSubscribersServiceServer interface {
 	// Gets a list of subscribers for an issue.
 	ListIssueSubscribers(context.Context, *ListIssueSubscribersRequest) (*ListIssueSubscribersResponse, error)
 	// Deletes an issue subscription.
-	DeleteIssueSubscriber(context.Context, *DeleteIssueSubscriberRequest) (*protobuf.Empty, error)
+	DeleteIssueSubscriber(context.Context, *DeleteIssueSubscriberRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedIssueSubscribersServiceServer()
 }
 
@@ -256,7 +256,7 @@ func (UnimplementedIssueSubscribersServiceServer) GetIssueSubscriber(context.Con
 func (UnimplementedIssueSubscribersServiceServer) ListIssueSubscribers(context.Context, *ListIssueSubscribersRequest) (*ListIssueSubscribersResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListIssueSubscribers not implemented")
 }
-func (UnimplementedIssueSubscribersServiceServer) DeleteIssueSubscriber(context.Context, *DeleteIssueSubscriberRequest) (*protobuf.Empty, error) {
+func (UnimplementedIssueSubscribersServiceServer) DeleteIssueSubscriber(context.Context, *DeleteIssueSubscriberRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteIssueSubscriber not implemented")
 }
 func (UnimplementedIssueSubscribersServiceServer) mustEmbedUnimplementedIssueSubscribersServiceServer() {

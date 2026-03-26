@@ -7,9 +7,9 @@
 package v1
 
 import (
-	protobuf "go.alis.build/common/google/protobuf"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	descriptorpb "google.golang.org/protobuf/types/descriptorpb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -451,7 +451,7 @@ func (x *FieldOptions_JsonSchema) GetMaxProperties() int64 {
 
 var file_alis_open_options_v1_options_proto_extTypes = []protoimpl.ExtensionInfo{
 	{
-		ExtendedType:  (*protobuf.FileOptions)(nil),
+		ExtendedType:  (*descriptorpb.FileOptions)(nil),
 		ExtensionType: (*FileOptions)(nil),
 		Field:         1001,
 		Name:          "alis.open.options.v1.file",
@@ -459,7 +459,7 @@ var file_alis_open_options_v1_options_proto_extTypes = []protoimpl.ExtensionInfo
 		Filename:      "alis/open/options/v1/options.proto",
 	},
 	{
-		ExtendedType:  (*protobuf.MessageOptions)(nil),
+		ExtendedType:  (*descriptorpb.MessageOptions)(nil),
 		ExtensionType: (*MessageOptions)(nil),
 		Field:         1001,
 		Name:          "alis.open.options.v1.message",
@@ -467,7 +467,7 @@ var file_alis_open_options_v1_options_proto_extTypes = []protoimpl.ExtensionInfo
 		Filename:      "alis/open/options/v1/options.proto",
 	},
 	{
-		ExtendedType:  (*protobuf.FieldOptions)(nil),
+		ExtendedType:  (*descriptorpb.FieldOptions)(nil),
 		ExtensionType: (*FieldOptions)(nil),
 		Field:         1001,
 		Name:          "alis.open.options.v1.field",
@@ -476,7 +476,7 @@ var file_alis_open_options_v1_options_proto_extTypes = []protoimpl.ExtensionInfo
 	},
 }
 
-// Extension fields to protobuf.FileOptions.
+// Extension fields to descriptorpb.FileOptions.
 var (
 	// Usage: option (alis.open.options.v1.file).json_schema.generate = true;
 	//
@@ -484,7 +484,7 @@ var (
 	E_File = &file_alis_open_options_v1_options_proto_extTypes[0]
 )
 
-// Extension fields to protobuf.MessageOptions.
+// Extension fields to descriptorpb.MessageOptions.
 var (
 	// Usage: option (alis.open.options.v1.message).json_schema.generate = true;
 	//
@@ -492,7 +492,7 @@ var (
 	E_Message = &file_alis_open_options_v1_options_proto_extTypes[1]
 )
 
-// Extension fields to protobuf.FieldOptions.
+// Extension fields to descriptorpb.FieldOptions.
 var (
 	// Usage:
 	// string email = 1 [
@@ -594,15 +594,15 @@ func file_alis_open_options_v1_options_proto_rawDescGZIP() []byte {
 
 var file_alis_open_options_v1_options_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_alis_open_options_v1_options_proto_goTypes = []any{
-	(*FileOptions)(nil),               // 0: alis.open.options.v1.FileOptions
-	(*MessageOptions)(nil),            // 1: alis.open.options.v1.MessageOptions
-	(*FieldOptions)(nil),              // 2: alis.open.options.v1.FieldOptions
-	(*FileOptions_JsonSchema)(nil),    // 3: alis.open.options.v1.FileOptions.JsonSchema
-	(*MessageOptions_JsonSchema)(nil), // 4: alis.open.options.v1.MessageOptions.JsonSchema
-	(*FieldOptions_JsonSchema)(nil),   // 5: alis.open.options.v1.FieldOptions.JsonSchema
-	(*protobuf.FileOptions)(nil),      // 6: google.protobuf.FileOptions
-	(*protobuf.MessageOptions)(nil),   // 7: google.protobuf.MessageOptions
-	(*protobuf.FieldOptions)(nil),     // 8: google.protobuf.FieldOptions
+	(*FileOptions)(nil),                 // 0: alis.open.options.v1.FileOptions
+	(*MessageOptions)(nil),              // 1: alis.open.options.v1.MessageOptions
+	(*FieldOptions)(nil),                // 2: alis.open.options.v1.FieldOptions
+	(*FileOptions_JsonSchema)(nil),      // 3: alis.open.options.v1.FileOptions.JsonSchema
+	(*MessageOptions_JsonSchema)(nil),   // 4: alis.open.options.v1.MessageOptions.JsonSchema
+	(*FieldOptions_JsonSchema)(nil),     // 5: alis.open.options.v1.FieldOptions.JsonSchema
+	(*descriptorpb.FileOptions)(nil),    // 6: google.protobuf.FileOptions
+	(*descriptorpb.MessageOptions)(nil), // 7: google.protobuf.MessageOptions
+	(*descriptorpb.FieldOptions)(nil),   // 8: google.protobuf.FieldOptions
 }
 var file_alis_open_options_v1_options_proto_depIdxs = []int32{
 	3, // 0: alis.open.options.v1.FileOptions.json_schema:type_name -> alis.open.options.v1.FileOptions.JsonSchema

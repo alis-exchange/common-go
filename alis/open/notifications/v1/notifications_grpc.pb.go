@@ -9,7 +9,7 @@ package v1
 import (
 	context "context"
 	v1 "go.alis.build/common/alis/open/validation/v1"
-	v11 "go.alis.build/common/google/iam/v1"
+	v11 "google.golang.org/genproto/googleapis/iam/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"

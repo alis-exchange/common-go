@@ -9,10 +9,10 @@ package v1
 import (
 	context "context"
 	v1 "go.alis.build/common/alis/open/pubsub/v1"
-	protobuf "go.alis.build/common/google/protobuf"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -31,7 +31,7 @@ const (
 // Service for handling events.
 type EventsServiceClient interface {
 	// Handles an event from pubsub.
-	HandleEvent(ctx context.Context, in *v1.PubSubMessage, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	HandleEvent(ctx context.Context, in *v1.PubSubMessage, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type eventsServiceClient struct {
@@ -42,9 +42,9 @@ func NewEventsServiceClient(cc grpc.ClientConnInterface) EventsServiceClient {
 	return &eventsServiceClient{cc}
 }
 
-func (c *eventsServiceClient) HandleEvent(ctx context.Context, in *v1.PubSubMessage, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *eventsServiceClient) HandleEvent(ctx context.Context, in *v1.PubSubMessage, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, EventsService_HandleEvent_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -59,7 +59,7 @@ func (c *eventsServiceClient) HandleEvent(ctx context.Context, in *v1.PubSubMess
 // Service for handling events.
 type EventsServiceServer interface {
 	// Handles an event from pubsub.
-	HandleEvent(context.Context, *v1.PubSubMessage) (*protobuf.Empty, error)
+	HandleEvent(context.Context, *v1.PubSubMessage) (*emptypb.Empty, error)
 	mustEmbedUnimplementedEventsServiceServer()
 }
 
@@ -70,7 +70,7 @@ type EventsServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedEventsServiceServer struct{}
 
-func (UnimplementedEventsServiceServer) HandleEvent(context.Context, *v1.PubSubMessage) (*protobuf.Empty, error) {
+func (UnimplementedEventsServiceServer) HandleEvent(context.Context, *v1.PubSubMessage) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method HandleEvent not implemented")
 }
 func (UnimplementedEventsServiceServer) mustEmbedUnimplementedEventsServiceServer() {}

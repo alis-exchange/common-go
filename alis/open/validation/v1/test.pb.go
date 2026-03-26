@@ -7,10 +7,12 @@
 package v1
 
 import (
-	protobuf "go.alis.build/common/google/protobuf"
-	_type "go.alis.build/common/google/type"
+	date "google.golang.org/genproto/googleapis/type/date"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -86,9 +88,9 @@ type Book struct {
 	// The author of the Book.
 	Author string `protobuf:"bytes,3,opt,name=author,proto3" json:"author,omitempty"`
 	// The publication date of the Book.
-	PublicationDate *_type.Date `protobuf:"bytes,4,opt,name=publication_date,json=publicationDate,proto3" json:"publication_date,omitempty"`
+	PublicationDate *date.Date `protobuf:"bytes,4,opt,name=publication_date,json=publicationDate,proto3" json:"publication_date,omitempty"`
 	// The last time the Book was updated.
-	UpdateTime *protobuf.Timestamp `protobuf:"bytes,5,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	UpdateTime *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	// The page count of the Book.
 	PageCount int32 `protobuf:"varint,6,opt,name=page_count,json=pageCount,proto3" json:"page_count,omitempty"`
 	// The type of the Book.
@@ -148,14 +150,14 @@ func (x *Book) GetAuthor() string {
 	return ""
 }
 
-func (x *Book) GetPublicationDate() *_type.Date {
+func (x *Book) GetPublicationDate() *date.Date {
 	if x != nil {
 		return x.PublicationDate
 	}
 	return nil
 }
 
-func (x *Book) GetUpdateTime() *protobuf.Timestamp {
+func (x *Book) GetUpdateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdateTime
 	}
@@ -185,7 +187,7 @@ type GetBookRequest struct {
 	// The fields to return in snake_case, as defined in the proto
 	// e.g. &field_mask.FieldMask{Paths: []string{"name", "display_name"}} --> File{Name, DisplayName}
 	// All fields are returned if not provided
-	ReadMask      *protobuf.FieldMask `protobuf:"bytes,2,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -227,7 +229,7 @@ func (x *GetBookRequest) GetName() string {
 	return ""
 }
 
-func (x *GetBookRequest) GetReadMask() *protobuf.FieldMask {
+func (x *GetBookRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -287,7 +289,7 @@ type UpdateBookRequest struct {
 	// The Book's `name` field is used to identify the Book to update.
 	Book *Book `protobuf:"bytes,1,opt,name=book,proto3" json:"book,omitempty"`
 	// The list of fields to update.
-	UpdateMask    *protobuf.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -329,7 +331,7 @@ func (x *UpdateBookRequest) GetBook() *Book {
 	return nil
 }
 
-func (x *UpdateBookRequest) GetUpdateMask() *protobuf.FieldMask {
+func (x *UpdateBookRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.UpdateMask
 	}
@@ -400,7 +402,7 @@ type ListBooksRequest struct {
 	// The fields to return in snake_case, as defined in the proto
 	// e.g. &field_mask.FieldMask{Paths: []string{"name", "display_name"}} --> File{Name, DisplayName}
 	// All fields are returned if not provided
-	ReadMask      *protobuf.FieldMask `protobuf:"bytes,4,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,4,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -449,7 +451,7 @@ func (x *ListBooksRequest) GetPageToken() string {
 	return ""
 }
 
-func (x *ListBooksRequest) GetReadMask() *protobuf.FieldMask {
+func (x *ListBooksRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -467,7 +469,7 @@ type ListBooksResponse struct {
 	// The fields to return in snake_case, as defined in the proto
 	// e.g. &field_mask.FieldMask{Paths: []string{"name", "display_name"}} --> File{Name, DisplayName}
 	// All fields are returned if not provided
-	ReadMask      *protobuf.FieldMask `protobuf:"bytes,3,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,3,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -516,7 +518,7 @@ func (x *ListBooksResponse) GetNextPageToken() string {
 	return ""
 }
 
-func (x *ListBooksResponse) GetReadMask() *protobuf.FieldMask {
+func (x *ListBooksResponse) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -588,18 +590,18 @@ func file_alis_open_validation_v1_test_proto_rawDescGZIP() []byte {
 var file_alis_open_validation_v1_test_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_alis_open_validation_v1_test_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_alis_open_validation_v1_test_proto_goTypes = []any{
-	(Type)(0),                  // 0: alis.open.validation.v1.Type
-	(*Book)(nil),               // 1: alis.open.validation.v1.Book
-	(*GetBookRequest)(nil),     // 2: alis.open.validation.v1.GetBookRequest
-	(*CreateBookRequest)(nil),  // 3: alis.open.validation.v1.CreateBookRequest
-	(*UpdateBookRequest)(nil),  // 4: alis.open.validation.v1.UpdateBookRequest
-	(*DeleteBookRequest)(nil),  // 5: alis.open.validation.v1.DeleteBookRequest
-	(*ListBooksRequest)(nil),   // 6: alis.open.validation.v1.ListBooksRequest
-	(*ListBooksResponse)(nil),  // 7: alis.open.validation.v1.ListBooksResponse
-	(*_type.Date)(nil),         // 8: google.type.Date
-	(*protobuf.Timestamp)(nil), // 9: google.protobuf.Timestamp
-	(*protobuf.FieldMask)(nil), // 10: google.protobuf.FieldMask
-	(*protobuf.Empty)(nil),     // 11: google.protobuf.Empty
+	(Type)(0),                     // 0: alis.open.validation.v1.Type
+	(*Book)(nil),                  // 1: alis.open.validation.v1.Book
+	(*GetBookRequest)(nil),        // 2: alis.open.validation.v1.GetBookRequest
+	(*CreateBookRequest)(nil),     // 3: alis.open.validation.v1.CreateBookRequest
+	(*UpdateBookRequest)(nil),     // 4: alis.open.validation.v1.UpdateBookRequest
+	(*DeleteBookRequest)(nil),     // 5: alis.open.validation.v1.DeleteBookRequest
+	(*ListBooksRequest)(nil),      // 6: alis.open.validation.v1.ListBooksRequest
+	(*ListBooksResponse)(nil),     // 7: alis.open.validation.v1.ListBooksResponse
+	(*date.Date)(nil),             // 8: google.type.Date
+	(*timestamppb.Timestamp)(nil), // 9: google.protobuf.Timestamp
+	(*fieldmaskpb.FieldMask)(nil), // 10: google.protobuf.FieldMask
+	(*emptypb.Empty)(nil),         // 11: google.protobuf.Empty
 }
 var file_alis_open_validation_v1_test_proto_depIdxs = []int32{
 	8,  // 0: alis.open.validation.v1.Book.publication_date:type_name -> google.type.Date

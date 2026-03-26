@@ -8,9 +8,11 @@ package v1
 
 import (
 	v1 "go.alis.build/common/alis/open/validation/v1"
-	protobuf "go.alis.build/common/google/protobuf"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -122,9 +124,9 @@ type IssueActivity struct {
 	// The type of Activity
 	Type IssueActivity_Type `protobuf:"varint,5,opt,name=type,proto3,enum=alis.open.support.v1.IssueActivity_Type" json:"type,omitempty"`
 	// Output only. The time when this Activity was created.
-	CreateTime *protobuf.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreateTime *timestamppb.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// Output only . The time when this Activity was last updated.
-	UpdateTime    *protobuf.Timestamp `protobuf:"bytes,99,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	UpdateTime    *timestamppb.Timestamp `protobuf:"bytes,99,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -187,14 +189,14 @@ func (x *IssueActivity) GetType() IssueActivity_Type {
 	return IssueActivity_TYPE_UNSPECIFIED
 }
 
-func (x *IssueActivity) GetCreateTime() *protobuf.Timestamp {
+func (x *IssueActivity) GetCreateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreateTime
 	}
 	return nil
 }
 
-func (x *IssueActivity) GetUpdateTime() *protobuf.Timestamp {
+func (x *IssueActivity) GetUpdateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdateTime
 	}
@@ -265,7 +267,7 @@ type GetIssueActivityRequest struct {
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// The fields to return in snake_issue.
 	// All fields are returned if not set.
-	ReadMask      *protobuf.FieldMask `protobuf:"bytes,2,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -307,7 +309,7 @@ func (x *GetIssueActivityRequest) GetName() string {
 	return ""
 }
 
-func (x *GetIssueActivityRequest) GetReadMask() *protobuf.FieldMask {
+func (x *GetIssueActivityRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -321,7 +323,7 @@ type UpdateIssueActivityRequest struct {
 	IssueActivity *IssueActivity `protobuf:"bytes,1,opt,name=issue_activity,json=issueActivity,proto3" json:"issue_activity,omitempty"`
 	// The fields to update in snake_issue.
 	// All fields are updated if not set.
-	UpdateMask    *protobuf.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -363,7 +365,7 @@ func (x *UpdateIssueActivityRequest) GetIssueActivity() *IssueActivity {
 	return nil
 }
 
-func (x *UpdateIssueActivityRequest) GetUpdateMask() *protobuf.FieldMask {
+func (x *UpdateIssueActivityRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.UpdateMask
 	}
@@ -429,7 +431,7 @@ type ListIssueActivitiesRequest struct {
 	PageToken string `protobuf:"bytes,3,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	// The fields to return in snake_issue.
 	// All fields are returned if not set.
-	ReadMask *protobuf.FieldMask `protobuf:"bytes,4,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,4,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// The filter to apply
 	Filter string `protobuf:"bytes,5,opt,name=filter,proto3" json:"filter,omitempty"`
 	// The order to sort the results by
@@ -494,7 +496,7 @@ func (x *ListIssueActivitiesRequest) GetPageToken() string {
 	return ""
 }
 
-func (x *ListIssueActivitiesRequest) GetReadMask() *protobuf.FieldMask {
+func (x *ListIssueActivitiesRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -828,13 +830,13 @@ var file_alis_open_support_v1_issueactivity_proto_goTypes = []any{
 	(*DeleteCommentRequest)(nil),        // 10: alis.open.support.v1.DeleteCommentRequest
 	(*Issue_User)(nil),                  // 11: alis.open.support.v1.Issue.User
 	(*Issue_ContentBlock)(nil),          // 12: alis.open.support.v1.Issue.ContentBlock
-	(*protobuf.Timestamp)(nil),          // 13: google.protobuf.Timestamp
-	(*protobuf.FieldMask)(nil),          // 14: google.protobuf.FieldMask
+	(*timestamppb.Timestamp)(nil),       // 13: google.protobuf.Timestamp
+	(*fieldmaskpb.FieldMask)(nil),       // 14: google.protobuf.FieldMask
 	(*v1.ValidateMessageRequest)(nil),   // 15: alis.open.validation.v1.ValidateMessageRequest
 	(*v1.RetrieveRulesRequest)(nil),     // 16: alis.open.validation.v1.RetrieveRulesRequest
 	(*v1.ValidateMessageResponse)(nil),  // 17: alis.open.validation.v1.ValidateMessageResponse
 	(*v1.RetrieveRulesResponse)(nil),    // 18: alis.open.validation.v1.RetrieveRulesResponse
-	(*protobuf.Empty)(nil),              // 19: google.protobuf.Empty
+	(*emptypb.Empty)(nil),               // 19: google.protobuf.Empty
 }
 var file_alis_open_support_v1_issueactivity_proto_depIdxs = []int32{
 	11, // 0: alis.open.support.v1.IssueActivity.creator:type_name -> alis.open.support.v1.Issue.User

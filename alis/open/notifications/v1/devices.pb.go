@@ -9,10 +9,12 @@ package v1
 import (
 	v12 "go.alis.build/common/alis/open/iam/v1"
 	v1 "go.alis.build/common/alis/open/validation/v1"
-	v11 "go.alis.build/common/google/iam/v1"
-	protobuf "go.alis.build/common/google/protobuf"
+	v11 "google.golang.org/genproto/googleapis/iam/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -35,9 +37,9 @@ type Device struct {
 	// ETag
 	Etag string `protobuf:"bytes,97,opt,name=etag,proto3" json:"etag,omitempty"`
 	// Device creation time
-	CreateTime *protobuf.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreateTime *timestamppb.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// Device update time
-	UpdateTime    *protobuf.Timestamp `protobuf:"bytes,99,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	UpdateTime    *timestamppb.Timestamp `protobuf:"bytes,99,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -93,14 +95,14 @@ func (x *Device) GetEtag() string {
 	return ""
 }
 
-func (x *Device) GetCreateTime() *protobuf.Timestamp {
+func (x *Device) GetCreateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreateTime
 	}
 	return nil
 }
 
-func (x *Device) GetUpdateTime() *protobuf.Timestamp {
+func (x *Device) GetUpdateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdateTime
 	}
@@ -166,7 +168,7 @@ type ListDevicesRequest struct {
 	// A page token, received from a previous ListDevices call.
 	PageToken string `protobuf:"bytes,3,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	// The fields to return in snake_case.
-	ReadMask *protobuf.FieldMask `protobuf:"bytes,4,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,4,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// An optional filter to apply to the list of devices.
 	Filter        string `protobuf:"bytes,5,opt,name=filter,proto3" json:"filter,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -224,7 +226,7 @@ func (x *ListDevicesRequest) GetPageToken() string {
 	return ""
 }
 
-func (x *ListDevicesRequest) GetReadMask() *protobuf.FieldMask {
+func (x *ListDevicesRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -498,8 +500,8 @@ var file_alis_open_notifications_v1_devices_proto_goTypes = []any{
 	(*DeleteDeviceRequest)(nil),            // 4: alis.open.notifications.v1.DeleteDeviceRequest
 	(*RegisterDeviceRequest)(nil),          // 5: alis.open.notifications.v1.RegisterDeviceRequest
 	(*RegisterDeviceResponse)(nil),         // 6: alis.open.notifications.v1.RegisterDeviceResponse
-	(*protobuf.Timestamp)(nil),             // 7: google.protobuf.Timestamp
-	(*protobuf.FieldMask)(nil),             // 8: google.protobuf.FieldMask
+	(*timestamppb.Timestamp)(nil),          // 7: google.protobuf.Timestamp
+	(*fieldmaskpb.FieldMask)(nil),          // 8: google.protobuf.FieldMask
 	(*v1.ValidateMessageRequest)(nil),      // 9: alis.open.validation.v1.ValidateMessageRequest
 	(*v1.RetrieveRulesRequest)(nil),        // 10: alis.open.validation.v1.RetrieveRulesRequest
 	(*v11.GetIamPolicyRequest)(nil),        // 11: google.iam.v1.GetIamPolicyRequest
@@ -511,7 +513,7 @@ var file_alis_open_notifications_v1_devices_proto_goTypes = []any{
 	(*v1.RetrieveRulesResponse)(nil),       // 17: alis.open.validation.v1.RetrieveRulesResponse
 	(*v11.Policy)(nil),                     // 18: google.iam.v1.Policy
 	(*v11.TestIamPermissionsResponse)(nil), // 19: google.iam.v1.TestIamPermissionsResponse
-	(*protobuf.Empty)(nil),                 // 20: google.protobuf.Empty
+	(*emptypb.Empty)(nil),                  // 20: google.protobuf.Empty
 }
 var file_alis_open_notifications_v1_devices_proto_depIdxs = []int32{
 	7,  // 0: alis.open.notifications.v1.Device.create_time:type_name -> google.protobuf.Timestamp

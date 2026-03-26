@@ -7,10 +7,11 @@
 package v1
 
 import (
-	protobuf "go.alis.build/common/google/protobuf"
-	rpc "go.alis.build/common/google/rpc"
+	status "google.golang.org/genproto/googleapis/rpc/status"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	anypb "google.golang.org/protobuf/types/known/anypb"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -35,7 +36,7 @@ type Operation struct {
 	// contains progress information and common metadata such as create time.
 	// Some services might not provide such metadata.  Any method that returns a
 	// long-running operation should document the metadata type, if any.
-	Metadata *protobuf.Any `protobuf:"bytes,2,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	Metadata *anypb.Any `protobuf:"bytes,2,opt,name=metadata,proto3" json:"metadata,omitempty"`
 	// If the value is `false`, it means the operation is still in progress.
 	// If `true`, the operation is completed, and either `error` or `response` is
 	// available.
@@ -67,9 +68,9 @@ type Operation struct {
 	//	*Operation_CloudTask_
 	Runner isOperation_Runner `protobuf_oneof:"runner"`
 	// The time the operation was created.
-	CreateTime *protobuf.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreateTime *timestamppb.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// The time the operation was last updated.
-	UpdateTime    *protobuf.Timestamp `protobuf:"bytes,99,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	UpdateTime    *timestamppb.Timestamp `protobuf:"bytes,99,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -111,7 +112,7 @@ func (x *Operation) GetName() string {
 	return ""
 }
 
-func (x *Operation) GetMetadata() *protobuf.Any {
+func (x *Operation) GetMetadata() *anypb.Any {
 	if x != nil {
 		return x.Metadata
 	}
@@ -132,7 +133,7 @@ func (x *Operation) GetResult() isOperation_Result {
 	return nil
 }
 
-func (x *Operation) GetError() *rpc.Status {
+func (x *Operation) GetError() *status.Status {
 	if x != nil {
 		if x, ok := x.Result.(*Operation_Error); ok {
 			return x.Error
@@ -141,7 +142,7 @@ func (x *Operation) GetError() *rpc.Status {
 	return nil
 }
 
-func (x *Operation) GetResponse() *protobuf.Any {
+func (x *Operation) GetResponse() *anypb.Any {
 	if x != nil {
 		if x, ok := x.Result.(*Operation_Response); ok {
 			return x.Response
@@ -187,14 +188,14 @@ func (x *Operation) GetCloudTask() *Operation_CloudTask {
 	return nil
 }
 
-func (x *Operation) GetCreateTime() *protobuf.Timestamp {
+func (x *Operation) GetCreateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreateTime
 	}
 	return nil
 }
 
-func (x *Operation) GetUpdateTime() *protobuf.Timestamp {
+func (x *Operation) GetUpdateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdateTime
 	}
@@ -207,7 +208,7 @@ type isOperation_Result interface {
 
 type Operation_Error struct {
 	// The error result of the operation in case of failure or cancellation.
-	Error *rpc.Status `protobuf:"bytes,4,opt,name=error,proto3,oneof"`
+	Error *status.Status `protobuf:"bytes,4,opt,name=error,proto3,oneof"`
 }
 
 type Operation_Response struct {
@@ -219,7 +220,7 @@ type Operation_Response struct {
 	// is the original method name.  For example, if the original method name
 	// is `TakeSnapshot()`, the inferred response type is
 	// `TakeSnapshotResponse`.
-	Response *protobuf.Any `protobuf:"bytes,5,opt,name=response,proto3,oneof"`
+	Response *anypb.Any `protobuf:"bytes,5,opt,name=response,proto3,oneof"`
 }
 
 func (*Operation_Error) isOperation_Result() {}
@@ -245,9 +246,9 @@ type Operation_CloudTask struct {
 	// Format: projects/{project}/locations/{location}/queues/{queue}/tasks/{task}
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// The time the task is scheduled to run
-	ScheduleTime *protobuf.Timestamp `protobuf:"bytes,2,opt,name=schedule_time,json=scheduleTime,proto3" json:"schedule_time,omitempty"`
+	ScheduleTime *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=schedule_time,json=scheduleTime,proto3" json:"schedule_time,omitempty"`
 	// The time the task was created
-	CreateTime *protobuf.Timestamp `protobuf:"bytes,3,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreateTime *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// Whether the task is currently running
 	Running bool `protobuf:"varint,4,opt,name=running,proto3" json:"running,omitempty"`
 	// The target host setup for the task to make requests to.
@@ -294,14 +295,14 @@ func (x *Operation_CloudTask) GetName() string {
 	return ""
 }
 
-func (x *Operation_CloudTask) GetScheduleTime() *protobuf.Timestamp {
+func (x *Operation_CloudTask) GetScheduleTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.ScheduleTime
 	}
 	return nil
 }
 
-func (x *Operation_CloudTask) GetCreateTime() *protobuf.Timestamp {
+func (x *Operation_CloudTask) GetCreateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreateTime
 	}
@@ -370,11 +371,11 @@ func file_alis_open_operations_v1_operations_proto_rawDescGZIP() []byte {
 
 var file_alis_open_operations_v1_operations_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_alis_open_operations_v1_operations_proto_goTypes = []any{
-	(*Operation)(nil),           // 0: alis.open.operations.v1.Operation
-	(*Operation_CloudTask)(nil), // 1: alis.open.operations.v1.Operation.CloudTask
-	(*protobuf.Any)(nil),        // 2: google.protobuf.Any
-	(*rpc.Status)(nil),          // 3: google.rpc.Status
-	(*protobuf.Timestamp)(nil),  // 4: google.protobuf.Timestamp
+	(*Operation)(nil),             // 0: alis.open.operations.v1.Operation
+	(*Operation_CloudTask)(nil),   // 1: alis.open.operations.v1.Operation.CloudTask
+	(*anypb.Any)(nil),             // 2: google.protobuf.Any
+	(*status.Status)(nil),         // 3: google.rpc.Status
+	(*timestamppb.Timestamp)(nil), // 4: google.protobuf.Timestamp
 }
 var file_alis_open_operations_v1_operations_proto_depIdxs = []int32{
 	2, // 0: alis.open.operations.v1.Operation.metadata:type_name -> google.protobuf.Any

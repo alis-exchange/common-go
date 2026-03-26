@@ -9,10 +9,12 @@ package v1
 import (
 	v12 "go.alis.build/common/alis/open/iam/v1"
 	v1 "go.alis.build/common/alis/open/validation/v1"
-	v11 "go.alis.build/common/google/iam/v1"
-	protobuf "go.alis.build/common/google/protobuf"
+	v11 "google.golang.org/genproto/googleapis/iam/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -366,9 +368,9 @@ type Issue struct {
 	// If not specified, the default is ISSUE_VISIBILITY_PRIVATE
 	Visibility Issue_IssueVisibility `protobuf:"varint,9,opt,name=visibility,proto3,enum=alis.open.support.v1.Issue_IssueVisibility" json:"visibility,omitempty"`
 	// Output only. The time this Issue was created.
-	CreateTime *protobuf.Timestamp `protobuf:"bytes,99,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreateTime *timestamppb.Timestamp `protobuf:"bytes,99,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// Output only. The time this Issue was last updated.
-	UpdateTime    *protobuf.Timestamp `protobuf:"bytes,100,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	UpdateTime    *timestamppb.Timestamp `protobuf:"bytes,100,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -466,14 +468,14 @@ func (x *Issue) GetVisibility() Issue_IssueVisibility {
 	return Issue_ISSUE_VISIBILITY_UNSPECIFIED
 }
 
-func (x *Issue) GetCreateTime() *protobuf.Timestamp {
+func (x *Issue) GetCreateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreateTime
 	}
 	return nil
 }
 
-func (x *Issue) GetUpdateTime() *protobuf.Timestamp {
+func (x *Issue) GetUpdateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdateTime
 	}
@@ -534,7 +536,7 @@ type UpdateIssueRequest struct {
 	Issue *Issue `protobuf:"bytes,1,opt,name=issue,proto3" json:"issue,omitempty"`
 	// The fields to update in snake_issue.
 	// All fields are updated if not set.
-	UpdateMask    *protobuf.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -576,7 +578,7 @@ func (x *UpdateIssueRequest) GetIssue() *Issue {
 	return nil
 }
 
-func (x *UpdateIssueRequest) GetUpdateMask() *protobuf.FieldMask {
+func (x *UpdateIssueRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.UpdateMask
 	}
@@ -591,7 +593,7 @@ type GetIssueRequest struct {
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// The fields to return in snake_issue.
 	// All fields are returned if not set.
-	ReadMask      *protobuf.FieldMask `protobuf:"bytes,2,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -633,7 +635,7 @@ func (x *GetIssueRequest) GetName() string {
 	return ""
 }
 
-func (x *GetIssueRequest) GetReadMask() *protobuf.FieldMask {
+func (x *GetIssueRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -649,7 +651,7 @@ type ListIssuesRequest struct {
 	PageToken string `protobuf:"bytes,2,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	// The fields to return in snake_issue.
 	// All fields are returned if not set.
-	ReadMask *protobuf.FieldMask `protobuf:"bytes,3,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,3,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// A filter to apply to the list of Issues.
 	Filter string `protobuf:"bytes,4,opt,name=filter,proto3" json:"filter,omitempty"`
 	// The order to sort the results by
@@ -707,7 +709,7 @@ func (x *ListIssuesRequest) GetPageToken() string {
 	return ""
 }
 
-func (x *ListIssuesRequest) GetReadMask() *protobuf.FieldMask {
+func (x *ListIssuesRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -1614,8 +1616,8 @@ var file_alis_open_support_v1_issue_proto_goTypes = []any{
 	(*Issue_ContentBlock_TextBody)(nil),    // 19: alis.open.support.v1.Issue.ContentBlock.TextBody
 	(*Issue_ContentBlock_Image)(nil),       // 20: alis.open.support.v1.Issue.ContentBlock.Image
 	(*Issue_ContentBlock_Video)(nil),       // 21: alis.open.support.v1.Issue.ContentBlock.Video
-	(*protobuf.Timestamp)(nil),             // 22: google.protobuf.Timestamp
-	(*protobuf.FieldMask)(nil),             // 23: google.protobuf.FieldMask
+	(*timestamppb.Timestamp)(nil),          // 22: google.protobuf.Timestamp
+	(*fieldmaskpb.FieldMask)(nil),          // 23: google.protobuf.FieldMask
 	(*v1.ValidateMessageRequest)(nil),      // 24: alis.open.validation.v1.ValidateMessageRequest
 	(*v1.RetrieveRulesRequest)(nil),        // 25: alis.open.validation.v1.RetrieveRulesRequest
 	(*v11.GetIamPolicyRequest)(nil),        // 26: google.iam.v1.GetIamPolicyRequest
@@ -1627,7 +1629,7 @@ var file_alis_open_support_v1_issue_proto_goTypes = []any{
 	(*v1.RetrieveRulesResponse)(nil),       // 32: alis.open.validation.v1.RetrieveRulesResponse
 	(*v11.Policy)(nil),                     // 33: google.iam.v1.Policy
 	(*v11.TestIamPermissionsResponse)(nil), // 34: google.iam.v1.TestIamPermissionsResponse
-	(*protobuf.Empty)(nil),                 // 35: google.protobuf.Empty
+	(*emptypb.Empty)(nil),                  // 35: google.protobuf.Empty
 }
 var file_alis_open_support_v1_issue_proto_depIdxs = []int32{
 	17, // 0: alis.open.support.v1.Issue.description:type_name -> alis.open.support.v1.Issue.ContentBlock
