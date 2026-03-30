@@ -26,21 +26,81 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Cron Type definition.
+type Cron_Type int32
+
+const (
+	// Unspecified type
+	Cron_TYPE_UNSPECIFIED Cron_Type = 0
+	// CRON type. Must be used for tasks that run on a recurring schedule.
+	Cron_TYPE_CRON Cron_Type = 1
+	// AT type. Must be used for once-off, non-recurring tasks that run at a specified time only.
+	Cron_TYPE_AT Cron_Type = 2
+)
+
+// Enum value maps for Cron_Type.
+var (
+	Cron_Type_name = map[int32]string{
+		0: "TYPE_UNSPECIFIED",
+		1: "TYPE_CRON",
+		2: "TYPE_AT",
+	}
+	Cron_Type_value = map[string]int32{
+		"TYPE_UNSPECIFIED": 0,
+		"TYPE_CRON":        1,
+		"TYPE_AT":          2,
+	}
+)
+
+func (x Cron_Type) Enum() *Cron_Type {
+	p := new(Cron_Type)
+	*p = x
+	return p
+}
+
+func (x Cron_Type) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (Cron_Type) Descriptor() protoreflect.EnumDescriptor {
+	return file_alis_a2a_extension_scheduler_v1_scheduler_proto_enumTypes[0].Descriptor()
+}
+
+func (Cron_Type) Type() protoreflect.EnumType {
+	return &file_alis_a2a_extension_scheduler_v1_scheduler_proto_enumTypes[0]
+}
+
+func (x Cron_Type) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use Cron_Type.Descriptor instead.
+func (Cron_Type) EnumDescriptor() ([]byte, []int) {
+	return file_alis_a2a_extension_scheduler_v1_scheduler_proto_rawDescGZIP(), []int{0, 0}
+}
+
 // A Cron resource representing a scheduled CRON job.
 type Cron struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The resource name of the Cron.
 	// Format: crons/{cron_id}
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	// The prompt that the agent will be invoked with when the Cron runs.
+	// The prompt payload that the agent will be invoked with when the Cron runs.
 	Prompt string `protobuf:"bytes,2,opt,name=prompt,proto3" json:"prompt,omitempty"`
-	// A schedule defined using the unix-cron string format (* * * * *).
+	// The unix-cron string format expression (* * * * *) for recurring jobs.
+	// Required when using type='TYPE_CRON'.
 	// See https://docs.cloud.google.com/scheduler/docs/configuring/cron-job-schedules for details.
-	Schedule string `protobuf:"bytes,3,opt,name=schedule,proto3" json:"schedule,omitempty"`
-	// Timezone to be used in interpreting schedule. Must be part of the tz database.
+	Expr string `protobuf:"bytes,3,opt,name=expr,proto3" json:"expr,omitempty"`
+	// Timezone to be used in interpreting the cron expr. Must exist within the tz database.
+	// Required when using type='TYPE_CRON'.
 	// See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for list of valid values.
 	// Example: Europe/London, America/New_York, etc.
 	Timezone string `protobuf:"bytes,4,opt,name=timezone,proto3" json:"timezone,omitempty"`
+	// The specified (once-off) timestamp for when this Cron will be invoked.
+	// Required when using type='TYPE_AT'.
+	At *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=at,proto3" json:"at,omitempty"`
+	// The Cron type.
+	Type Cron_Type `protobuf:"varint,6,opt,name=type,proto3,enum=alis.a2a.extension.scheduler.v1.Cron_Type" json:"type,omitempty"`
 	// When this Cron was created.
 	CreateTime *timestamppb.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// When this Cron was last updated.
@@ -93,9 +153,9 @@ func (x *Cron) GetPrompt() string {
 	return ""
 }
 
-func (x *Cron) GetSchedule() string {
+func (x *Cron) GetExpr() string {
 	if x != nil {
-		return x.Schedule
+		return x.Expr
 	}
 	return ""
 }
@@ -105,6 +165,20 @@ func (x *Cron) GetTimezone() string {
 		return x.Timezone
 	}
 	return ""
+}
+
+func (x *Cron) GetAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.At
+	}
+	return nil
+}
+
+func (x *Cron) GetType() Cron_Type {
+	if x != nil {
+		return x.Type
+	}
+	return Cron_TYPE_UNSPECIFIED
 }
 
 func (x *Cron) GetCreateTime() *timestamppb.Timestamp {
@@ -531,16 +605,22 @@ var File_alis_a2a_extension_scheduler_v1_scheduler_proto protoreflect.FileDescri
 
 const file_alis_a2a_extension_scheduler_v1_scheduler_proto_rawDesc = "" +
 	"\n" +
-	"/alis/a2a/extension/scheduler/v1/scheduler.proto\x12\x1falis.a2a.extension.scheduler.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a google/protobuf/field_mask.proto\x1a\x1agoogle/iam/v1/policy.proto\x1a\x1egoogle/iam/v1/iam_policy.proto\x1a\x1aalis/open/iam/v1/iam.proto\x1a\x1bgoogle/protobuf/empty.proto\"\xe4\x01\n" +
+	"/alis/a2a/extension/scheduler/v1/scheduler.proto\x12\x1falis.a2a.extension.scheduler.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a google/protobuf/field_mask.proto\x1a\x1agoogle/iam/v1/policy.proto\x1a\x1egoogle/iam/v1/iam_policy.proto\x1a\x1aalis/open/iam/v1/iam.proto\x1a\x1bgoogle/protobuf/empty.proto\"\x82\x03\n" +
 	"\x04Cron\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x16\n" +
-	"\x06prompt\x18\x02 \x01(\tR\x06prompt\x12\x1a\n" +
-	"\bschedule\x18\x03 \x01(\tR\bschedule\x12\x1a\n" +
-	"\btimezone\x18\x04 \x01(\tR\btimezone\x12;\n" +
+	"\x06prompt\x18\x02 \x01(\tR\x06prompt\x12\x12\n" +
+	"\x04expr\x18\x03 \x01(\tR\x04expr\x12\x1a\n" +
+	"\btimezone\x18\x04 \x01(\tR\btimezone\x12*\n" +
+	"\x02at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\x02at\x12>\n" +
+	"\x04type\x18\x06 \x01(\x0e2*.alis.a2a.extension.scheduler.v1.Cron.TypeR\x04type\x12;\n" +
 	"\vcreate_time\x18b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"createTime\x12;\n" +
 	"\vupdate_time\x18c \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"updateTime\"N\n" +
+	"updateTime\"8\n" +
+	"\x04Type\x12\x14\n" +
+	"\x10TYPE_UNSPECIFIED\x10\x00\x12\r\n" +
+	"\tTYPE_CRON\x10\x01\x12\v\n" +
+	"\aTYPE_AT\x10\x02\"N\n" +
 	"\x11CreateCronRequest\x129\n" +
 	"\x04cron\x18\x01 \x01(\v2%.alis.a2a.extension.scheduler.v1.CronR\x04cron\"\x8b\x01\n" +
 	"\x11UpdateCronRequest\x129\n" +
@@ -590,60 +670,64 @@ func file_alis_a2a_extension_scheduler_v1_scheduler_proto_rawDescGZIP() []byte {
 	return file_alis_a2a_extension_scheduler_v1_scheduler_proto_rawDescData
 }
 
+var file_alis_a2a_extension_scheduler_v1_scheduler_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_alis_a2a_extension_scheduler_v1_scheduler_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_alis_a2a_extension_scheduler_v1_scheduler_proto_goTypes = []any{
-	(*Cron)(nil),                         // 0: alis.a2a.extension.scheduler.v1.Cron
-	(*CreateCronRequest)(nil),            // 1: alis.a2a.extension.scheduler.v1.CreateCronRequest
-	(*UpdateCronRequest)(nil),            // 2: alis.a2a.extension.scheduler.v1.UpdateCronRequest
-	(*GetCronRequest)(nil),               // 3: alis.a2a.extension.scheduler.v1.GetCronRequest
-	(*DeleteCronRequest)(nil),            // 4: alis.a2a.extension.scheduler.v1.DeleteCronRequest
-	(*ListCronsRequest)(nil),             // 5: alis.a2a.extension.scheduler.v1.ListCronsRequest
-	(*ListCronsResponse)(nil),            // 6: alis.a2a.extension.scheduler.v1.ListCronsResponse
-	(*RunCronRequest)(nil),               // 7: alis.a2a.extension.scheduler.v1.RunCronRequest
-	(*RunCronResponse)(nil),              // 8: alis.a2a.extension.scheduler.v1.RunCronResponse
-	(*timestamppb.Timestamp)(nil),        // 9: google.protobuf.Timestamp
-	(*fieldmaskpb.FieldMask)(nil),        // 10: google.protobuf.FieldMask
-	(*v1.GetIamPolicyRequest)(nil),       // 11: google.iam.v1.GetIamPolicyRequest
-	(*v1.SetIamPolicyRequest)(nil),       // 12: google.iam.v1.SetIamPolicyRequest
-	(*v11.AddIamBindingsRequest)(nil),    // 13: alis.open.iam.v1.AddIamBindingsRequest
-	(*v11.RemoveIamBindingsRequest)(nil), // 14: alis.open.iam.v1.RemoveIamBindingsRequest
-	(*v1.Policy)(nil),                    // 15: google.iam.v1.Policy
-	(*emptypb.Empty)(nil),                // 16: google.protobuf.Empty
+	(Cron_Type)(0),                       // 0: alis.a2a.extension.scheduler.v1.Cron.Type
+	(*Cron)(nil),                         // 1: alis.a2a.extension.scheduler.v1.Cron
+	(*CreateCronRequest)(nil),            // 2: alis.a2a.extension.scheduler.v1.CreateCronRequest
+	(*UpdateCronRequest)(nil),            // 3: alis.a2a.extension.scheduler.v1.UpdateCronRequest
+	(*GetCronRequest)(nil),               // 4: alis.a2a.extension.scheduler.v1.GetCronRequest
+	(*DeleteCronRequest)(nil),            // 5: alis.a2a.extension.scheduler.v1.DeleteCronRequest
+	(*ListCronsRequest)(nil),             // 6: alis.a2a.extension.scheduler.v1.ListCronsRequest
+	(*ListCronsResponse)(nil),            // 7: alis.a2a.extension.scheduler.v1.ListCronsResponse
+	(*RunCronRequest)(nil),               // 8: alis.a2a.extension.scheduler.v1.RunCronRequest
+	(*RunCronResponse)(nil),              // 9: alis.a2a.extension.scheduler.v1.RunCronResponse
+	(*timestamppb.Timestamp)(nil),        // 10: google.protobuf.Timestamp
+	(*fieldmaskpb.FieldMask)(nil),        // 11: google.protobuf.FieldMask
+	(*v1.GetIamPolicyRequest)(nil),       // 12: google.iam.v1.GetIamPolicyRequest
+	(*v1.SetIamPolicyRequest)(nil),       // 13: google.iam.v1.SetIamPolicyRequest
+	(*v11.AddIamBindingsRequest)(nil),    // 14: alis.open.iam.v1.AddIamBindingsRequest
+	(*v11.RemoveIamBindingsRequest)(nil), // 15: alis.open.iam.v1.RemoveIamBindingsRequest
+	(*v1.Policy)(nil),                    // 16: google.iam.v1.Policy
+	(*emptypb.Empty)(nil),                // 17: google.protobuf.Empty
 }
 var file_alis_a2a_extension_scheduler_v1_scheduler_proto_depIdxs = []int32{
-	9,  // 0: alis.a2a.extension.scheduler.v1.Cron.create_time:type_name -> google.protobuf.Timestamp
-	9,  // 1: alis.a2a.extension.scheduler.v1.Cron.update_time:type_name -> google.protobuf.Timestamp
-	0,  // 2: alis.a2a.extension.scheduler.v1.CreateCronRequest.cron:type_name -> alis.a2a.extension.scheduler.v1.Cron
-	0,  // 3: alis.a2a.extension.scheduler.v1.UpdateCronRequest.cron:type_name -> alis.a2a.extension.scheduler.v1.Cron
-	10, // 4: alis.a2a.extension.scheduler.v1.UpdateCronRequest.update_mask:type_name -> google.protobuf.FieldMask
-	10, // 5: alis.a2a.extension.scheduler.v1.GetCronRequest.read_mask:type_name -> google.protobuf.FieldMask
-	10, // 6: alis.a2a.extension.scheduler.v1.ListCronsRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 7: alis.a2a.extension.scheduler.v1.ListCronsResponse.crons:type_name -> alis.a2a.extension.scheduler.v1.Cron
-	11, // 8: alis.a2a.extension.scheduler.v1.SchedulerService.GetIamPolicy:input_type -> google.iam.v1.GetIamPolicyRequest
-	12, // 9: alis.a2a.extension.scheduler.v1.SchedulerService.SetIamPolicy:input_type -> google.iam.v1.SetIamPolicyRequest
-	13, // 10: alis.a2a.extension.scheduler.v1.SchedulerService.AddIamBindings:input_type -> alis.open.iam.v1.AddIamBindingsRequest
-	14, // 11: alis.a2a.extension.scheduler.v1.SchedulerService.RemoveIamBindings:input_type -> alis.open.iam.v1.RemoveIamBindingsRequest
-	1,  // 12: alis.a2a.extension.scheduler.v1.SchedulerService.CreateCron:input_type -> alis.a2a.extension.scheduler.v1.CreateCronRequest
-	5,  // 13: alis.a2a.extension.scheduler.v1.SchedulerService.ListCrons:input_type -> alis.a2a.extension.scheduler.v1.ListCronsRequest
-	3,  // 14: alis.a2a.extension.scheduler.v1.SchedulerService.GetCron:input_type -> alis.a2a.extension.scheduler.v1.GetCronRequest
-	2,  // 15: alis.a2a.extension.scheduler.v1.SchedulerService.UpdateCron:input_type -> alis.a2a.extension.scheduler.v1.UpdateCronRequest
-	4,  // 16: alis.a2a.extension.scheduler.v1.SchedulerService.DeleteCron:input_type -> alis.a2a.extension.scheduler.v1.DeleteCronRequest
-	7,  // 17: alis.a2a.extension.scheduler.v1.SchedulerService.RunCron:input_type -> alis.a2a.extension.scheduler.v1.RunCronRequest
-	15, // 18: alis.a2a.extension.scheduler.v1.SchedulerService.GetIamPolicy:output_type -> google.iam.v1.Policy
-	15, // 19: alis.a2a.extension.scheduler.v1.SchedulerService.SetIamPolicy:output_type -> google.iam.v1.Policy
-	15, // 20: alis.a2a.extension.scheduler.v1.SchedulerService.AddIamBindings:output_type -> google.iam.v1.Policy
-	15, // 21: alis.a2a.extension.scheduler.v1.SchedulerService.RemoveIamBindings:output_type -> google.iam.v1.Policy
-	0,  // 22: alis.a2a.extension.scheduler.v1.SchedulerService.CreateCron:output_type -> alis.a2a.extension.scheduler.v1.Cron
-	6,  // 23: alis.a2a.extension.scheduler.v1.SchedulerService.ListCrons:output_type -> alis.a2a.extension.scheduler.v1.ListCronsResponse
-	0,  // 24: alis.a2a.extension.scheduler.v1.SchedulerService.GetCron:output_type -> alis.a2a.extension.scheduler.v1.Cron
-	0,  // 25: alis.a2a.extension.scheduler.v1.SchedulerService.UpdateCron:output_type -> alis.a2a.extension.scheduler.v1.Cron
-	16, // 26: alis.a2a.extension.scheduler.v1.SchedulerService.DeleteCron:output_type -> google.protobuf.Empty
-	8,  // 27: alis.a2a.extension.scheduler.v1.SchedulerService.RunCron:output_type -> alis.a2a.extension.scheduler.v1.RunCronResponse
-	18, // [18:28] is the sub-list for method output_type
-	8,  // [8:18] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	10, // 0: alis.a2a.extension.scheduler.v1.Cron.at:type_name -> google.protobuf.Timestamp
+	0,  // 1: alis.a2a.extension.scheduler.v1.Cron.type:type_name -> alis.a2a.extension.scheduler.v1.Cron.Type
+	10, // 2: alis.a2a.extension.scheduler.v1.Cron.create_time:type_name -> google.protobuf.Timestamp
+	10, // 3: alis.a2a.extension.scheduler.v1.Cron.update_time:type_name -> google.protobuf.Timestamp
+	1,  // 4: alis.a2a.extension.scheduler.v1.CreateCronRequest.cron:type_name -> alis.a2a.extension.scheduler.v1.Cron
+	1,  // 5: alis.a2a.extension.scheduler.v1.UpdateCronRequest.cron:type_name -> alis.a2a.extension.scheduler.v1.Cron
+	11, // 6: alis.a2a.extension.scheduler.v1.UpdateCronRequest.update_mask:type_name -> google.protobuf.FieldMask
+	11, // 7: alis.a2a.extension.scheduler.v1.GetCronRequest.read_mask:type_name -> google.protobuf.FieldMask
+	11, // 8: alis.a2a.extension.scheduler.v1.ListCronsRequest.read_mask:type_name -> google.protobuf.FieldMask
+	1,  // 9: alis.a2a.extension.scheduler.v1.ListCronsResponse.crons:type_name -> alis.a2a.extension.scheduler.v1.Cron
+	12, // 10: alis.a2a.extension.scheduler.v1.SchedulerService.GetIamPolicy:input_type -> google.iam.v1.GetIamPolicyRequest
+	13, // 11: alis.a2a.extension.scheduler.v1.SchedulerService.SetIamPolicy:input_type -> google.iam.v1.SetIamPolicyRequest
+	14, // 12: alis.a2a.extension.scheduler.v1.SchedulerService.AddIamBindings:input_type -> alis.open.iam.v1.AddIamBindingsRequest
+	15, // 13: alis.a2a.extension.scheduler.v1.SchedulerService.RemoveIamBindings:input_type -> alis.open.iam.v1.RemoveIamBindingsRequest
+	2,  // 14: alis.a2a.extension.scheduler.v1.SchedulerService.CreateCron:input_type -> alis.a2a.extension.scheduler.v1.CreateCronRequest
+	6,  // 15: alis.a2a.extension.scheduler.v1.SchedulerService.ListCrons:input_type -> alis.a2a.extension.scheduler.v1.ListCronsRequest
+	4,  // 16: alis.a2a.extension.scheduler.v1.SchedulerService.GetCron:input_type -> alis.a2a.extension.scheduler.v1.GetCronRequest
+	3,  // 17: alis.a2a.extension.scheduler.v1.SchedulerService.UpdateCron:input_type -> alis.a2a.extension.scheduler.v1.UpdateCronRequest
+	5,  // 18: alis.a2a.extension.scheduler.v1.SchedulerService.DeleteCron:input_type -> alis.a2a.extension.scheduler.v1.DeleteCronRequest
+	8,  // 19: alis.a2a.extension.scheduler.v1.SchedulerService.RunCron:input_type -> alis.a2a.extension.scheduler.v1.RunCronRequest
+	16, // 20: alis.a2a.extension.scheduler.v1.SchedulerService.GetIamPolicy:output_type -> google.iam.v1.Policy
+	16, // 21: alis.a2a.extension.scheduler.v1.SchedulerService.SetIamPolicy:output_type -> google.iam.v1.Policy
+	16, // 22: alis.a2a.extension.scheduler.v1.SchedulerService.AddIamBindings:output_type -> google.iam.v1.Policy
+	16, // 23: alis.a2a.extension.scheduler.v1.SchedulerService.RemoveIamBindings:output_type -> google.iam.v1.Policy
+	1,  // 24: alis.a2a.extension.scheduler.v1.SchedulerService.CreateCron:output_type -> alis.a2a.extension.scheduler.v1.Cron
+	7,  // 25: alis.a2a.extension.scheduler.v1.SchedulerService.ListCrons:output_type -> alis.a2a.extension.scheduler.v1.ListCronsResponse
+	1,  // 26: alis.a2a.extension.scheduler.v1.SchedulerService.GetCron:output_type -> alis.a2a.extension.scheduler.v1.Cron
+	1,  // 27: alis.a2a.extension.scheduler.v1.SchedulerService.UpdateCron:output_type -> alis.a2a.extension.scheduler.v1.Cron
+	17, // 28: alis.a2a.extension.scheduler.v1.SchedulerService.DeleteCron:output_type -> google.protobuf.Empty
+	9,  // 29: alis.a2a.extension.scheduler.v1.SchedulerService.RunCron:output_type -> alis.a2a.extension.scheduler.v1.RunCronResponse
+	20, // [20:30] is the sub-list for method output_type
+	10, // [10:20] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_alis_a2a_extension_scheduler_v1_scheduler_proto_init() }
@@ -656,13 +740,14 @@ func file_alis_a2a_extension_scheduler_v1_scheduler_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_alis_a2a_extension_scheduler_v1_scheduler_proto_rawDesc), len(file_alis_a2a_extension_scheduler_v1_scheduler_proto_rawDesc)),
-			NumEnums:      0,
+			NumEnums:      1,
 			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_alis_a2a_extension_scheduler_v1_scheduler_proto_goTypes,
 		DependencyIndexes: file_alis_a2a_extension_scheduler_v1_scheduler_proto_depIdxs,
+		EnumInfos:         file_alis_a2a_extension_scheduler_v1_scheduler_proto_enumTypes,
 		MessageInfos:      file_alis_a2a_extension_scheduler_v1_scheduler_proto_msgTypes,
 	}.Build()
 	File_alis_a2a_extension_scheduler_v1_scheduler_proto = out.File
