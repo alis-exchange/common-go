@@ -7,9 +7,9 @@
 package v1
 
 import (
-	protobuf "go.alis.build/common/google/protobuf"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -29,9 +29,9 @@ type Role struct {
 	// Format: roles/([a-z][a-zA-Z0-9.]{3,50})
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// The creation time of the Role.
-	CreateTime *protobuf.Timestamp `protobuf:"bytes,2,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreateTime *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// The last time the Role was updated.
-	UpdateTime *protobuf.Timestamp `protobuf:"bytes,3,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	UpdateTime *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	// Used to perform a consistent read-modify-write.
 	Etag []byte `protobuf:"bytes,4,opt,name=etag,proto3" json:"etag,omitempty"`
 	// The title of the role
@@ -91,14 +91,14 @@ func (x *Role) GetName() string {
 	return ""
 }
 
-func (x *Role) GetCreateTime() *protobuf.Timestamp {
+func (x *Role) GetCreateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreateTime
 	}
 	return nil
 }
 
-func (x *Role) GetUpdateTime() *protobuf.Timestamp {
+func (x *Role) GetUpdateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdateTime
 	}
@@ -179,8 +179,8 @@ func file_alis_open_iam_v1_role_proto_rawDescGZIP() []byte {
 
 var file_alis_open_iam_v1_role_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_alis_open_iam_v1_role_proto_goTypes = []any{
-	(*Role)(nil),               // 0: alis.open.iam.v1.Role
-	(*protobuf.Timestamp)(nil), // 1: google.protobuf.Timestamp
+	(*Role)(nil),                  // 0: alis.open.iam.v1.Role
+	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
 }
 var file_alis_open_iam_v1_role_proto_depIdxs = []int32{
 	1, // 0: alis.open.iam.v1.Role.create_time:type_name -> google.protobuf.Timestamp

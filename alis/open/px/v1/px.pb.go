@@ -7,10 +7,12 @@
 package v1
 
 import (
-	protobuf "go.alis.build/common/google/protobuf"
-	_type "go.alis.build/common/google/type"
+	date "google.golang.org/genproto/googleapis/type/date"
+	timeofday "google.golang.org/genproto/googleapis/type/timeofday"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
+	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -815,7 +817,7 @@ type Instrument struct {
 	// Unique Entity Tag(ETag) used for optimistic concurrency control as a way to help prevent simultaneous updates from overwriting each other.
 	ETag string `protobuf:"bytes,97,opt,name=e_tag,json=eTag,proto3" json:"e_tag,omitempty"`
 	// Time the Instrument was last updated
-	UpdateTime    *protobuf.Timestamp `protobuf:"bytes,98,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	UpdateTime    *timestamppb.Timestamp `protobuf:"bytes,98,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1002,7 +1004,7 @@ func (x *Instrument) GetETag() string {
 	return ""
 }
 
-func (x *Instrument) GetUpdateTime() *protobuf.Timestamp {
+func (x *Instrument) GetUpdateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdateTime
 	}
@@ -1026,7 +1028,7 @@ type InstrumentHealthState struct {
 	// Points quality checks
 	PointsQualityCheck *InstrumentHealthState_PointsQualityCheck `protobuf:"bytes,23,opt,name=points_quality_check,json=pointsQualityCheck,proto3" json:"points_quality_check,omitempty"`
 	// Time the Instrument was last updated
-	UpdateTime    *protobuf.Timestamp `protobuf:"bytes,98,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	UpdateTime    *timestamppb.Timestamp `protobuf:"bytes,98,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1103,7 +1105,7 @@ func (x *InstrumentHealthState) GetPointsQualityCheck() *InstrumentHealthState_P
 	return nil
 }
 
-func (x *InstrumentHealthState) GetUpdateTime() *protobuf.Timestamp {
+func (x *InstrumentHealthState) GetUpdateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdateTime
 	}
@@ -1230,10 +1232,10 @@ type Instrument_BranchMetadata struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The date the instrument first became active in the branch
 	// If this is not set, the start date is determined by the days service.
-	StartDate *_type.Date `protobuf:"bytes,1,opt,name=start_date,json=startDate,proto3" json:"start_date,omitempty"`
+	StartDate *date.Date `protobuf:"bytes,1,opt,name=start_date,json=startDate,proto3" json:"start_date,omitempty"`
 	// The date the instrument last became active in the branch
 	// If this is not set, the end date is determined by the days service.
-	EndDate       *_type.Date `protobuf:"bytes,2,opt,name=end_date,json=endDate,proto3" json:"end_date,omitempty"`
+	EndDate       *date.Date `protobuf:"bytes,2,opt,name=end_date,json=endDate,proto3" json:"end_date,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1268,14 +1270,14 @@ func (*Instrument_BranchMetadata) Descriptor() ([]byte, []int) {
 	return file_alis_open_px_v1_px_proto_rawDescGZIP(), []int{0, 4}
 }
 
-func (x *Instrument_BranchMetadata) GetStartDate() *_type.Date {
+func (x *Instrument_BranchMetadata) GetStartDate() *date.Date {
 	if x != nil {
 		return x.StartDate
 	}
 	return nil
 }
 
-func (x *Instrument_BranchMetadata) GetEndDate() *_type.Date {
+func (x *Instrument_BranchMetadata) GetEndDate() *date.Date {
 	if x != nil {
 		return x.EndDate
 	}
@@ -1375,10 +1377,10 @@ type Instrument_HealthCheckConfig struct {
 	// Fill forward max days
 	// The maximum number of days allowed to fill forward points data
 	// If not specified a default of 7 days is set as the maximum
-	MaxFillForwardDays *protobuf.UInt32Value `protobuf:"bytes,2,opt,name=max_fill_forward_days,json=maxFillForwardDays,proto3" json:"max_fill_forward_days,omitempty"`
+	MaxFillForwardDays *wrapperspb.UInt32Value `protobuf:"bytes,2,opt,name=max_fill_forward_days,json=maxFillForwardDays,proto3" json:"max_fill_forward_days,omitempty"`
 	// Include weekends when checking for filled forward points data
 	// If not specified a default of false is set
-	IncludeWeekends *protobuf.BoolValue `protobuf:"bytes,3,opt,name=include_weekends,json=includeWeekends,proto3" json:"include_weekends,omitempty"`
+	IncludeWeekends *wrapperspb.BoolValue `protobuf:"bytes,3,opt,name=include_weekends,json=includeWeekends,proto3" json:"include_weekends,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1420,14 +1422,14 @@ func (x *Instrument_HealthCheckConfig) GetExcludedPointsFields() []string {
 	return nil
 }
 
-func (x *Instrument_HealthCheckConfig) GetMaxFillForwardDays() *protobuf.UInt32Value {
+func (x *Instrument_HealthCheckConfig) GetMaxFillForwardDays() *wrapperspb.UInt32Value {
 	if x != nil {
 		return x.MaxFillForwardDays
 	}
 	return nil
 }
 
-func (x *Instrument_HealthCheckConfig) GetIncludeWeekends() *protobuf.BoolValue {
+func (x *Instrument_HealthCheckConfig) GetIncludeWeekends() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.IncludeWeekends
 	}
@@ -1439,10 +1441,10 @@ type Instrument_PointsMetadata struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The date from which to sync points data
 	// If this is not set, the start date is determined by the sync service.
-	StartDate *_type.Date `protobuf:"bytes,1,opt,name=start_date,json=startDate,proto3" json:"start_date,omitempty"`
+	StartDate *date.Date `protobuf:"bytes,1,opt,name=start_date,json=startDate,proto3" json:"start_date,omitempty"`
 	// The date to which to sync points data
 	// If this is not set, the end date is determined by the sync service.
-	EndDate       *_type.Date `protobuf:"bytes,2,opt,name=end_date,json=endDate,proto3" json:"end_date,omitempty"`
+	EndDate       *date.Date `protobuf:"bytes,2,opt,name=end_date,json=endDate,proto3" json:"end_date,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1477,14 +1479,14 @@ func (*Instrument_PointsMetadata) Descriptor() ([]byte, []int) {
 	return file_alis_open_px_v1_px_proto_rawDescGZIP(), []int{0, 7}
 }
 
-func (x *Instrument_PointsMetadata) GetStartDate() *_type.Date {
+func (x *Instrument_PointsMetadata) GetStartDate() *date.Date {
 	if x != nil {
 		return x.StartDate
 	}
 	return nil
 }
 
-func (x *Instrument_PointsMetadata) GetEndDate() *_type.Date {
+func (x *Instrument_PointsMetadata) GetEndDate() *date.Date {
 	if x != nil {
 		return x.EndDate
 	}
@@ -1656,7 +1658,7 @@ type Instrument_PointsSyncConfig_BloombergConfig struct {
 	//
 	// By default, the instrument will be synchronised at the earliest
 	// daily synchronisation.
-	SyncActivationTime *_type.TimeOfDay `protobuf:"bytes,2,opt,name=sync_activation_time,json=syncActivationTime,proto3" json:"sync_activation_time,omitempty"`
+	SyncActivationTime *timeofday.TimeOfDay `protobuf:"bytes,2,opt,name=sync_activation_time,json=syncActivationTime,proto3" json:"sync_activation_time,omitempty"`
 	// Metadata used when syncing points data
 	PointsMeta    *Instrument_PointsMetadata `protobuf:"bytes,9,opt,name=points_meta,json=pointsMeta,proto3" json:"points_meta,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -1700,7 +1702,7 @@ func (x *Instrument_PointsSyncConfig_BloombergConfig) GetEnabled() bool {
 	return false
 }
 
-func (x *Instrument_PointsSyncConfig_BloombergConfig) GetSyncActivationTime() *_type.TimeOfDay {
+func (x *Instrument_PointsSyncConfig_BloombergConfig) GetSyncActivationTime() *timeofday.TimeOfDay {
 	if x != nil {
 		return x.SyncActivationTime
 	}
@@ -3231,11 +3233,11 @@ var file_alis_open_px_v1_px_proto_goTypes = []any{
 	(*InstrumentHealthState_PointsQualityCheck_FillForwardedPointsCheck)(nil),                     // 33: alis.open.px.v1.InstrumentHealthState.PointsQualityCheck.FillForwardedPointsCheck
 	(*InstrumentHealthState_PointsQualityCheck_ZeroReturnsPointsCheck)(nil),                       // 34: alis.open.px.v1.InstrumentHealthState.PointsQualityCheck.ZeroReturnsPointsCheck
 	(*InstrumentHealthState_PointsQualityCheck_ZeroReturnsPointsCheck_PointZeroReturnFields)(nil), // 35: alis.open.px.v1.InstrumentHealthState.PointsQualityCheck.ZeroReturnsPointsCheck.PointZeroReturnFields
-	(*protobuf.Timestamp)(nil),                                                                    // 36: google.protobuf.Timestamp
-	(*_type.Date)(nil),                                                                            // 37: google.type.Date
-	(*protobuf.UInt32Value)(nil),                                                                  // 38: google.protobuf.UInt32Value
-	(*protobuf.BoolValue)(nil),                                                                    // 39: google.protobuf.BoolValue
-	(*_type.TimeOfDay)(nil),                                                                       // 40: google.type.TimeOfDay
+	(*timestamppb.Timestamp)(nil),                                                                 // 36: google.protobuf.Timestamp
+	(*date.Date)(nil),                                                                             // 37: google.type.Date
+	(*wrapperspb.UInt32Value)(nil),                                                                // 38: google.protobuf.UInt32Value
+	(*wrapperspb.BoolValue)(nil),                                                                  // 39: google.protobuf.BoolValue
+	(*timeofday.TimeOfDay)(nil),                                                                   // 40: google.type.TimeOfDay
 }
 var file_alis_open_px_v1_px_proto_depIdxs = []int32{
 	7,  // 0: alis.open.px.v1.Instrument.asset_classification:type_name -> alis.open.px.v1.Instrument.AssetClassification

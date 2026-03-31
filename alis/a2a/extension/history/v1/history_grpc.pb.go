@@ -9,11 +9,11 @@ package v1
 import (
 	context "context"
 	v11 "go.alis.build/common/alis/open/iam/v1"
-	v1 "go.alis.build/common/google/iam/v1"
-	protobuf "go.alis.build/common/google/protobuf"
+	v1 "google.golang.org/genproto/googleapis/iam/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -54,7 +54,7 @@ type ThreadServiceClient interface {
 	// Gets an Thread by its resource name.
 	GetThread(ctx context.Context, in *GetThreadRequest, opts ...grpc.CallOption) (*Thread, error)
 	// Deletes an Thread.
-	DeleteThread(ctx context.Context, in *DeleteThreadRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	DeleteThread(ctx context.Context, in *DeleteThreadRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Appends an event to a given Thread
 	AppendThreadEvent(ctx context.Context, in *AppendThreadEventRequest, opts ...grpc.CallOption) (*AppendThreadEventResponse, error)
 	// Lists all events.
@@ -131,9 +131,9 @@ func (c *threadServiceClient) GetThread(ctx context.Context, in *GetThreadReques
 	return out, nil
 }
 
-func (c *threadServiceClient) DeleteThread(ctx context.Context, in *DeleteThreadRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *threadServiceClient) DeleteThread(ctx context.Context, in *DeleteThreadRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, ThreadService_DeleteThread_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -200,7 +200,7 @@ type ThreadServiceServer interface {
 	// Gets an Thread by its resource name.
 	GetThread(context.Context, *GetThreadRequest) (*Thread, error)
 	// Deletes an Thread.
-	DeleteThread(context.Context, *DeleteThreadRequest) (*protobuf.Empty, error)
+	DeleteThread(context.Context, *DeleteThreadRequest) (*emptypb.Empty, error)
 	// Appends an event to a given Thread
 	AppendThreadEvent(context.Context, *AppendThreadEventRequest) (*AppendThreadEventResponse, error)
 	// Lists all events.
@@ -235,7 +235,7 @@ func (UnimplementedThreadServiceServer) ListThreads(context.Context, *ListThread
 func (UnimplementedThreadServiceServer) GetThread(context.Context, *GetThreadRequest) (*Thread, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetThread not implemented")
 }
-func (UnimplementedThreadServiceServer) DeleteThread(context.Context, *DeleteThreadRequest) (*protobuf.Empty, error) {
+func (UnimplementedThreadServiceServer) DeleteThread(context.Context, *DeleteThreadRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteThread not implemented")
 }
 func (UnimplementedThreadServiceServer) AppendThreadEvent(context.Context, *AppendThreadEventRequest) (*AppendThreadEventResponse, error) {

@@ -8,10 +8,10 @@ package v2
 
 import (
 	context "context"
-	protobuf "go.alis.build/common/google/protobuf"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -75,7 +75,7 @@ type A2AServiceClient interface {
 	// GetAgentCard returns the agent card for the agent.
 	GetAgentCard(ctx context.Context, in *GetAgentCardRequest, opts ...grpc.CallOption) (*AgentCard, error)
 	// Delete a push notification config for a task.
-	DeleteTaskPushNotificationConfig(ctx context.Context, in *DeleteTaskPushNotificationConfigRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	DeleteTaskPushNotificationConfig(ctx context.Context, in *DeleteTaskPushNotificationConfigRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type a2AServiceClient struct {
@@ -204,9 +204,9 @@ func (c *a2AServiceClient) GetAgentCard(ctx context.Context, in *GetAgentCardReq
 	return out, nil
 }
 
-func (c *a2AServiceClient) DeleteTaskPushNotificationConfig(ctx context.Context, in *DeleteTaskPushNotificationConfigRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *a2AServiceClient) DeleteTaskPushNotificationConfig(ctx context.Context, in *DeleteTaskPushNotificationConfigRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, A2AService_DeleteTaskPushNotificationConfig_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -256,7 +256,7 @@ type A2AServiceServer interface {
 	// GetAgentCard returns the agent card for the agent.
 	GetAgentCard(context.Context, *GetAgentCardRequest) (*AgentCard, error)
 	// Delete a push notification config for a task.
-	DeleteTaskPushNotificationConfig(context.Context, *DeleteTaskPushNotificationConfigRequest) (*protobuf.Empty, error)
+	DeleteTaskPushNotificationConfig(context.Context, *DeleteTaskPushNotificationConfigRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedA2AServiceServer()
 }
 
@@ -297,7 +297,7 @@ func (UnimplementedA2AServiceServer) ListTaskPushNotificationConfig(context.Cont
 func (UnimplementedA2AServiceServer) GetAgentCard(context.Context, *GetAgentCardRequest) (*AgentCard, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetAgentCard not implemented")
 }
-func (UnimplementedA2AServiceServer) DeleteTaskPushNotificationConfig(context.Context, *DeleteTaskPushNotificationConfigRequest) (*protobuf.Empty, error) {
+func (UnimplementedA2AServiceServer) DeleteTaskPushNotificationConfig(context.Context, *DeleteTaskPushNotificationConfigRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteTaskPushNotificationConfig not implemented")
 }
 func (UnimplementedA2AServiceServer) mustEmbedUnimplementedA2AServiceServer() {}

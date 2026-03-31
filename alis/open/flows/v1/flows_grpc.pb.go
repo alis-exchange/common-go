@@ -9,10 +9,10 @@ package v1
 import (
 	context "context"
 	v1 "go.alis.build/common/alis/open/pubsub/v1"
-	protobuf "go.alis.build/common/google/protobuf"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -52,9 +52,9 @@ type FlowsServiceClient interface {
 	// This can be used to generate the next level of the tree on demand.
 	GenerateFlowTree(ctx context.Context, in *GenerateFlowTreeRequest, opts ...grpc.CallOption) (*GenerateFlowTreeResponse, error)
 	// Handles an event from Pub/Sub
-	HandleEvent(ctx context.Context, in *v1.PubSubMessage, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	HandleEvent(ctx context.Context, in *v1.PubSubMessage, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Handles a dead letter event from Pub/Sub
-	HandleDeadLetter(ctx context.Context, in *v1.PubSubMessage, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	HandleDeadLetter(ctx context.Context, in *v1.PubSubMessage, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type flowsServiceClient struct {
@@ -114,9 +114,9 @@ func (c *flowsServiceClient) GenerateFlowTree(ctx context.Context, in *GenerateF
 	return out, nil
 }
 
-func (c *flowsServiceClient) HandleEvent(ctx context.Context, in *v1.PubSubMessage, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *flowsServiceClient) HandleEvent(ctx context.Context, in *v1.PubSubMessage, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, FlowsService_HandleEvent_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -124,9 +124,9 @@ func (c *flowsServiceClient) HandleEvent(ctx context.Context, in *v1.PubSubMessa
 	return out, nil
 }
 
-func (c *flowsServiceClient) HandleDeadLetter(ctx context.Context, in *v1.PubSubMessage, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *flowsServiceClient) HandleDeadLetter(ctx context.Context, in *v1.PubSubMessage, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, FlowsService_HandleDeadLetter_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -157,9 +157,9 @@ type FlowsServiceServer interface {
 	// This can be used to generate the next level of the tree on demand.
 	GenerateFlowTree(context.Context, *GenerateFlowTreeRequest) (*GenerateFlowTreeResponse, error)
 	// Handles an event from Pub/Sub
-	HandleEvent(context.Context, *v1.PubSubMessage) (*protobuf.Empty, error)
+	HandleEvent(context.Context, *v1.PubSubMessage) (*emptypb.Empty, error)
 	// Handles a dead letter event from Pub/Sub
-	HandleDeadLetter(context.Context, *v1.PubSubMessage) (*protobuf.Empty, error)
+	HandleDeadLetter(context.Context, *v1.PubSubMessage) (*emptypb.Empty, error)
 	mustEmbedUnimplementedFlowsServiceServer()
 }
 
@@ -182,10 +182,10 @@ func (UnimplementedFlowsServiceServer) StreamFlows(*StreamFlowsRequest, grpc.Ser
 func (UnimplementedFlowsServiceServer) GenerateFlowTree(context.Context, *GenerateFlowTreeRequest) (*GenerateFlowTreeResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GenerateFlowTree not implemented")
 }
-func (UnimplementedFlowsServiceServer) HandleEvent(context.Context, *v1.PubSubMessage) (*protobuf.Empty, error) {
+func (UnimplementedFlowsServiceServer) HandleEvent(context.Context, *v1.PubSubMessage) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method HandleEvent not implemented")
 }
-func (UnimplementedFlowsServiceServer) HandleDeadLetter(context.Context, *v1.PubSubMessage) (*protobuf.Empty, error) {
+func (UnimplementedFlowsServiceServer) HandleDeadLetter(context.Context, *v1.PubSubMessage) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method HandleDeadLetter not implemented")
 }
 func (UnimplementedFlowsServiceServer) mustEmbedUnimplementedFlowsServiceServer() {}

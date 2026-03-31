@@ -7,10 +7,13 @@
 package v1
 
 import (
-	_ "go.alis.build/common/google/api"
-	protobuf "go.alis.build/common/google/protobuf"
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	anypb "google.golang.org/protobuf/types/known/anypb"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	structpb "google.golang.org/protobuf/types/known/structpb"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -260,7 +263,7 @@ type Task struct {
 	History []*Message `protobuf:"bytes,6,rep,name=history,proto3" json:"history,omitempty"`
 	// protolint:enable REPEATED_FIELD_NAMES_PLURALIZED
 	// A key/value object to store custom metadata about a task.
-	Metadata      *protobuf.Struct `protobuf:"bytes,7,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	Metadata      *structpb.Struct `protobuf:"bytes,7,opt,name=metadata,proto3" json:"metadata,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -337,7 +340,7 @@ func (x *Task) GetHistory() []*Message {
 	return nil
 }
 
-func (x *Task) GetMetadata() *protobuf.Struct {
+func (x *Task) GetMetadata() *structpb.Struct {
 	if x != nil {
 		return x.Metadata
 	}
@@ -352,7 +355,7 @@ type TaskStatus struct {
 	// A message associated with the status.
 	Update *Message `protobuf:"bytes,2,opt,name=update,json=message,proto3" json:"update,omitempty"`
 	// Timestamp when the status was recorded.
-	Timestamp     *protobuf.Timestamp `protobuf:"bytes,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -401,7 +404,7 @@ func (x *TaskStatus) GetUpdate() *Message {
 	return nil
 }
 
-func (x *TaskStatus) GetTimestamp() *protobuf.Timestamp {
+func (x *TaskStatus) GetTimestamp() *timestamppb.Timestamp {
 	if x != nil {
 		return x.Timestamp
 	}
@@ -421,7 +424,7 @@ type Part struct {
 	//	*Part_Any
 	Part isPart_Part `protobuf_oneof:"part"`
 	// Optional metadata associated with this part.
-	Metadata      *protobuf.Struct `protobuf:"bytes,4,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	Metadata      *structpb.Struct `protobuf:"bytes,4,opt,name=metadata,proto3" json:"metadata,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -490,7 +493,7 @@ func (x *Part) GetData() *DataPart {
 	return nil
 }
 
-func (x *Part) GetAny() *protobuf.Any {
+func (x *Part) GetAny() *anypb.Any {
 	if x != nil {
 		if x, ok := x.Part.(*Part_Any); ok {
 			return x.Any
@@ -499,7 +502,7 @@ func (x *Part) GetAny() *protobuf.Any {
 	return nil
 }
 
-func (x *Part) GetMetadata() *protobuf.Struct {
+func (x *Part) GetMetadata() *structpb.Struct {
 	if x != nil {
 		return x.Metadata
 	}
@@ -523,7 +526,7 @@ type Part_Data struct {
 }
 
 type Part_Any struct {
-	Any *protobuf.Any `protobuf:"bytes,20,opt,name=any,proto3,oneof"`
+	Any *anypb.Any `protobuf:"bytes,20,opt,name=any,proto3,oneof"`
 }
 
 func (*Part_Text) isPart_Part() {}
@@ -639,7 +642,7 @@ func (*FilePart_FileWithBytes) isFilePart_File() {}
 // DataPart represents a structured blob. This is most commonly a JSON payload.
 type DataPart struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Data          *protobuf.Struct       `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
+	Data          *structpb.Struct       `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -674,7 +677,7 @@ func (*DataPart) Descriptor() ([]byte, []int) {
 	return file_alis_open_agent_v1_agent_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *DataPart) GetData() *protobuf.Struct {
+func (x *DataPart) GetData() *structpb.Struct {
 	if x != nil {
 		return x.Data
 	}
@@ -706,7 +709,7 @@ type Message struct {
 	Parts []*Part `protobuf:"bytes,5,rep,name=parts,proto3" json:"parts,omitempty"`
 	// protolint:enable REPEATED_FIELD_NAMES_PLURALIZED
 	// Any optional metadata to provide along with the message.
-	Metadata *protobuf.Struct `protobuf:"bytes,6,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	Metadata *structpb.Struct `protobuf:"bytes,6,opt,name=metadata,proto3" json:"metadata,omitempty"`
 	// The URIs of extensions that are present or contributed to this Message.
 	Extensions []string `protobuf:"bytes,7,rep,name=extensions,proto3" json:"extensions,omitempty"`
 	// A list of task IDs that this message references for additional context.
@@ -780,7 +783,7 @@ func (x *Message) GetParts() []*Part {
 	return nil
 }
 
-func (x *Message) GetMetadata() *protobuf.Struct {
+func (x *Message) GetMetadata() *structpb.Struct {
 	if x != nil {
 		return x.Metadata
 	}
@@ -816,7 +819,7 @@ type Artifact struct {
 	// The content of the artifact.
 	Parts []*Part `protobuf:"bytes,5,rep,name=parts,proto3" json:"parts,omitempty"`
 	// Optional metadata included with the artifact.
-	Metadata *protobuf.Struct `protobuf:"bytes,6,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	Metadata *structpb.Struct `protobuf:"bytes,6,opt,name=metadata,proto3" json:"metadata,omitempty"`
 	// The URIs of extensions that are present or contributed to this Artifact.
 	Extensions    []string `protobuf:"bytes,7,rep,name=extensions,proto3" json:"extensions,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -881,7 +884,7 @@ func (x *Artifact) GetParts() []*Part {
 	return nil
 }
 
-func (x *Artifact) GetMetadata() *protobuf.Struct {
+func (x *Artifact) GetMetadata() *structpb.Struct {
 	if x != nil {
 		return x.Metadata
 	}
@@ -908,7 +911,7 @@ type TaskStatusUpdateEvent struct {
 	// Whether this is the last status update expected for this task.
 	Final bool `protobuf:"varint,4,opt,name=final,proto3" json:"final,omitempty"`
 	// Optional metadata to associate with the task update.
-	Metadata      *protobuf.Struct `protobuf:"bytes,5,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	Metadata      *structpb.Struct `protobuf:"bytes,5,opt,name=metadata,proto3" json:"metadata,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -971,7 +974,7 @@ func (x *TaskStatusUpdateEvent) GetFinal() bool {
 	return false
 }
 
-func (x *TaskStatusUpdateEvent) GetMetadata() *protobuf.Struct {
+func (x *TaskStatusUpdateEvent) GetMetadata() *structpb.Struct {
 	if x != nil {
 		return x.Metadata
 	}
@@ -993,7 +996,7 @@ type TaskArtifactUpdateEvent struct {
 	// Whether this represents the last part of an artifact
 	LastChunk bool `protobuf:"varint,5,opt,name=last_chunk,json=lastChunk,proto3" json:"last_chunk,omitempty"`
 	// Optional metadata associated with the artifact update.
-	Metadata      *protobuf.Struct `protobuf:"bytes,6,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	Metadata      *structpb.Struct `protobuf:"bytes,6,opt,name=metadata,proto3" json:"metadata,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1063,7 +1066,7 @@ func (x *TaskArtifactUpdateEvent) GetLastChunk() bool {
 	return false
 }
 
-func (x *TaskArtifactUpdateEvent) GetMetadata() *protobuf.Struct {
+func (x *TaskArtifactUpdateEvent) GetMetadata() *structpb.Struct {
 	if x != nil {
 		return x.Metadata
 	}
@@ -1628,7 +1631,7 @@ type AgentExtension struct {
 	// Example: false
 	Required bool `protobuf:"varint,3,opt,name=required,proto3" json:"required,omitempty"`
 	// Optional configuration for the extension.
-	Params        *protobuf.Struct `protobuf:"bytes,4,opt,name=params,proto3" json:"params,omitempty"`
+	Params        *structpb.Struct `protobuf:"bytes,4,opt,name=params,proto3" json:"params,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1684,7 +1687,7 @@ func (x *AgentExtension) GetRequired() bool {
 	return false
 }
 
-func (x *AgentExtension) GetParams() *protobuf.Struct {
+func (x *AgentExtension) GetParams() *structpb.Struct {
 	if x != nil {
 		return x.Params
 	}
@@ -1823,7 +1826,7 @@ type AgentCardSignature struct {
 	// The computed signature, base64url-encoded. Required.
 	Signature string `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty"`
 	// The unprotected JWS header values.
-	Header        *protobuf.Struct `protobuf:"bytes,3,opt,name=header,proto3" json:"header,omitempty"`
+	Header        *structpb.Struct `protobuf:"bytes,3,opt,name=header,proto3" json:"header,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1872,7 +1875,7 @@ func (x *AgentCardSignature) GetSignature() string {
 	return ""
 }
 
-func (x *AgentCardSignature) GetHeader() *protobuf.Struct {
+func (x *AgentCardSignature) GetHeader() *structpb.Struct {
 	if x != nil {
 		return x.Header
 	}
@@ -2844,7 +2847,7 @@ type SendMessageRequest struct {
 	// Configuration for the send request.
 	Configuration *SendMessageConfiguration `protobuf:"bytes,2,opt,name=configuration,proto3" json:"configuration,omitempty"`
 	// Optional metadata for the request.
-	Metadata      *protobuf.Struct `protobuf:"bytes,3,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	Metadata      *structpb.Struct `protobuf:"bytes,3,opt,name=metadata,proto3" json:"metadata,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2893,7 +2896,7 @@ func (x *SendMessageRequest) GetConfiguration() *SendMessageConfiguration {
 	return nil
 }
 
-func (x *SendMessageRequest) GetMetadata() *protobuf.Struct {
+func (x *SendMessageRequest) GetMetadata() *structpb.Struct {
 	if x != nil {
 		return x.Metadata
 	}
@@ -2973,7 +2976,7 @@ type ListTasksRequest struct {
 	HistoryLength int32 `protobuf:"varint,5,opt,name=history_length,json=historyLength,proto3" json:"history_length,omitempty"`
 	// Filter tasks updated after this timestamp. Only tasks with a last
 	// updated time greater than or equal to this value will be returned.
-	LastUpdatedTime *protobuf.Timestamp `protobuf:"bytes,6,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
+	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
 	// Whether to include artifacts in the returned tasks.
 	// Defaults to false to reduce payload size.
 	IncludeArtifacts bool `protobuf:"varint,7,opt,name=include_artifacts,json=includeArtifacts,proto3" json:"include_artifacts,omitempty"`
@@ -3046,7 +3049,7 @@ func (x *ListTasksRequest) GetHistoryLength() int32 {
 	return 0
 }
 
-func (x *ListTasksRequest) GetLastUpdatedTime() *protobuf.Timestamp {
+func (x *ListTasksRequest) GetLastUpdatedTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.LastUpdatedTime
 	}
@@ -4107,16 +4110,16 @@ var file_alis_open_agent_v1_agent_proto_goTypes = []any{
 	(*StreamResponse)(nil),                          // 46: alis.open.agent.v1.StreamResponse
 	(*ListTasksResponse)(nil),                       // 47: alis.open.agent.v1.ListTasksResponse
 	(*ListTaskPushNotificationConfigResponse)(nil),  // 48: alis.open.agent.v1.ListTaskPushNotificationConfigResponse
-	nil,                        // 49: alis.open.agent.v1.AgentCard.SecuritySchemesEntry
-	nil,                        // 50: alis.open.agent.v1.Security.SchemesEntry
-	nil,                        // 51: alis.open.agent.v1.AuthorizationCodeOAuthFlow.ScopesEntry
-	nil,                        // 52: alis.open.agent.v1.ClientCredentialsOAuthFlow.ScopesEntry
-	nil,                        // 53: alis.open.agent.v1.ImplicitOAuthFlow.ScopesEntry
-	nil,                        // 54: alis.open.agent.v1.PasswordOAuthFlow.ScopesEntry
-	(*protobuf.Struct)(nil),    // 55: google.protobuf.Struct
-	(*protobuf.Timestamp)(nil), // 56: google.protobuf.Timestamp
-	(*protobuf.Any)(nil),       // 57: google.protobuf.Any
-	(*protobuf.Empty)(nil),     // 58: google.protobuf.Empty
+	nil,                           // 49: alis.open.agent.v1.AgentCard.SecuritySchemesEntry
+	nil,                           // 50: alis.open.agent.v1.Security.SchemesEntry
+	nil,                           // 51: alis.open.agent.v1.AuthorizationCodeOAuthFlow.ScopesEntry
+	nil,                           // 52: alis.open.agent.v1.ClientCredentialsOAuthFlow.ScopesEntry
+	nil,                           // 53: alis.open.agent.v1.ImplicitOAuthFlow.ScopesEntry
+	nil,                           // 54: alis.open.agent.v1.PasswordOAuthFlow.ScopesEntry
+	(*structpb.Struct)(nil),       // 55: google.protobuf.Struct
+	(*timestamppb.Timestamp)(nil), // 56: google.protobuf.Timestamp
+	(*anypb.Any)(nil),             // 57: google.protobuf.Any
+	(*emptypb.Empty)(nil),         // 58: google.protobuf.Empty
 }
 var file_alis_open_agent_v1_agent_proto_depIdxs = []int32{
 	12, // 0: alis.open.agent.v1.SendMessageConfiguration.push_notification:type_name -> alis.open.agent.v1.PushNotificationConfig

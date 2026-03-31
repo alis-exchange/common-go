@@ -8,10 +8,13 @@ package v1
 
 import (
 	v1 "go.alis.build/common/alis/open/validation/v1"
-	v11 "go.alis.build/common/google/iam/v1"
-	protobuf "go.alis.build/common/google/protobuf"
+	v11 "google.golang.org/genproto/googleapis/iam/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	anypb "google.golang.org/protobuf/types/known/anypb"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -245,19 +248,19 @@ type User struct {
 	// successfully synched to the relevant google group since it was added/changed in the config
 	GoogleGroup string `protobuf:"bytes,12,opt,name=google_group,json=googleGroup,proto3" json:"google_group,omitempty"`
 	// Any metadata about the User. The user can edit this using EditMyInfo.
-	Metadata *protobuf.Any `protobuf:"bytes,11,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	Metadata *anypb.Any `protobuf:"bytes,11,opt,name=metadata,proto3" json:"metadata,omitempty"`
 	// Any internal metadata about the User. The user can not edit this, but can see it.
-	InternalMetadata *protobuf.Any `protobuf:"bytes,19,opt,name=internal_metadata,json=internalMetadata,proto3" json:"internal_metadata,omitempty"`
+	InternalMetadata *anypb.Any `protobuf:"bytes,19,opt,name=internal_metadata,json=internalMetadata,proto3" json:"internal_metadata,omitempty"`
 	// The creation time of the User.
-	CreateTime *protobuf.Timestamp `protobuf:"bytes,2,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreateTime *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// The last time the User was updated.
-	UpdateTime *protobuf.Timestamp `protobuf:"bytes,3,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	UpdateTime *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	// The last time the user signed in.
 	// This does not include refreshing of tokens.
-	LastSignInTime *protobuf.Timestamp `protobuf:"bytes,16,opt,name=last_sign_in_time,json=lastSignInTime,proto3" json:"last_sign_in_time,omitempty"`
+	LastSignInTime *timestamppb.Timestamp `protobuf:"bytes,16,opt,name=last_sign_in_time,json=lastSignInTime,proto3" json:"last_sign_in_time,omitempty"`
 	// The last time the user's access token was refreshed.
 	// Since this is done every 5 minutes, it is a good indicator of the user's activity.
-	LastRefreshTime *protobuf.Timestamp `protobuf:"bytes,20,opt,name=last_refresh_time,json=lastRefreshTime,proto3" json:"last_refresh_time,omitempty"`
+	LastRefreshTime *timestamppb.Timestamp `protobuf:"bytes,20,opt,name=last_refresh_time,json=lastRefreshTime,proto3" json:"last_refresh_time,omitempty"`
 	// The google identity of the user if any.
 	GoogleIdentity *User_GoogleIdentity `protobuf:"bytes,17,opt,name=google_identity,json=googleIdentity,proto3" json:"google_identity,omitempty"`
 	// The microsoft identity of the user if any.
@@ -393,42 +396,42 @@ func (x *User) GetGoogleGroup() string {
 	return ""
 }
 
-func (x *User) GetMetadata() *protobuf.Any {
+func (x *User) GetMetadata() *anypb.Any {
 	if x != nil {
 		return x.Metadata
 	}
 	return nil
 }
 
-func (x *User) GetInternalMetadata() *protobuf.Any {
+func (x *User) GetInternalMetadata() *anypb.Any {
 	if x != nil {
 		return x.InternalMetadata
 	}
 	return nil
 }
 
-func (x *User) GetCreateTime() *protobuf.Timestamp {
+func (x *User) GetCreateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreateTime
 	}
 	return nil
 }
 
-func (x *User) GetUpdateTime() *protobuf.Timestamp {
+func (x *User) GetUpdateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdateTime
 	}
 	return nil
 }
 
-func (x *User) GetLastSignInTime() *protobuf.Timestamp {
+func (x *User) GetLastSignInTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.LastSignInTime
 	}
 	return nil
 }
 
-func (x *User) GetLastRefreshTime() *protobuf.Timestamp {
+func (x *User) GetLastRefreshTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.LastRefreshTime
 	}
@@ -499,7 +502,7 @@ type GetUserRequest struct {
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// The fields to return in snake_case.
 	// All fields are returned if not set.
-	ReadMask      *protobuf.FieldMask `protobuf:"bytes,2,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -541,7 +544,7 @@ func (x *GetUserRequest) GetName() string {
 	return ""
 }
 
-func (x *GetUserRequest) GetReadMask() *protobuf.FieldMask {
+func (x *GetUserRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -601,7 +604,7 @@ type UpdateUserRequest struct {
 	// The user to update
 	User *User `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	// The set of fields that should be updated
-	UpdateMask    *protobuf.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -643,7 +646,7 @@ func (x *UpdateUserRequest) GetUser() *User {
 	return nil
 }
 
-func (x *UpdateUserRequest) GetUpdateMask() *protobuf.FieldMask {
+func (x *UpdateUserRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.UpdateMask
 	}
@@ -706,7 +709,7 @@ type ListUsersRequest struct {
 	PageToken string `protobuf:"bytes,3,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	// The fields to return in snake_case.
 	// All fields are returned if not set.
-	ReadMask *protobuf.FieldMask `protobuf:"bytes,4,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,4,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// The filter to apply.
 	Filter        string `protobuf:"bytes,5,opt,name=filter,proto3" json:"filter,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -757,7 +760,7 @@ func (x *ListUsersRequest) GetPageToken() string {
 	return ""
 }
 
-func (x *ListUsersRequest) GetReadMask() *protobuf.FieldMask {
+func (x *ListUsersRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -833,7 +836,7 @@ type RetrieveUserByEmailRequest struct {
 	Email string `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
 	// The fields to return in snake_case.
 	// All fields are returned if not set.
-	ReadMask      *protobuf.FieldMask `protobuf:"bytes,2,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -875,7 +878,7 @@ func (x *RetrieveUserByEmailRequest) GetEmail() string {
 	return ""
 }
 
-func (x *RetrieveUserByEmailRequest) GetReadMask() *protobuf.FieldMask {
+func (x *RetrieveUserByEmailRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -890,7 +893,7 @@ type BatchRetrieveMaskedUsersRequest struct {
 	// Format: [users/*, users/*, ...]
 	Users []string `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
 	// Fields to retrieve from the Resource. Defaults to all fields.
-	ReadMask      *protobuf.FieldMask `protobuf:"bytes,2,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -932,7 +935,7 @@ func (x *BatchRetrieveMaskedUsersRequest) GetUsers() []string {
 	return nil
 }
 
-func (x *BatchRetrieveMaskedUsersRequest) GetReadMask() *protobuf.FieldMask {
+func (x *BatchRetrieveMaskedUsersRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -1091,7 +1094,7 @@ type RetrieveMaskedUsersRequest struct {
 	PageToken string `protobuf:"bytes,3,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	// The fields to return in snake_case.
 	// All fields are returned if not set.
-	ReadMask *protobuf.FieldMask `protobuf:"bytes,4,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,4,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// The filter to apply.
 	Filter        string `protobuf:"bytes,5,opt,name=filter,proto3" json:"filter,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -1142,7 +1145,7 @@ func (x *RetrieveMaskedUsersRequest) GetPageToken() string {
 	return ""
 }
 
-func (x *RetrieveMaskedUsersRequest) GetReadMask() *protobuf.FieldMask {
+func (x *RetrieveMaskedUsersRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -1304,9 +1307,9 @@ type MaskedUser struct {
 	// Format: users/([a-z0-9-]{2,50})
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// The creation time of the User.
-	CreateTime *protobuf.Timestamp `protobuf:"bytes,2,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreateTime *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// The last time the User was updated.
-	UpdateTime *protobuf.Timestamp `protobuf:"bytes,3,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	UpdateTime *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	// The email of the User. Alis will never overwrite this field.
 	MaskedEmail string `protobuf:"bytes,4,opt,name=masked_email,json=maskedEmail,proto3" json:"masked_email,omitempty"`
 	// The identity provider of the User.
@@ -1368,14 +1371,14 @@ func (x *MaskedUser) GetName() string {
 	return ""
 }
 
-func (x *MaskedUser) GetCreateTime() *protobuf.Timestamp {
+func (x *MaskedUser) GetCreateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreateTime
 	}
 	return nil
 }
 
-func (x *MaskedUser) GetUpdateTime() *protobuf.Timestamp {
+func (x *MaskedUser) GetUpdateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdateTime
 	}
@@ -1463,7 +1466,7 @@ type EditUserInfoRequest struct {
 	// Example: https://www.linkedin.com/in/jankrynauw/
 	LinkedinUri string `protobuf:"bytes,8,opt,name=linkedin_uri,json=linkedinUri,proto3" json:"linkedin_uri,omitempty"`
 	// The set of fields that should be updated
-	UpdateMask    *protobuf.FieldMask `protobuf:"bytes,99,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,99,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1554,7 +1557,7 @@ func (x *EditUserInfoRequest) GetLinkedinUri() string {
 	return ""
 }
 
-func (x *EditUserInfoRequest) GetUpdateMask() *protobuf.FieldMask {
+func (x *EditUserInfoRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.UpdateMask
 	}
@@ -1568,7 +1571,7 @@ type EditUserMetadataRequest struct {
 	// Format: users/([a-z0-9-]{2,50})
 	User string `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	// The metadata to update.
-	Metadata      *protobuf.Any `protobuf:"bytes,2,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	Metadata      *anypb.Any `protobuf:"bytes,2,opt,name=metadata,proto3" json:"metadata,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1610,7 +1613,7 @@ func (x *EditUserMetadataRequest) GetUser() string {
 	return ""
 }
 
-func (x *EditUserMetadataRequest) GetMetadata() *protobuf.Any {
+func (x *EditUserMetadataRequest) GetMetadata() *anypb.Any {
 	if x != nil {
 		return x.Metadata
 	}
@@ -1676,7 +1679,7 @@ type EditMyInfoRequest struct {
 	// Example: https://www.linkedin.com/in/jankrynauw/
 	LinkedinUri string `protobuf:"bytes,7,opt,name=linkedin_uri,json=linkedinUri,proto3" json:"linkedin_uri,omitempty"`
 	// The set of fields that should be updated
-	UpdateMask    *protobuf.FieldMask `protobuf:"bytes,10,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1760,7 +1763,7 @@ func (x *EditMyInfoRequest) GetLinkedinUri() string {
 	return ""
 }
 
-func (x *EditMyInfoRequest) GetUpdateMask() *protobuf.FieldMask {
+func (x *EditMyInfoRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.UpdateMask
 	}
@@ -1771,7 +1774,7 @@ func (x *EditMyInfoRequest) GetUpdateMask() *protobuf.FieldMask {
 type EditMyMetadataRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The metadata to update.
-	Metadata      *protobuf.Any `protobuf:"bytes,1,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	Metadata      *anypb.Any `protobuf:"bytes,1,opt,name=metadata,proto3" json:"metadata,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1806,7 +1809,7 @@ func (*EditMyMetadataRequest) Descriptor() ([]byte, []int) {
 	return file_alis_open_iam_v1_user_proto_rawDescGZIP(), []int{22}
 }
 
-func (x *EditMyMetadataRequest) GetMetadata() *protobuf.Any {
+func (x *EditMyMetadataRequest) GetMetadata() *anypb.Any {
 	if x != nil {
 		return x.Metadata
 	}
@@ -2616,9 +2619,9 @@ var file_alis_open_iam_v1_user_proto_goTypes = []any{
 	nil,                                      // 34: alis.open.iam.v1.User.Account.SeatsEntry
 	(*User_Account_Seat)(nil),                // 35: alis.open.iam.v1.User.Account.Seat
 	(*LookupUserResponse_Result)(nil),        // 36: alis.open.iam.v1.LookupUserResponse.Result
-	(*protobuf.Any)(nil),                     // 37: google.protobuf.Any
-	(*protobuf.Timestamp)(nil),               // 38: google.protobuf.Timestamp
-	(*protobuf.FieldMask)(nil),               // 39: google.protobuf.FieldMask
+	(*anypb.Any)(nil),                        // 37: google.protobuf.Any
+	(*timestamppb.Timestamp)(nil),            // 38: google.protobuf.Timestamp
+	(*fieldmaskpb.FieldMask)(nil),            // 39: google.protobuf.FieldMask
 	(*v1.ValidateMessageRequest)(nil),        // 40: alis.open.validation.v1.ValidateMessageRequest
 	(*v1.RetrieveRulesRequest)(nil),          // 41: alis.open.validation.v1.RetrieveRulesRequest
 	(*v11.GetIamPolicyRequest)(nil),          // 42: google.iam.v1.GetIamPolicyRequest
@@ -2630,7 +2633,7 @@ var file_alis_open_iam_v1_user_proto_goTypes = []any{
 	(*v1.RetrieveRulesResponse)(nil),         // 48: alis.open.validation.v1.RetrieveRulesResponse
 	(*v11.Policy)(nil),                       // 49: google.iam.v1.Policy
 	(*v11.TestIamPermissionsResponse)(nil),   // 50: google.iam.v1.TestIamPermissionsResponse
-	(*protobuf.Empty)(nil),                   // 51: google.protobuf.Empty
+	(*emptypb.Empty)(nil),                    // 51: google.protobuf.Empty
 }
 var file_alis_open_iam_v1_user_proto_depIdxs = []int32{
 	0,  // 0: alis.open.iam.v1.User.identity_provider:type_name -> alis.open.iam.v1.IdentityProvider

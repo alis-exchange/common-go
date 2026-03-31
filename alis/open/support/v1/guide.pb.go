@@ -8,9 +8,10 @@ package v1
 
 import (
 	v1 "go.alis.build/common/alis/open/validation/v1"
-	protobuf "go.alis.build/common/google/protobuf"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -211,9 +212,9 @@ type Guide struct {
 	// The Guide contents
 	Contents []*Guide_ContentBlock `protobuf:"bytes,5,rep,name=contents,proto3" json:"contents,omitempty"`
 	// Time the page was created
-	CreateTime *protobuf.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreateTime *timestamppb.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// Time the page was updated
-	UpdateTime    *protobuf.Timestamp `protobuf:"bytes,99,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	UpdateTime    *timestamppb.Timestamp `protobuf:"bytes,99,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -276,14 +277,14 @@ func (x *Guide) GetContents() []*Guide_ContentBlock {
 	return nil
 }
 
-func (x *Guide) GetCreateTime() *protobuf.Timestamp {
+func (x *Guide) GetCreateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreateTime
 	}
 	return nil
 }
 
-func (x *Guide) GetUpdateTime() *protobuf.Timestamp {
+func (x *Guide) GetUpdateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdateTime
 	}
@@ -298,7 +299,7 @@ type GetGuideRequest struct {
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// The fields to return in snake_case.
 	// All fields are returned if not set.
-	ReadMask      *protobuf.FieldMask `protobuf:"bytes,2,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -340,7 +341,7 @@ func (x *GetGuideRequest) GetName() string {
 	return ""
 }
 
-func (x *GetGuideRequest) GetReadMask() *protobuf.FieldMask {
+func (x *GetGuideRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -356,7 +357,7 @@ type ListGuidesRequest struct {
 	PageToken string `protobuf:"bytes,3,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	// The fields to return in snake_case.
 	// All fields are returned if not set.
-	ReadMask *protobuf.FieldMask `protobuf:"bytes,4,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,4,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// The filter to apply
 	Filter string `protobuf:"bytes,5,opt,name=filter,proto3" json:"filter,omitempty"`
 	// The order to sort the results by
@@ -414,7 +415,7 @@ func (x *ListGuidesRequest) GetPageToken() string {
 	return ""
 }
 
-func (x *ListGuidesRequest) GetReadMask() *protobuf.FieldMask {
+func (x *ListGuidesRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -1526,8 +1527,8 @@ var file_alis_open_support_v1_guide_proto_goTypes = []any{
 	(*Guide_ContentBlock_Footnote)(nil),    // 16: alis.open.support.v1.Guide.ContentBlock.Footnote
 	(*Guide_ContentBlock_Diagram)(nil),     // 17: alis.open.support.v1.Guide.ContentBlock.Diagram
 	(*Guide_ContentBlock_CodeBlock)(nil),   // 18: alis.open.support.v1.Guide.ContentBlock.CodeBlock
-	(*protobuf.Timestamp)(nil),             // 19: google.protobuf.Timestamp
-	(*protobuf.FieldMask)(nil),             // 20: google.protobuf.FieldMask
+	(*timestamppb.Timestamp)(nil),          // 19: google.protobuf.Timestamp
+	(*fieldmaskpb.FieldMask)(nil),          // 20: google.protobuf.FieldMask
 	(*v1.ValidateMessageRequest)(nil),      // 21: alis.open.validation.v1.ValidateMessageRequest
 	(*v1.RetrieveRulesRequest)(nil),        // 22: alis.open.validation.v1.RetrieveRulesRequest
 	(*v1.ValidateMessageResponse)(nil),     // 23: alis.open.validation.v1.ValidateMessageResponse

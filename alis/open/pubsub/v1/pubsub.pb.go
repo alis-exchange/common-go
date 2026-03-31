@@ -7,9 +7,9 @@
 package v1
 
 import (
-	protobuf "go.alis.build/common/google/protobuf"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -103,7 +103,7 @@ type PubSubMessage_Message struct {
 	// The time at which the message was published, populated by the server when
 	// it receives the `Publish` call. It must not be populated by the
 	// publisher in a `Publish` call.
-	PublishTime *protobuf.Timestamp `protobuf:"bytes,4,opt,name=publish_time,json=publishTime,proto3" json:"publish_time,omitempty"`
+	PublishTime *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=publish_time,json=publishTime,proto3" json:"publish_time,omitempty"`
 	// If non-empty, identifies related messages for which publish order should be
 	// respected. If a `Subscription` has `enable_message_ordering` set to `true`,
 	// messages published with the same non-empty `ordering_key` value will be
@@ -116,7 +116,7 @@ type PubSubMessage_Message struct {
 	MessageId1 string `protobuf:"bytes,6,opt,name=message_id1,json=messageId1,proto3" json:"message_id1,omitempty"`
 	// A temporary fix - pubsub push delivers both publishTime and publish_time
 	// attributes, which is seen as a duplicate in the proto world.
-	PublishTime1  *protobuf.Timestamp `protobuf:"bytes,7,opt,name=publish_time1,json=publishTime1,proto3" json:"publish_time1,omitempty"`
+	PublishTime1  *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=publish_time1,json=publishTime1,proto3" json:"publish_time1,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -172,7 +172,7 @@ func (x *PubSubMessage_Message) GetMessageId() string {
 	return ""
 }
 
-func (x *PubSubMessage_Message) GetPublishTime() *protobuf.Timestamp {
+func (x *PubSubMessage_Message) GetPublishTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.PublishTime
 	}
@@ -193,7 +193,7 @@ func (x *PubSubMessage_Message) GetMessageId1() string {
 	return ""
 }
 
-func (x *PubSubMessage_Message) GetPublishTime1() *protobuf.Timestamp {
+func (x *PubSubMessage_Message) GetPublishTime1() *timestamppb.Timestamp {
 	if x != nil {
 		return x.PublishTime1
 	}
@@ -241,7 +241,7 @@ var file_alis_open_pubsub_v1_pubsub_proto_goTypes = []any{
 	(*PubSubMessage)(nil),         // 0: alis.open.pubsub.v1.PubSubMessage
 	(*PubSubMessage_Message)(nil), // 1: alis.open.pubsub.v1.PubSubMessage.Message
 	nil,                           // 2: alis.open.pubsub.v1.PubSubMessage.Message.AttributesEntry
-	(*protobuf.Timestamp)(nil),    // 3: google.protobuf.Timestamp
+	(*timestamppb.Timestamp)(nil), // 3: google.protobuf.Timestamp
 }
 var file_alis_open_pubsub_v1_pubsub_proto_depIdxs = []int32{
 	1, // 0: alis.open.pubsub.v1.PubSubMessage.message:type_name -> alis.open.pubsub.v1.PubSubMessage.Message

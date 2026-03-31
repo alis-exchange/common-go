@@ -9,11 +9,11 @@ package v1
 import (
 	context "context"
 	v1 "go.alis.build/common/alis/open/validation/v1"
-	v11 "go.alis.build/common/google/iam/v1"
-	protobuf "go.alis.build/common/google/protobuf"
+	v11 "google.golang.org/genproto/googleapis/iam/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -78,7 +78,7 @@ type UsersServiceClient interface {
 	// Updates a User.
 	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*User, error)
 	// Deletes a User.
-	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Lists Users. Results are sorted by name, ascending.
 	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
 	// Retrieve a User by their email.
@@ -128,7 +128,7 @@ type UsersServiceClient interface {
 	EditMyMetadata(ctx context.Context, in *EditMyMetadataRequest, opts ...grpc.CallOption) (*User, error)
 	// Removes the currently signed in user.
 	// This is useful if a user wants to delete their account.
-	RemoveMyUser(ctx context.Context, in *RemoveMyUserRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	RemoveMyUser(ctx context.Context, in *RemoveMyUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Syncs all google User's to the google group configured in the IamConfig.
 	// Will not delete service accounts.
 	SyncToGoogleGroup(ctx context.Context, in *SyncToGoogleGroupRequest, opts ...grpc.CallOption) (*SyncToGoogleGroupResponse, error)
@@ -244,9 +244,9 @@ func (c *usersServiceClient) UpdateUser(ctx context.Context, in *UpdateUserReque
 	return out, nil
 }
 
-func (c *usersServiceClient) DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *usersServiceClient) DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, UsersService_DeleteUser_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -364,9 +364,9 @@ func (c *usersServiceClient) EditMyMetadata(ctx context.Context, in *EditMyMetad
 	return out, nil
 }
 
-func (c *usersServiceClient) RemoveMyUser(ctx context.Context, in *RemoveMyUserRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *usersServiceClient) RemoveMyUser(ctx context.Context, in *RemoveMyUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, UsersService_RemoveMyUser_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -423,7 +423,7 @@ type UsersServiceServer interface {
 	// Updates a User.
 	UpdateUser(context.Context, *UpdateUserRequest) (*User, error)
 	// Deletes a User.
-	DeleteUser(context.Context, *DeleteUserRequest) (*protobuf.Empty, error)
+	DeleteUser(context.Context, *DeleteUserRequest) (*emptypb.Empty, error)
 	// Lists Users. Results are sorted by name, ascending.
 	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
 	// Retrieve a User by their email.
@@ -473,7 +473,7 @@ type UsersServiceServer interface {
 	EditMyMetadata(context.Context, *EditMyMetadataRequest) (*User, error)
 	// Removes the currently signed in user.
 	// This is useful if a user wants to delete their account.
-	RemoveMyUser(context.Context, *RemoveMyUserRequest) (*protobuf.Empty, error)
+	RemoveMyUser(context.Context, *RemoveMyUserRequest) (*emptypb.Empty, error)
 	// Syncs all google User's to the google group configured in the IamConfig.
 	// Will not delete service accounts.
 	SyncToGoogleGroup(context.Context, *SyncToGoogleGroupRequest) (*SyncToGoogleGroupResponse, error)
@@ -519,7 +519,7 @@ func (UnimplementedUsersServiceServer) CreateUser(context.Context, *CreateUserRe
 func (UnimplementedUsersServiceServer) UpdateUser(context.Context, *UpdateUserRequest) (*User, error) {
 	return nil, status.Error(codes.Unimplemented, "method UpdateUser not implemented")
 }
-func (UnimplementedUsersServiceServer) DeleteUser(context.Context, *DeleteUserRequest) (*protobuf.Empty, error) {
+func (UnimplementedUsersServiceServer) DeleteUser(context.Context, *DeleteUserRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteUser not implemented")
 }
 func (UnimplementedUsersServiceServer) ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error) {
@@ -555,7 +555,7 @@ func (UnimplementedUsersServiceServer) EditMyInfo(context.Context, *EditMyInfoRe
 func (UnimplementedUsersServiceServer) EditMyMetadata(context.Context, *EditMyMetadataRequest) (*User, error) {
 	return nil, status.Error(codes.Unimplemented, "method EditMyMetadata not implemented")
 }
-func (UnimplementedUsersServiceServer) RemoveMyUser(context.Context, *RemoveMyUserRequest) (*protobuf.Empty, error) {
+func (UnimplementedUsersServiceServer) RemoveMyUser(context.Context, *RemoveMyUserRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method RemoveMyUser not implemented")
 }
 func (UnimplementedUsersServiceServer) SyncToGoogleGroup(context.Context, *SyncToGoogleGroupRequest) (*SyncToGoogleGroupResponse, error) {

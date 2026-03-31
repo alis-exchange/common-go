@@ -8,9 +8,11 @@ package v1
 
 import (
 	v1 "go.alis.build/common/alis/open/pubsub/v1"
-	protobuf "go.alis.build/common/google/protobuf"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -111,11 +113,11 @@ type Flow struct {
 	// A sequence of steps
 	Steps []*Flow_Step `protobuf:"bytes,7,rep,name=steps,proto3" json:"steps,omitempty"`
 	// The time at which the Flow was created.
-	CreateTime *protobuf.Timestamp `protobuf:"bytes,97,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreateTime *timestamppb.Timestamp `protobuf:"bytes,97,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// The time at which the Flow was created.
-	UpdateTime *protobuf.Timestamp `protobuf:"bytes,98,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	UpdateTime *timestamppb.Timestamp `protobuf:"bytes,98,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	// The time at which the Flow was published.
-	PublishTime   *protobuf.Timestamp `protobuf:"bytes,99,opt,name=publish_time,json=publishTime,proto3" json:"publish_time,omitempty"`
+	PublishTime   *timestamppb.Timestamp `protobuf:"bytes,99,opt,name=publish_time,json=publishTime,proto3" json:"publish_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -178,21 +180,21 @@ func (x *Flow) GetSteps() []*Flow_Step {
 	return nil
 }
 
-func (x *Flow) GetCreateTime() *protobuf.Timestamp {
+func (x *Flow) GetCreateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreateTime
 	}
 	return nil
 }
 
-func (x *Flow) GetUpdateTime() *protobuf.Timestamp {
+func (x *Flow) GetUpdateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdateTime
 	}
 	return nil
 }
 
-func (x *Flow) GetPublishTime() *protobuf.Timestamp {
+func (x *Flow) GetPublishTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.PublishTime
 	}
@@ -206,7 +208,7 @@ type GetFlowRequest struct {
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// The fields to return in snake_case, as defined in the proto
 	// All fields are returned if not provided
-	ReadMask      *protobuf.FieldMask `protobuf:"bytes,2,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -248,7 +250,7 @@ func (x *GetFlowRequest) GetName() string {
 	return ""
 }
 
-func (x *GetFlowRequest) GetReadMask() *protobuf.FieldMask {
+func (x *GetFlowRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -275,7 +277,7 @@ type ListFlowsRequest struct {
 	PageToken string `protobuf:"bytes,3,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	// The fields to return in snake_case, as defined in the proto
 	// All fields are returned if not provided
-	ReadMask *protobuf.FieldMask `protobuf:"bytes,4,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,4,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// Optional filter string to filter results.
 	Filter        string `protobuf:"bytes,5,opt,name=filter,proto3" json:"filter,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -333,7 +335,7 @@ func (x *ListFlowsRequest) GetPageToken() string {
 	return ""
 }
 
-func (x *ListFlowsRequest) GetReadMask() *protobuf.FieldMask {
+func (x *ListFlowsRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -411,7 +413,7 @@ type StreamFlowsRequest struct {
 	Parent string `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
 	// The fields to return in snake_case, as defined in the proto
 	// All fields are returned if not provided
-	ReadMask      *protobuf.FieldMask `protobuf:"bytes,2,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -453,7 +455,7 @@ func (x *StreamFlowsRequest) GetParent() string {
 	return ""
 }
 
-func (x *StreamFlowsRequest) GetReadMask() *protobuf.FieldMask {
+func (x *StreamFlowsRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -473,7 +475,7 @@ type GenerateFlowTreeRequest struct {
 	MaxDepth int32 `protobuf:"varint,2,opt,name=max_depth,json=maxDepth,proto3" json:"max_depth,omitempty"`
 	// The fields to return in snake_case, as defined in the proto
 	// All fields are returned if not provided
-	ReadMask *protobuf.FieldMask `protobuf:"bytes,3,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,3,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// Optional filter string to filter results.
 	Filter        string `protobuf:"bytes,4,opt,name=filter,proto3" json:"filter,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -524,7 +526,7 @@ func (x *GenerateFlowTreeRequest) GetMaxDepth() int32 {
 	return 0
 }
 
-func (x *GenerateFlowTreeRequest) GetReadMask() *protobuf.FieldMask {
+func (x *GenerateFlowTreeRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -625,9 +627,9 @@ type Flow_Step struct {
 	// It is only populated by the GenerateFlowTree method.
 	Children []*Flow `protobuf:"bytes,8,rep,name=children,proto3" json:"children,omitempty"`
 	// The time at which the Step was created.
-	CreateTime *protobuf.Timestamp `protobuf:"bytes,9,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreateTime *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// The time at which the Step was updated.
-	UpdateTime    *protobuf.Timestamp `protobuf:"bytes,10,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	UpdateTime    *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -697,14 +699,14 @@ func (x *Flow_Step) GetChildren() []*Flow {
 	return nil
 }
 
-func (x *Flow_Step) GetCreateTime() *protobuf.Timestamp {
+func (x *Flow_Step) GetCreateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreateTime
 	}
 	return nil
 }
 
-func (x *Flow_Step) GetUpdateTime() *protobuf.Timestamp {
+func (x *Flow_Step) GetUpdateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdateTime
 	}
@@ -865,10 +867,10 @@ var file_alis_open_flows_v1_flows_proto_goTypes = []any{
 	(*GenerateFlowTreeResponse)(nil),              // 7: alis.open.flows.v1.GenerateFlowTreeResponse
 	(*Flow_Step)(nil),                             // 8: alis.open.flows.v1.Flow.Step
 	(*GenerateFlowTreeResponse_StepChildren)(nil), // 9: alis.open.flows.v1.GenerateFlowTreeResponse.StepChildren
-	(*protobuf.Timestamp)(nil),                    // 10: google.protobuf.Timestamp
-	(*protobuf.FieldMask)(nil),                    // 11: google.protobuf.FieldMask
+	(*timestamppb.Timestamp)(nil),                 // 10: google.protobuf.Timestamp
+	(*fieldmaskpb.FieldMask)(nil),                 // 11: google.protobuf.FieldMask
 	(*v1.PubSubMessage)(nil),                      // 12: alis.open.pubsub.v1.PubSubMessage
-	(*protobuf.Empty)(nil),                        // 13: google.protobuf.Empty
+	(*emptypb.Empty)(nil),                         // 13: google.protobuf.Empty
 }
 var file_alis_open_flows_v1_flows_proto_depIdxs = []int32{
 	8,  // 0: alis.open.flows.v1.Flow.steps:type_name -> alis.open.flows.v1.Flow.Step

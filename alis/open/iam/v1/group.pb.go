@@ -7,10 +7,12 @@
 package v1
 
 import (
-	v1 "go.alis.build/common/google/iam/v1"
-	protobuf "go.alis.build/common/google/protobuf"
+	v1 "google.golang.org/genproto/googleapis/iam/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -34,9 +36,9 @@ type Group struct {
 	// The description of the group
 	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
 	// The time the group was last updated
-	UpdateTime *protobuf.Timestamp `protobuf:"bytes,98,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	UpdateTime *timestamppb.Timestamp `protobuf:"bytes,98,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	// The time the group was created
-	CreateTime    *protobuf.Timestamp `protobuf:"bytes,99,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreateTime    *timestamppb.Timestamp `protobuf:"bytes,99,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -92,14 +94,14 @@ func (x *Group) GetDescription() string {
 	return ""
 }
 
-func (x *Group) GetUpdateTime() *protobuf.Timestamp {
+func (x *Group) GetUpdateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdateTime
 	}
 	return nil
 }
 
-func (x *Group) GetCreateTime() *protobuf.Timestamp {
+func (x *Group) GetCreateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreateTime
 	}
@@ -114,7 +116,7 @@ type GetGroupRequest struct {
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// The fields to return in snake_case.
 	// All fields are returned if not set.
-	ReadMask      *protobuf.FieldMask `protobuf:"bytes,2,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -156,7 +158,7 @@ func (x *GetGroupRequest) GetName() string {
 	return ""
 }
 
-func (x *GetGroupRequest) GetReadMask() *protobuf.FieldMask {
+func (x *GetGroupRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -215,7 +217,7 @@ type UpdateGroupRequest struct {
 	// The group to update
 	Group *Group `protobuf:"bytes,1,opt,name=group,proto3" json:"group,omitempty"`
 	// The set of fields that should be updated
-	UpdateMask    *protobuf.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -257,7 +259,7 @@ func (x *UpdateGroupRequest) GetGroup() *Group {
 	return nil
 }
 
-func (x *UpdateGroupRequest) GetUpdateMask() *protobuf.FieldMask {
+func (x *UpdateGroupRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.UpdateMask
 	}
@@ -320,7 +322,7 @@ type ListGroupsRequest struct {
 	PageToken string `protobuf:"bytes,3,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	// The fields to return in snake_case.
 	// All fields are returned if not set.
-	ReadMask *protobuf.FieldMask `protobuf:"bytes,4,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,4,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// The filter to apply.
 	Filter        string `protobuf:"bytes,5,opt,name=filter,proto3" json:"filter,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -371,7 +373,7 @@ func (x *ListGroupsRequest) GetPageToken() string {
 	return ""
 }
 
-func (x *ListGroupsRequest) GetReadMask() *protobuf.FieldMask {
+func (x *ListGroupsRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -597,8 +599,8 @@ var file_alis_open_iam_v1_group_proto_goTypes = []any{
 	(*ListGroupsResponse)(nil),            // 6: alis.open.iam.v1.ListGroupsResponse
 	(*SyncGroupRequest)(nil),              // 7: alis.open.iam.v1.SyncGroupRequest
 	(*SyncGroupResponse)(nil),             // 8: alis.open.iam.v1.SyncGroupResponse
-	(*protobuf.Timestamp)(nil),            // 9: google.protobuf.Timestamp
-	(*protobuf.FieldMask)(nil),            // 10: google.protobuf.FieldMask
+	(*timestamppb.Timestamp)(nil),         // 9: google.protobuf.Timestamp
+	(*fieldmaskpb.FieldMask)(nil),         // 10: google.protobuf.FieldMask
 	(*v1.GetIamPolicyRequest)(nil),        // 11: google.iam.v1.GetIamPolicyRequest
 	(*v1.SetIamPolicyRequest)(nil),        // 12: google.iam.v1.SetIamPolicyRequest
 	(*v1.TestIamPermissionsRequest)(nil),  // 13: google.iam.v1.TestIamPermissionsRequest
@@ -606,7 +608,7 @@ var file_alis_open_iam_v1_group_proto_goTypes = []any{
 	(*RemoveIamBindingsRequest)(nil),      // 15: alis.open.iam.v1.RemoveIamBindingsRequest
 	(*v1.Policy)(nil),                     // 16: google.iam.v1.Policy
 	(*v1.TestIamPermissionsResponse)(nil), // 17: google.iam.v1.TestIamPermissionsResponse
-	(*protobuf.Empty)(nil),                // 18: google.protobuf.Empty
+	(*emptypb.Empty)(nil),                 // 18: google.protobuf.Empty
 }
 var file_alis_open_iam_v1_group_proto_depIdxs = []int32{
 	9,  // 0: alis.open.iam.v1.Group.update_time:type_name -> google.protobuf.Timestamp

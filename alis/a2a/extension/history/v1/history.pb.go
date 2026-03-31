@@ -8,11 +8,13 @@ package v1
 
 import (
 	v12 "go.alis.build/common/alis/open/iam/v1"
-	v11 "go.alis.build/common/google/iam/v1"
-	protobuf "go.alis.build/common/google/protobuf"
 	v1 "go.alis.build/common/lf/a2a/v1"
+	v11 "google.golang.org/genproto/googleapis/iam/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -38,7 +40,7 @@ type Thread struct {
 	// The agent display name, e.g. Finance Agent
 	AgentDisplayName string `protobuf:"bytes,4,opt,name=agent_display_name,json=agentDisplayName,proto3" json:"agent_display_name,omitempty"`
 	// When this Thread was created.
-	CreateTime    *protobuf.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreateTime    *timestamppb.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -101,7 +103,7 @@ func (x *Thread) GetAgentDisplayName() string {
 	return ""
 }
 
-func (x *Thread) GetCreateTime() *protobuf.Timestamp {
+func (x *Thread) GetCreateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreateTime
 	}
@@ -122,7 +124,7 @@ type ThreadEvent struct {
 	//	*ThreadEvent_ArtifactUpdate
 	Payload isThreadEvent_Payload `protobuf_oneof:"payload"`
 	// When this event was created.
-	CreateTime    *protobuf.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreateTime    *timestamppb.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -207,7 +209,7 @@ func (x *ThreadEvent) GetArtifactUpdate() *v1.TaskArtifactUpdateEvent {
 	return nil
 }
 
-func (x *ThreadEvent) GetCreateTime() *protobuf.Timestamp {
+func (x *ThreadEvent) GetCreateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreateTime
 	}
@@ -253,7 +255,7 @@ type GetThreadRequest struct {
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// A read mask to specify which fields to return.
 	// If not specified, view will determine the fields returned.
-	ReadMask      *protobuf.FieldMask `protobuf:"bytes,3,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,3,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -295,7 +297,7 @@ func (x *GetThreadRequest) GetName() string {
 	return ""
 }
 
-func (x *GetThreadRequest) GetReadMask() *protobuf.FieldMask {
+func (x *GetThreadRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -360,7 +362,7 @@ type ListThreadsRequest struct {
 	AgentId string `protobuf:"bytes,4,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
 	// A read mask to specify which fields to return.
 	// If not specified, view will determine the fields returned.
-	ReadMask      *protobuf.FieldMask `protobuf:"bytes,5,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,5,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -416,7 +418,7 @@ func (x *ListThreadsRequest) GetAgentId() string {
 	return ""
 }
 
-func (x *ListThreadsRequest) GetReadMask() *protobuf.FieldMask {
+func (x *ListThreadsRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -486,7 +488,7 @@ type GetThreadEventRequest struct {
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// A read mask to specify which fields to return.
 	// If not specified, view will determine the fields returned.
-	ReadMask      *protobuf.FieldMask `protobuf:"bytes,3,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,3,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -528,7 +530,7 @@ func (x *GetThreadEventRequest) GetName() string {
 	return ""
 }
 
-func (x *GetThreadEventRequest) GetReadMask() *protobuf.FieldMask {
+func (x *GetThreadEventRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -547,7 +549,7 @@ type ListThreadEventsRequest struct {
 	PageToken string `protobuf:"bytes,3,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	// A read mask to specify which fields to return.
 	// If not specified, view will determine the fields returned.
-	ReadMask      *protobuf.FieldMask `protobuf:"bytes,5,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,5,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -603,7 +605,7 @@ func (x *ListThreadEventsRequest) GetPageToken() string {
 	return ""
 }
 
-func (x *ListThreadEventsRequest) GetReadMask() *protobuf.FieldMask {
+func (x *ListThreadEventsRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -673,7 +675,7 @@ type StreamThreadEventsRequest struct {
 	Parent string `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
 	// A read mask to specify which fields to return.
 	// If not specified, view will determine the fields returned.
-	ReadMask      *protobuf.FieldMask `protobuf:"bytes,3,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,3,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -715,7 +717,7 @@ func (x *StreamThreadEventsRequest) GetParent() string {
 	return ""
 }
 
-func (x *StreamThreadEventsRequest) GetReadMask() *protobuf.FieldMask {
+func (x *StreamThreadEventsRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -908,18 +910,18 @@ var file_alis_a2a_extension_history_v1_history_proto_goTypes = []any{
 	(*StreamThreadEventsRequest)(nil),    // 9: alis.a2a.extension.history.v1.StreamThreadEventsRequest
 	(*AppendThreadEventRequest)(nil),     // 10: alis.a2a.extension.history.v1.AppendThreadEventRequest
 	(*AppendThreadEventResponse)(nil),    // 11: alis.a2a.extension.history.v1.AppendThreadEventResponse
-	(*protobuf.Timestamp)(nil),           // 12: google.protobuf.Timestamp
+	(*timestamppb.Timestamp)(nil),        // 12: google.protobuf.Timestamp
 	(*v1.Task)(nil),                      // 13: lf.a2a.v1.Task
 	(*v1.Message)(nil),                   // 14: lf.a2a.v1.Message
 	(*v1.TaskStatusUpdateEvent)(nil),     // 15: lf.a2a.v1.TaskStatusUpdateEvent
 	(*v1.TaskArtifactUpdateEvent)(nil),   // 16: lf.a2a.v1.TaskArtifactUpdateEvent
-	(*protobuf.FieldMask)(nil),           // 17: google.protobuf.FieldMask
+	(*fieldmaskpb.FieldMask)(nil),        // 17: google.protobuf.FieldMask
 	(*v11.GetIamPolicyRequest)(nil),      // 18: google.iam.v1.GetIamPolicyRequest
 	(*v11.SetIamPolicyRequest)(nil),      // 19: google.iam.v1.SetIamPolicyRequest
 	(*v12.AddIamBindingsRequest)(nil),    // 20: alis.open.iam.v1.AddIamBindingsRequest
 	(*v12.RemoveIamBindingsRequest)(nil), // 21: alis.open.iam.v1.RemoveIamBindingsRequest
 	(*v11.Policy)(nil),                   // 22: google.iam.v1.Policy
-	(*protobuf.Empty)(nil),               // 23: google.protobuf.Empty
+	(*emptypb.Empty)(nil),                // 23: google.protobuf.Empty
 }
 var file_alis_a2a_extension_history_v1_history_proto_depIdxs = []int32{
 	12, // 0: alis.a2a.extension.history.v1.Thread.create_time:type_name -> google.protobuf.Timestamp

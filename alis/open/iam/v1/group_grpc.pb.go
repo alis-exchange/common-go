@@ -8,11 +8,11 @@ package v1
 
 import (
 	context "context"
-	v1 "go.alis.build/common/google/iam/v1"
-	protobuf "go.alis.build/common/google/protobuf"
+	v1 "google.golang.org/genproto/googleapis/iam/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -57,7 +57,7 @@ type GroupsServiceClient interface {
 	// Updates a Group.
 	UpdateGroup(ctx context.Context, in *UpdateGroupRequest, opts ...grpc.CallOption) (*Group, error)
 	// Deletes a Group.
-	DeleteGroup(ctx context.Context, in *DeleteGroupRequest, opts ...grpc.CallOption) (*protobuf.Empty, error)
+	DeleteGroup(ctx context.Context, in *DeleteGroupRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Lists Groups. Results are sorted by name, ascending.
 	ListGroups(ctx context.Context, in *ListGroupsRequest, opts ...grpc.CallOption) (*ListGroupsResponse, error)
 	// Syncs the specified group to its list of users
@@ -152,9 +152,9 @@ func (c *groupsServiceClient) UpdateGroup(ctx context.Context, in *UpdateGroupRe
 	return out, nil
 }
 
-func (c *groupsServiceClient) DeleteGroup(ctx context.Context, in *DeleteGroupRequest, opts ...grpc.CallOption) (*protobuf.Empty, error) {
+func (c *groupsServiceClient) DeleteGroup(ctx context.Context, in *DeleteGroupRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(protobuf.Empty)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, GroupsService_DeleteGroup_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -205,7 +205,7 @@ type GroupsServiceServer interface {
 	// Updates a Group.
 	UpdateGroup(context.Context, *UpdateGroupRequest) (*Group, error)
 	// Deletes a Group.
-	DeleteGroup(context.Context, *DeleteGroupRequest) (*protobuf.Empty, error)
+	DeleteGroup(context.Context, *DeleteGroupRequest) (*emptypb.Empty, error)
 	// Lists Groups. Results are sorted by name, ascending.
 	ListGroups(context.Context, *ListGroupsRequest) (*ListGroupsResponse, error)
 	// Syncs the specified group to its list of users
@@ -244,7 +244,7 @@ func (UnimplementedGroupsServiceServer) CreateGroup(context.Context, *CreateGrou
 func (UnimplementedGroupsServiceServer) UpdateGroup(context.Context, *UpdateGroupRequest) (*Group, error) {
 	return nil, status.Error(codes.Unimplemented, "method UpdateGroup not implemented")
 }
-func (UnimplementedGroupsServiceServer) DeleteGroup(context.Context, *DeleteGroupRequest) (*protobuf.Empty, error) {
+func (UnimplementedGroupsServiceServer) DeleteGroup(context.Context, *DeleteGroupRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteGroup not implemented")
 }
 func (UnimplementedGroupsServiceServer) ListGroups(context.Context, *ListGroupsRequest) (*ListGroupsResponse, error) {

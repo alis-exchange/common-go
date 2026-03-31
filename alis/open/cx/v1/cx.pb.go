@@ -7,9 +7,10 @@
 package v1
 
 import (
-	protobuf "go.alis.build/common/google/protobuf"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
+	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -1285,7 +1286,7 @@ type Instrument struct {
 	// Name of the issuing entity of the security.
 	Issuer string `protobuf:"bytes,9,opt,name=issuer,proto3" json:"issuer,omitempty"`
 	// Instrument Update time
-	UpdateTime *protobuf.Timestamp `protobuf:"bytes,10,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	UpdateTime *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	// ASISA attributes.
 	Asisa *Instrument_Asisa `protobuf:"bytes,100,opt,name=asisa,proto3" json:"asisa,omitempty"`
 	// MiFID attributes
@@ -1397,7 +1398,7 @@ func (x *Instrument) GetIssuer() string {
 	return ""
 }
 
-func (x *Instrument) GetUpdateTime() *protobuf.Timestamp {
+func (x *Instrument) GetUpdateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdateTime
 	}
@@ -1477,9 +1478,9 @@ type Instrument_Asisa struct {
 	//	google.protobuf.BoolValue equities_index_linked = 9;
 	//
 	// Indicates if the security forms part of the 5% Africa allowance.
-	AfricaAllowance *protobuf.BoolValue `protobuf:"bytes,10,opt,name=africa_allowance,json=africaAllowance,proto3" json:"africa_allowance,omitempty"`
+	AfricaAllowance *wrapperspb.BoolValue `protobuf:"bytes,10,opt,name=africa_allowance,json=africaAllowance,proto3" json:"africa_allowance,omitempty"`
 	// If the security is classified as a compulsory convertible debenture (CCD)
-	CcdClassified *protobuf.BoolValue `protobuf:"bytes,11,opt,name=ccd_classified,json=ccdClassified,proto3" json:"ccd_classified,omitempty"`
+	CcdClassified *wrapperspb.BoolValue `protobuf:"bytes,11,opt,name=ccd_classified,json=ccdClassified,proto3" json:"ccd_classified,omitempty"`
 	// Currency
 	// The 3-letter currency code defined in ISO 4217.
 	// Currency in which the security was issued. Equities: Trading currency for the security.
@@ -1580,14 +1581,14 @@ func (x *Instrument_Asisa) GetLongTermCreditRatingIssuer() *Instrument_CreditRat
 	return nil
 }
 
-func (x *Instrument_Asisa) GetAfricaAllowance() *protobuf.BoolValue {
+func (x *Instrument_Asisa) GetAfricaAllowance() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.AfricaAllowance
 	}
 	return nil
 }
 
-func (x *Instrument_Asisa) GetCcdClassified() *protobuf.BoolValue {
+func (x *Instrument_Asisa) GetCcdClassified() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.CcdClassified
 	}
@@ -1684,15 +1685,15 @@ type Instrument_Ucits struct {
 	// Name of the issuing entity of the security.
 	Issuer string `protobuf:"bytes,3,opt,name=issuer,proto3" json:"issuer,omitempty"`
 	// Instrument issued by Banks in EU or in non-member states with equivalent supervision
-	EuBankIssuer *protobuf.BoolValue `protobuf:"bytes,4,opt,name=eu_bank_issuer,json=euBankIssuer,proto3" json:"eu_bank_issuer,omitempty"`
+	EuBankIssuer *wrapperspb.BoolValue `protobuf:"bytes,4,opt,name=eu_bank_issuer,json=euBankIssuer,proto3" json:"eu_bank_issuer,omitempty"`
 	// Instrument issued by EU credit institutions with special public supervision
-	EuCreditInstitutionIssuer *protobuf.BoolValue `protobuf:"bytes,5,opt,name=eu_credit_institution_issuer,json=euCreditInstitutionIssuer,proto3" json:"eu_credit_institution_issuer,omitempty"`
+	EuCreditInstitutionIssuer *wrapperspb.BoolValue `protobuf:"bytes,5,opt,name=eu_credit_institution_issuer,json=euCreditInstitutionIssuer,proto3" json:"eu_credit_institution_issuer,omitempty"`
 	// Permissible for inclusion in a portfolio governed by UCITS
-	UcitsCompatible *protobuf.BoolValue `protobuf:"bytes,6,opt,name=ucits_compatible,json=ucitsCompatible,proto3" json:"ucits_compatible,omitempty"`
+	UcitsCompatible *wrapperspb.BoolValue `protobuf:"bytes,6,opt,name=ucits_compatible,json=ucitsCompatible,proto3" json:"ucits_compatible,omitempty"`
 	// Instrument is traded on a regulated exchange
-	TradedOnExchange *protobuf.BoolValue `protobuf:"bytes,7,opt,name=traded_on_exchange,json=tradedOnExchange,proto3" json:"traded_on_exchange,omitempty"`
+	TradedOnExchange *wrapperspb.BoolValue `protobuf:"bytes,7,opt,name=traded_on_exchange,json=tradedOnExchange,proto3" json:"traded_on_exchange,omitempty"`
 	// Instrument itself is UCITS fund or equivalent funds (UCI)
-	UcitsUciFund *protobuf.BoolValue `protobuf:"bytes,8,opt,name=ucits_uci_fund,json=ucitsUciFund,proto3" json:"ucits_uci_fund,omitempty"`
+	UcitsUciFund *wrapperspb.BoolValue `protobuf:"bytes,8,opt,name=ucits_uci_fund,json=ucitsUciFund,proto3" json:"ucits_uci_fund,omitempty"`
 	// Details on whether the instrument attributes meet the requirements for the Set
 	Validation    *Instrument_Validation `protobuf:"bytes,99,opt,name=validation,proto3" json:"validation,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -1750,35 +1751,35 @@ func (x *Instrument_Ucits) GetIssuer() string {
 	return ""
 }
 
-func (x *Instrument_Ucits) GetEuBankIssuer() *protobuf.BoolValue {
+func (x *Instrument_Ucits) GetEuBankIssuer() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.EuBankIssuer
 	}
 	return nil
 }
 
-func (x *Instrument_Ucits) GetEuCreditInstitutionIssuer() *protobuf.BoolValue {
+func (x *Instrument_Ucits) GetEuCreditInstitutionIssuer() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.EuCreditInstitutionIssuer
 	}
 	return nil
 }
 
-func (x *Instrument_Ucits) GetUcitsCompatible() *protobuf.BoolValue {
+func (x *Instrument_Ucits) GetUcitsCompatible() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.UcitsCompatible
 	}
 	return nil
 }
 
-func (x *Instrument_Ucits) GetTradedOnExchange() *protobuf.BoolValue {
+func (x *Instrument_Ucits) GetTradedOnExchange() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.TradedOnExchange
 	}
 	return nil
 }
 
-func (x *Instrument_Ucits) GetUcitsUciFund() *protobuf.BoolValue {
+func (x *Instrument_Ucits) GetUcitsUciFund() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.UcitsUciFund
 	}
@@ -1798,7 +1799,7 @@ type Instrument_Reg28 struct {
 	// The different categories of securities
 	Category Instrument_Reg28_Category `protobuf:"varint,1,opt,name=category,proto3,enum=alis.open.cx.v1.Instrument_Reg28_Category" json:"category,omitempty"`
 	// Issuer of instrument is listed on an exchange
-	ExchangeListedIssuer *protobuf.BoolValue `protobuf:"bytes,2,opt,name=exchange_listed_issuer,json=exchangeListedIssuer,proto3" json:"exchange_listed_issuer,omitempty"`
+	ExchangeListedIssuer *wrapperspb.BoolValue `protobuf:"bytes,2,opt,name=exchange_listed_issuer,json=exchangeListedIssuer,proto3" json:"exchange_listed_issuer,omitempty"`
 	// Description of the specific instrument type within its market sector.
 	// This typically depends on the market sector and is fairly flexible
 	SecurityType string `protobuf:"bytes,3,opt,name=security_type,json=securityType,proto3" json:"security_type,omitempty"`
@@ -1851,7 +1852,7 @@ func (x *Instrument_Reg28) GetCategory() Instrument_Reg28_Category {
 	return Instrument_Reg28_CATEGORY_UNSPECIFIED
 }
 
-func (x *Instrument_Reg28) GetExchangeListedIssuer() *protobuf.BoolValue {
+func (x *Instrument_Reg28) GetExchangeListedIssuer() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.ExchangeListedIssuer
 	}
@@ -1904,7 +1905,7 @@ type Instrument_Cisca struct {
 	// Name of the issuing entity of the security.
 	Issuer string `protobuf:"bytes,4,opt,name=issuer,proto3" json:"issuer,omitempty"`
 	// indication if security has embedded leveraged
-	HasEmbeddedLeverage *protobuf.BoolValue `protobuf:"bytes,5,opt,name=has_embedded_leverage,json=hasEmbeddedLeverage,proto3" json:"has_embedded_leverage,omitempty"`
+	HasEmbeddedLeverage *wrapperspb.BoolValue `protobuf:"bytes,5,opt,name=has_embedded_leverage,json=hasEmbeddedLeverage,proto3" json:"has_embedded_leverage,omitempty"`
 	// equity security's weighting in its relevant index
 	// e.g. 0.5 = 50%
 	IndexWeight float64 `protobuf:"fixed64,6,opt,name=index_weight,json=indexWeight,proto3" json:"index_weight,omitempty"`
@@ -1967,7 +1968,7 @@ func (x *Instrument_Cisca) GetIssuer() string {
 	return ""
 }
 
-func (x *Instrument_Cisca) GetHasEmbeddedLeverage() *protobuf.BoolValue {
+func (x *Instrument_Cisca) GetHasEmbeddedLeverage() *wrapperspb.BoolValue {
 	if x != nil {
 		return x.HasEmbeddedLeverage
 	}
@@ -2645,8 +2646,8 @@ var file_alis_open_cx_v1_cx_proto_goTypes = []any{
 	(*Instrument_CreditRating)(nil),     // 18: alis.open.cx.v1.Instrument.CreditRating
 	(*Instrument_Validation)(nil),       // 19: alis.open.cx.v1.Instrument.Validation
 	(*Instrument_Validation_Field)(nil), // 20: alis.open.cx.v1.Instrument.Validation.Field
-	(*protobuf.Timestamp)(nil),          // 21: google.protobuf.Timestamp
-	(*protobuf.BoolValue)(nil),          // 22: google.protobuf.BoolValue
+	(*timestamppb.Timestamp)(nil),       // 21: google.protobuf.Timestamp
+	(*wrapperspb.BoolValue)(nil),        // 22: google.protobuf.BoolValue
 }
 var file_alis_open_cx_v1_cx_proto_depIdxs = []int32{
 	3,  // 0: alis.open.cx.v1.Instrument.figi_type:type_name -> alis.open.cx.v1.Instrument.FigiType

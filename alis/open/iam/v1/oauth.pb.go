@@ -7,9 +7,9 @@
 package v1
 
 import (
-	protobuf "go.alis.build/common/google/protobuf"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	durationpb "google.golang.org/protobuf/types/known/durationpb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -320,11 +320,11 @@ type EmailAuthProvider struct {
 	Server *EmailAuthProvider_Server `protobuf:"bytes,2,opt,name=server,proto3" json:"server,omitempty"`
 	// The time that needs to pass before a user can request another email.
 	// Default is none, but highly recommended to set to prevent spam.
-	ThrottleDuration *protobuf.Duration `protobuf:"bytes,3,opt,name=throttle_duration,json=throttleDuration,proto3" json:"throttle_duration,omitempty"`
+	ThrottleDuration *durationpb.Duration `protobuf:"bytes,3,opt,name=throttle_duration,json=throttleDuration,proto3" json:"throttle_duration,omitempty"`
 	// The duration that a user must is auto signed in for after clicking the sign in link.
 	// This corresponds directly to the expiry date on the refresh token.
 	// If not set, a user is signed in for 8 hours.
-	SignedInDuration *protobuf.Duration `protobuf:"bytes,4,opt,name=signed_in_duration,json=signedInDuration,proto3" json:"signed_in_duration,omitempty"`
+	SignedInDuration *durationpb.Duration `protobuf:"bytes,4,opt,name=signed_in_duration,json=signedInDuration,proto3" json:"signed_in_duration,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -373,14 +373,14 @@ func (x *EmailAuthProvider) GetServer() *EmailAuthProvider_Server {
 	return nil
 }
 
-func (x *EmailAuthProvider) GetThrottleDuration() *protobuf.Duration {
+func (x *EmailAuthProvider) GetThrottleDuration() *durationpb.Duration {
 	if x != nil {
 		return x.ThrottleDuration
 	}
 	return nil
 }
 
-func (x *EmailAuthProvider) GetSignedInDuration() *protobuf.Duration {
+func (x *EmailAuthProvider) GetSignedInDuration() *durationpb.Duration {
 	if x != nil {
 		return x.SignedInDuration
 	}
@@ -1048,7 +1048,7 @@ var file_alis_open_iam_v1_oauth_proto_goTypes = []any{
 	(*IamConfig_SelfSignupSpec_DomainProvider)(nil), // 10: alis.open.iam.v1.IamConfig.SelfSignupSpec.DomainProvider
 	(*EmailAuthProvider_Server)(nil),                // 11: alis.open.iam.v1.EmailAuthProvider.Server
 	(*EmailAuthProvider_Sendgrid)(nil),              // 12: alis.open.iam.v1.EmailAuthProvider.Sendgrid
-	(*protobuf.Duration)(nil),                       // 13: google.protobuf.Duration
+	(*durationpb.Duration)(nil),                     // 13: google.protobuf.Duration
 	(IdentityProvider)(0),                           // 14: alis.open.iam.v1.IdentityProvider
 }
 var file_alis_open_iam_v1_oauth_proto_depIdxs = []int32{

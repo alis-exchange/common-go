@@ -9,10 +9,12 @@ package v1
 import (
 	v12 "go.alis.build/common/alis/open/iam/v1"
 	v1 "go.alis.build/common/alis/open/validation/v1"
-	v11 "go.alis.build/common/google/iam/v1"
-	protobuf "go.alis.build/common/google/protobuf"
+	v11 "google.golang.org/genproto/googleapis/iam/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -32,9 +34,9 @@ type IssueSubscriber struct {
 	// Format: issues/([a-z0-9-]{2,50})/subscribers/([a-z0-9-]{2,50})
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// Output only. The time when this IssueSubscription was created.
-	CreateTime *protobuf.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreateTime *timestamppb.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// Output only . The time when this IssueSubscription was last updated.
-	UpdateTime    *protobuf.Timestamp `protobuf:"bytes,99,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	UpdateTime    *timestamppb.Timestamp `protobuf:"bytes,99,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -76,14 +78,14 @@ func (x *IssueSubscriber) GetName() string {
 	return ""
 }
 
-func (x *IssueSubscriber) GetCreateTime() *protobuf.Timestamp {
+func (x *IssueSubscriber) GetCreateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreateTime
 	}
 	return nil
 }
 
-func (x *IssueSubscriber) GetUpdateTime() *protobuf.Timestamp {
+func (x *IssueSubscriber) GetUpdateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdateTime
 	}
@@ -263,7 +265,7 @@ type ListIssueSubscribersRequest struct {
 	PageToken string `protobuf:"bytes,3,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	// The fields to return in snake_issue.
 	// All fields are returned if not set.
-	ReadMask *protobuf.FieldMask `protobuf:"bytes,4,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,4,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// The filter to apply
 	Filter string `protobuf:"bytes,5,opt,name=filter,proto3" json:"filter,omitempty"`
 	// The order to sort the results by
@@ -328,7 +330,7 @@ func (x *ListIssueSubscribersRequest) GetPageToken() string {
 	return ""
 }
 
-func (x *ListIssueSubscribersRequest) GetReadMask() *protobuf.FieldMask {
+func (x *ListIssueSubscribersRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -467,8 +469,8 @@ var file_alis_open_support_v1_issuesubscriber_proto_goTypes = []any{
 	(*GetIssueSubscriberRequest)(nil),      // 3: alis.open.support.v1.GetIssueSubscriberRequest
 	(*ListIssueSubscribersRequest)(nil),    // 4: alis.open.support.v1.ListIssueSubscribersRequest
 	(*ListIssueSubscribersResponse)(nil),   // 5: alis.open.support.v1.ListIssueSubscribersResponse
-	(*protobuf.Timestamp)(nil),             // 6: google.protobuf.Timestamp
-	(*protobuf.FieldMask)(nil),             // 7: google.protobuf.FieldMask
+	(*timestamppb.Timestamp)(nil),          // 6: google.protobuf.Timestamp
+	(*fieldmaskpb.FieldMask)(nil),          // 7: google.protobuf.FieldMask
 	(*v1.ValidateMessageRequest)(nil),      // 8: alis.open.validation.v1.ValidateMessageRequest
 	(*v1.RetrieveRulesRequest)(nil),        // 9: alis.open.validation.v1.RetrieveRulesRequest
 	(*v11.GetIamPolicyRequest)(nil),        // 10: google.iam.v1.GetIamPolicyRequest
@@ -480,7 +482,7 @@ var file_alis_open_support_v1_issuesubscriber_proto_goTypes = []any{
 	(*v1.RetrieveRulesResponse)(nil),       // 16: alis.open.validation.v1.RetrieveRulesResponse
 	(*v11.Policy)(nil),                     // 17: google.iam.v1.Policy
 	(*v11.TestIamPermissionsResponse)(nil), // 18: google.iam.v1.TestIamPermissionsResponse
-	(*protobuf.Empty)(nil),                 // 19: google.protobuf.Empty
+	(*emptypb.Empty)(nil),                  // 19: google.protobuf.Empty
 }
 var file_alis_open_support_v1_issuesubscriber_proto_depIdxs = []int32{
 	6,  // 0: alis.open.support.v1.IssueSubscriber.create_time:type_name -> google.protobuf.Timestamp
