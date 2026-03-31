@@ -101,6 +101,9 @@ type Cron struct {
 	At *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=at,proto3" json:"at,omitempty"`
 	// The Cron type.
 	Type Cron_Type `protobuf:"varint,6,opt,name=type,proto3,enum=alis.a2a.extension.scheduler.v1.Cron_Type" json:"type,omitempty"`
+	// Cron owner.
+	// Format: users/*
+	Owner string `protobuf:"bytes,7,opt,name=owner,proto3" json:"owner,omitempty"`
 	// When this Cron was created.
 	CreateTime *timestamppb.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// When this Cron was last updated.
@@ -179,6 +182,13 @@ func (x *Cron) GetType() Cron_Type {
 		return x.Type
 	}
 	return Cron_TYPE_UNSPECIFIED
+}
+
+func (x *Cron) GetOwner() string {
+	if x != nil {
+		return x.Owner
+	}
+	return ""
 }
 
 func (x *Cron) GetCreateTime() *timestamppb.Timestamp {
@@ -605,14 +615,15 @@ var File_alis_a2a_extension_scheduler_v1_scheduler_proto protoreflect.FileDescri
 
 const file_alis_a2a_extension_scheduler_v1_scheduler_proto_rawDesc = "" +
 	"\n" +
-	"/alis/a2a/extension/scheduler/v1/scheduler.proto\x12\x1falis.a2a.extension.scheduler.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a google/protobuf/field_mask.proto\x1a\x1agoogle/iam/v1/policy.proto\x1a\x1egoogle/iam/v1/iam_policy.proto\x1a\x1aalis/open/iam/v1/iam.proto\x1a\x1bgoogle/protobuf/empty.proto\"\x82\x03\n" +
+	"/alis/a2a/extension/scheduler/v1/scheduler.proto\x12\x1falis.a2a.extension.scheduler.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a google/protobuf/field_mask.proto\x1a\x1agoogle/iam/v1/policy.proto\x1a\x1egoogle/iam/v1/iam_policy.proto\x1a\x1aalis/open/iam/v1/iam.proto\x1a\x1bgoogle/protobuf/empty.proto\"\x98\x03\n" +
 	"\x04Cron\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x16\n" +
 	"\x06prompt\x18\x02 \x01(\tR\x06prompt\x12\x12\n" +
 	"\x04expr\x18\x03 \x01(\tR\x04expr\x12\x1a\n" +
 	"\btimezone\x18\x04 \x01(\tR\btimezone\x12*\n" +
 	"\x02at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\x02at\x12>\n" +
-	"\x04type\x18\x06 \x01(\x0e2*.alis.a2a.extension.scheduler.v1.Cron.TypeR\x04type\x12;\n" +
+	"\x04type\x18\x06 \x01(\x0e2*.alis.a2a.extension.scheduler.v1.Cron.TypeR\x04type\x12\x14\n" +
+	"\x05owner\x18\a \x01(\tR\x05owner\x12;\n" +
 	"\vcreate_time\x18b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"createTime\x12;\n" +
 	"\vupdate_time\x18c \x01(\v2\x1a.google.protobuf.TimestampR\n" +

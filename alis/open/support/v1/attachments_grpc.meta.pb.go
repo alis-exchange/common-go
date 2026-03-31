@@ -3,7 +3,7 @@
 // Source: alis/open/support/v1/attachments.proto
 // Plugin version: v0.0.1
 //
-// Generated on: 2026-03-30 07:28:23 UTC
+// Generated on: 2026-03-31 06:59:39 UTC
 
 package v1
 
