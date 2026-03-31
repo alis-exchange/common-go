@@ -3,19 +3,11 @@
 // Source: alis/a2a/extension/scheduler/v1/scheduler.proto
 // Plugin version: v0.0.1
 //
-// Generated on: 2026-03-31 06:59:39 UTC
+// Generated on: 2026-03-31 09:21:17 UTC
 
 package v1
 
 const (
-	// SchedulerService_GetIamPolicy_FullMethodDescription returns the description of the alis.a2a.extension.scheduler.v1.SchedulerService.GetIamPolicy method.
-	SchedulerService_GetIamPolicy_FullMethodDescription = "Gets the IAM policy for a resource implemented in this service."
-	// SchedulerService_SetIamPolicy_FullMethodDescription returns the description of the alis.a2a.extension.scheduler.v1.SchedulerService.SetIamPolicy method.
-	SchedulerService_SetIamPolicy_FullMethodDescription = "Sets the IAM policy for a resource implemented in this service."
-	// SchedulerService_AddIamBindings_FullMethodDescription returns the description of the alis.a2a.extension.scheduler.v1.SchedulerService.AddIamBindings method.
-	SchedulerService_AddIamBindings_FullMethodDescription = "Adds principals or updates the roles existing principals have on an IAM Policy protected resource."
-	// SchedulerService_RemoveIamBindings_FullMethodDescription returns the description of the alis.a2a.extension.scheduler.v1.SchedulerService.RemoveIamBindings method.
-	SchedulerService_RemoveIamBindings_FullMethodDescription = "Removes principals or some of the roles they have on an IAM Policy protected resource."
 	// SchedulerService_CreateCron_FullMethodDescription returns the description of the alis.a2a.extension.scheduler.v1.SchedulerService.CreateCron method.
 	SchedulerService_CreateCron_FullMethodDescription = "Creates a Cron."
 	// SchedulerService_ListCrons_FullMethodDescription returns the description of the alis.a2a.extension.scheduler.v1.SchedulerService.ListCrons method.

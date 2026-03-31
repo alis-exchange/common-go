@@ -3,7 +3,7 @@
 // Source: alis/open/cx/v1/cx.proto
 // Plugin version: v0.0.1
 //
-// Generated on: 2026-03-31 06:59:39 UTC
+// Generated on: 2026-03-31 09:21:17 UTC
 
 package v1
 

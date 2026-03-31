@@ -8,8 +8,6 @@ package v1
 
 import (
 	context "context"
-	v11 "go.alis.build/common/alis/open/iam/v1"
-	v1 "google.golang.org/genproto/googleapis/iam/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -22,16 +20,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	SchedulerService_GetIamPolicy_FullMethodName      = "/alis.a2a.extension.scheduler.v1.SchedulerService/GetIamPolicy"
-	SchedulerService_SetIamPolicy_FullMethodName      = "/alis.a2a.extension.scheduler.v1.SchedulerService/SetIamPolicy"
-	SchedulerService_AddIamBindings_FullMethodName    = "/alis.a2a.extension.scheduler.v1.SchedulerService/AddIamBindings"
-	SchedulerService_RemoveIamBindings_FullMethodName = "/alis.a2a.extension.scheduler.v1.SchedulerService/RemoveIamBindings"
-	SchedulerService_CreateCron_FullMethodName        = "/alis.a2a.extension.scheduler.v1.SchedulerService/CreateCron"
-	SchedulerService_ListCrons_FullMethodName         = "/alis.a2a.extension.scheduler.v1.SchedulerService/ListCrons"
-	SchedulerService_GetCron_FullMethodName           = "/alis.a2a.extension.scheduler.v1.SchedulerService/GetCron"
-	SchedulerService_UpdateCron_FullMethodName        = "/alis.a2a.extension.scheduler.v1.SchedulerService/UpdateCron"
-	SchedulerService_DeleteCron_FullMethodName        = "/alis.a2a.extension.scheduler.v1.SchedulerService/DeleteCron"
-	SchedulerService_RunCron_FullMethodName           = "/alis.a2a.extension.scheduler.v1.SchedulerService/RunCron"
+	SchedulerService_CreateCron_FullMethodName = "/alis.a2a.extension.scheduler.v1.SchedulerService/CreateCron"
+	SchedulerService_ListCrons_FullMethodName  = "/alis.a2a.extension.scheduler.v1.SchedulerService/ListCrons"
+	SchedulerService_GetCron_FullMethodName    = "/alis.a2a.extension.scheduler.v1.SchedulerService/GetCron"
+	SchedulerService_UpdateCron_FullMethodName = "/alis.a2a.extension.scheduler.v1.SchedulerService/UpdateCron"
+	SchedulerService_DeleteCron_FullMethodName = "/alis.a2a.extension.scheduler.v1.SchedulerService/DeleteCron"
+	SchedulerService_RunCron_FullMethodName    = "/alis.a2a.extension.scheduler.v1.SchedulerService/RunCron"
 )
 
 // SchedulerServiceClient is the client API for SchedulerService service.
@@ -40,14 +34,6 @@ const (
 //
 // Manages scheduled invocations of an A2A agent via Cron Jobs
 type SchedulerServiceClient interface {
-	// Gets the IAM policy for a resource implemented in this service.
-	GetIamPolicy(ctx context.Context, in *v1.GetIamPolicyRequest, opts ...grpc.CallOption) (*v1.Policy, error)
-	// Sets the IAM policy for a resource implemented in this service.
-	SetIamPolicy(ctx context.Context, in *v1.SetIamPolicyRequest, opts ...grpc.CallOption) (*v1.Policy, error)
-	// Adds principals or updates the roles existing principals have on an IAM Policy protected resource.
-	AddIamBindings(ctx context.Context, in *v11.AddIamBindingsRequest, opts ...grpc.CallOption) (*v1.Policy, error)
-	// Removes principals or some of the roles they have on an IAM Policy protected resource.
-	RemoveIamBindings(ctx context.Context, in *v11.RemoveIamBindingsRequest, opts ...grpc.CallOption) (*v1.Policy, error)
 	// Creates a Cron.
 	CreateCron(ctx context.Context, in *CreateCronRequest, opts ...grpc.CallOption) (*Cron, error)
 	// Lists all Crons.
@@ -68,46 +54,6 @@ type schedulerServiceClient struct {
 
 func NewSchedulerServiceClient(cc grpc.ClientConnInterface) SchedulerServiceClient {
 	return &schedulerServiceClient{cc}
-}
-
-func (c *schedulerServiceClient) GetIamPolicy(ctx context.Context, in *v1.GetIamPolicyRequest, opts ...grpc.CallOption) (*v1.Policy, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(v1.Policy)
-	err := c.cc.Invoke(ctx, SchedulerService_GetIamPolicy_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *schedulerServiceClient) SetIamPolicy(ctx context.Context, in *v1.SetIamPolicyRequest, opts ...grpc.CallOption) (*v1.Policy, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(v1.Policy)
-	err := c.cc.Invoke(ctx, SchedulerService_SetIamPolicy_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *schedulerServiceClient) AddIamBindings(ctx context.Context, in *v11.AddIamBindingsRequest, opts ...grpc.CallOption) (*v1.Policy, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(v1.Policy)
-	err := c.cc.Invoke(ctx, SchedulerService_AddIamBindings_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *schedulerServiceClient) RemoveIamBindings(ctx context.Context, in *v11.RemoveIamBindingsRequest, opts ...grpc.CallOption) (*v1.Policy, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(v1.Policy)
-	err := c.cc.Invoke(ctx, SchedulerService_RemoveIamBindings_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *schedulerServiceClient) CreateCron(ctx context.Context, in *CreateCronRequest, opts ...grpc.CallOption) (*Cron, error) {
@@ -176,14 +122,6 @@ func (c *schedulerServiceClient) RunCron(ctx context.Context, in *RunCronRequest
 //
 // Manages scheduled invocations of an A2A agent via Cron Jobs
 type SchedulerServiceServer interface {
-	// Gets the IAM policy for a resource implemented in this service.
-	GetIamPolicy(context.Context, *v1.GetIamPolicyRequest) (*v1.Policy, error)
-	// Sets the IAM policy for a resource implemented in this service.
-	SetIamPolicy(context.Context, *v1.SetIamPolicyRequest) (*v1.Policy, error)
-	// Adds principals or updates the roles existing principals have on an IAM Policy protected resource.
-	AddIamBindings(context.Context, *v11.AddIamBindingsRequest) (*v1.Policy, error)
-	// Removes principals or some of the roles they have on an IAM Policy protected resource.
-	RemoveIamBindings(context.Context, *v11.RemoveIamBindingsRequest) (*v1.Policy, error)
 	// Creates a Cron.
 	CreateCron(context.Context, *CreateCronRequest) (*Cron, error)
 	// Lists all Crons.
@@ -206,18 +144,6 @@ type SchedulerServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedSchedulerServiceServer struct{}
 
-func (UnimplementedSchedulerServiceServer) GetIamPolicy(context.Context, *v1.GetIamPolicyRequest) (*v1.Policy, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetIamPolicy not implemented")
-}
-func (UnimplementedSchedulerServiceServer) SetIamPolicy(context.Context, *v1.SetIamPolicyRequest) (*v1.Policy, error) {
-	return nil, status.Error(codes.Unimplemented, "method SetIamPolicy not implemented")
-}
-func (UnimplementedSchedulerServiceServer) AddIamBindings(context.Context, *v11.AddIamBindingsRequest) (*v1.Policy, error) {
-	return nil, status.Error(codes.Unimplemented, "method AddIamBindings not implemented")
-}
-func (UnimplementedSchedulerServiceServer) RemoveIamBindings(context.Context, *v11.RemoveIamBindingsRequest) (*v1.Policy, error) {
-	return nil, status.Error(codes.Unimplemented, "method RemoveIamBindings not implemented")
-}
 func (UnimplementedSchedulerServiceServer) CreateCron(context.Context, *CreateCronRequest) (*Cron, error) {
 	return nil, status.Error(codes.Unimplemented, "method CreateCron not implemented")
 }
@@ -255,78 +181,6 @@ func RegisterSchedulerServiceServer(s grpc.ServiceRegistrar, srv SchedulerServic
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&SchedulerService_ServiceDesc, srv)
-}
-
-func _SchedulerService_GetIamPolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.GetIamPolicyRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SchedulerServiceServer).GetIamPolicy(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: SchedulerService_GetIamPolicy_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulerServiceServer).GetIamPolicy(ctx, req.(*v1.GetIamPolicyRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _SchedulerService_SetIamPolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.SetIamPolicyRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SchedulerServiceServer).SetIamPolicy(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: SchedulerService_SetIamPolicy_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulerServiceServer).SetIamPolicy(ctx, req.(*v1.SetIamPolicyRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _SchedulerService_AddIamBindings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v11.AddIamBindingsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SchedulerServiceServer).AddIamBindings(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: SchedulerService_AddIamBindings_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulerServiceServer).AddIamBindings(ctx, req.(*v11.AddIamBindingsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _SchedulerService_RemoveIamBindings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v11.RemoveIamBindingsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SchedulerServiceServer).RemoveIamBindings(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: SchedulerService_RemoveIamBindings_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulerServiceServer).RemoveIamBindings(ctx, req.(*v11.RemoveIamBindingsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _SchedulerService_CreateCron_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -444,22 +298,6 @@ var SchedulerService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "alis.a2a.extension.scheduler.v1.SchedulerService",
 	HandlerType: (*SchedulerServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "GetIamPolicy",
-			Handler:    _SchedulerService_GetIamPolicy_Handler,
-		},
-		{
-			MethodName: "SetIamPolicy",
-			Handler:    _SchedulerService_SetIamPolicy_Handler,
-		},
-		{
-			MethodName: "AddIamBindings",
-			Handler:    _SchedulerService_AddIamBindings_Handler,
-		},
-		{
-			MethodName: "RemoveIamBindings",
-			Handler:    _SchedulerService_RemoveIamBindings_Handler,
-		},
 		{
 			MethodName: "CreateCron",
 			Handler:    _SchedulerService_CreateCron_Handler,
