@@ -7,7 +7,6 @@
 package v1
 
 import (
-	v12 "go.alis.build/common/alis/open/iam/v1"
 	v1 "go.alis.build/common/lf/a2a/v1"
 	v11 "google.golang.org/genproto/googleapis/iam/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -15,6 +14,7 @@ import (
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
+	v12 "open.alis.services/protobuf/alis/open/iam/v1"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
