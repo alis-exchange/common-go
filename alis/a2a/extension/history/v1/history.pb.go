@@ -39,6 +39,19 @@ type Thread struct {
 	AgentId string `protobuf:"bytes,3,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
 	// The agent display name, e.g. Finance Agent
 	AgentDisplayName string `protobuf:"bytes,4,opt,name=agent_display_name,json=agentDisplayName,proto3" json:"agent_display_name,omitempty"`
+	// Internal monotonic counter for assigning event sequence numbers.
+	NextSequence int64 `protobuf:"varint,5,opt,name=next_sequence,json=nextSequence,proto3" json:"next_sequence,omitempty"`
+	// Highest event sequence currently present in the thread.
+	// This is shared thread state and is the source of truth for unread calculations.
+	LatestSequence int64 `protobuf:"varint,6,opt,name=latest_sequence,json=latestSequence,proto3" json:"latest_sequence,omitempty"`
+	// Caller-specific read cursor for the thread.
+	// This is a response projection, not shared thread state.
+	// It is populated on read APIs that have caller context, such as ListThreads.
+	// Future multi-user implementations may expose per-user read state separately.
+	ReadSequence int64 `protobuf:"varint,7,opt,name=read_sequence,json=readSequence,proto3" json:"read_sequence,omitempty"`
+	// True when the caller has unread events in this thread.
+	// This is a response projection derived from latest_sequence and read_sequence.
+	HasUnread bool `protobuf:"varint,8,opt,name=has_unread,json=hasUnread,proto3" json:"has_unread,omitempty"`
 	// When this Thread was created.
 	CreateTime    *timestamppb.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -103,6 +116,34 @@ func (x *Thread) GetAgentDisplayName() string {
 	return ""
 }
 
+func (x *Thread) GetNextSequence() int64 {
+	if x != nil {
+		return x.NextSequence
+	}
+	return 0
+}
+
+func (x *Thread) GetLatestSequence() int64 {
+	if x != nil {
+		return x.LatestSequence
+	}
+	return 0
+}
+
+func (x *Thread) GetReadSequence() int64 {
+	if x != nil {
+		return x.ReadSequence
+	}
+	return 0
+}
+
+func (x *Thread) GetHasUnread() bool {
+	if x != nil {
+		return x.HasUnread
+	}
+	return false
+}
+
 func (x *Thread) GetCreateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreateTime
@@ -123,6 +164,9 @@ type ThreadEvent struct {
 	//	*ThreadEvent_StatusUpdate
 	//	*ThreadEvent_ArtifactUpdate
 	Payload isThreadEvent_Payload `protobuf_oneof:"payload"`
+	// Monotonic sequence number within a thread.
+	// Clients can use this as a stable read cursor.
+	Sequence int64 `protobuf:"varint,6,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	// When this event was created.
 	CreateTime    *timestamppb.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -207,6 +251,13 @@ func (x *ThreadEvent) GetArtifactUpdate() *v1.TaskArtifactUpdateEvent {
 		}
 	}
 	return nil
+}
+
+func (x *ThreadEvent) GetSequence() int64 {
+	if x != nil {
+		return x.Sequence
+	}
+	return 0
 }
 
 func (x *ThreadEvent) GetCreateTime() *timestamppb.Timestamp {
@@ -822,20 +873,26 @@ var File_alis_a2a_extension_history_v1_history_proto protoreflect.FileDescriptor
 
 const file_alis_a2a_extension_history_v1_history_proto_rawDesc = "" +
 	"\n" +
-	"+alis/a2a/extension/history/v1/history.proto\x12\x1dalis.a2a.extension.history.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a google/protobuf/field_mask.proto\x1a\x1agoogle/iam/v1/policy.proto\x1a\x1egoogle/iam/v1/iam_policy.proto\x1a\x1aalis/open/iam/v1/iam.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x13lf/a2a/v1/a2a.proto\"\xc5\x01\n" +
+	"+alis/a2a/extension/history/v1/history.proto\x12\x1dalis.a2a.extension.history.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a google/protobuf/field_mask.proto\x1a\x1agoogle/iam/v1/policy.proto\x1a\x1egoogle/iam/v1/iam_policy.proto\x1a\x1aalis/open/iam/v1/iam.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x13lf/a2a/v1/a2a.proto\"\xd7\x02\n" +
 	"\x06Thread\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12!\n" +
 	"\fdisplay_name\x18\x02 \x01(\tR\vdisplayName\x12\x19\n" +
 	"\bagent_id\x18\x03 \x01(\tR\aagentId\x12,\n" +
-	"\x12agent_display_name\x18\x04 \x01(\tR\x10agentDisplayName\x12;\n" +
+	"\x12agent_display_name\x18\x04 \x01(\tR\x10agentDisplayName\x12#\n" +
+	"\rnext_sequence\x18\x05 \x01(\x03R\fnextSequence\x12'\n" +
+	"\x0flatest_sequence\x18\x06 \x01(\x03R\x0elatestSequence\x12#\n" +
+	"\rread_sequence\x18\a \x01(\x03R\freadSequence\x12\x1d\n" +
+	"\n" +
+	"has_unread\x18\b \x01(\bR\thasUnread\x12;\n" +
 	"\vcreate_time\x18b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"createTime\"\xd8\x02\n" +
+	"createTime\"\xf4\x02\n" +
 	"\vThreadEvent\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12%\n" +
 	"\x04task\x18\x02 \x01(\v2\x0f.lf.a2a.v1.TaskH\x00R\x04task\x12.\n" +
 	"\amessage\x18\x03 \x01(\v2\x12.lf.a2a.v1.MessageH\x00R\amessage\x12G\n" +
 	"\rstatus_update\x18\x04 \x01(\v2 .lf.a2a.v1.TaskStatusUpdateEventH\x00R\fstatusUpdate\x12M\n" +
-	"\x0fartifact_update\x18\x05 \x01(\v2\".lf.a2a.v1.TaskArtifactUpdateEventH\x00R\x0eartifactUpdate\x12;\n" +
+	"\x0fartifact_update\x18\x05 \x01(\v2\".lf.a2a.v1.TaskArtifactUpdateEventH\x00R\x0eartifactUpdate\x12\x1a\n" +
+	"\bsequence\x18\x06 \x01(\x03R\bsequence\x12;\n" +
 	"\vcreate_time\x18b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"createTimeB\t\n" +
 	"\apayload\"_\n" +

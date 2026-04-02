@@ -105,6 +105,10 @@ type Cron struct {
 	// Cron owner email. Used in combination with owner for 'on-behalf-of'
 	// E.g. me@email.com
 	Email string `protobuf:"bytes,8,opt,name=email,proto3" json:"email,omitempty"`
+	// Optional A2A context to send the scheduled message into.
+	// When set, executions attach to the existing conversation/thread for this context.
+	// When empty, each execution starts a new conversation/context.
+	ContextId string `protobuf:"bytes,9,opt,name=context_id,json=contextId,proto3" json:"context_id,omitempty"`
 	// When this Cron was created.
 	CreateTime *timestamppb.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// When this Cron was last updated.
@@ -195,6 +199,13 @@ func (x *Cron) GetOwner() string {
 func (x *Cron) GetEmail() string {
 	if x != nil {
 		return x.Email
+	}
+	return ""
+}
+
+func (x *Cron) GetContextId() string {
+	if x != nil {
+		return x.ContextId
 	}
 	return ""
 }
@@ -623,7 +634,7 @@ var File_alis_a2a_extension_scheduler_v1_scheduler_proto protoreflect.FileDescri
 
 const file_alis_a2a_extension_scheduler_v1_scheduler_proto_rawDesc = "" +
 	"\n" +
-	"/alis/a2a/extension/scheduler/v1/scheduler.proto\x12\x1falis.a2a.extension.scheduler.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a google/protobuf/field_mask.proto\x1a\x1bgoogle/protobuf/empty.proto\"\xae\x03\n" +
+	"/alis/a2a/extension/scheduler/v1/scheduler.proto\x12\x1falis.a2a.extension.scheduler.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a google/protobuf/field_mask.proto\x1a\x1bgoogle/protobuf/empty.proto\"\xcd\x03\n" +
 	"\x04Cron\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x16\n" +
 	"\x06prompt\x18\x02 \x01(\tR\x06prompt\x12\x12\n" +
@@ -632,7 +643,9 @@ const file_alis_a2a_extension_scheduler_v1_scheduler_proto_rawDesc = "" +
 	"\x02at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\x02at\x12>\n" +
 	"\x04type\x18\x06 \x01(\x0e2*.alis.a2a.extension.scheduler.v1.Cron.TypeR\x04type\x12\x14\n" +
 	"\x05owner\x18\a \x01(\tR\x05owner\x12\x14\n" +
-	"\x05email\x18\b \x01(\tR\x05email\x12;\n" +
+	"\x05email\x18\b \x01(\tR\x05email\x12\x1d\n" +
+	"\n" +
+	"context_id\x18\t \x01(\tR\tcontextId\x12;\n" +
 	"\vcreate_time\x18b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"createTime\x12;\n" +
 	"\vupdate_time\x18c \x01(\v2\x1a.google.protobuf.TimestampR\n" +
