@@ -44,14 +44,6 @@ type Thread struct {
 	// Highest event sequence currently present in the thread.
 	// This is shared thread state and is the source of truth for unread calculations.
 	LatestSequence int64 `protobuf:"varint,6,opt,name=latest_sequence,json=latestSequence,proto3" json:"latest_sequence,omitempty"`
-	// Caller-specific read cursor for the thread.
-	// This is a response projection, not shared thread state.
-	// It is populated on read APIs that have caller context, such as ListThreads.
-	// Future multi-user implementations may expose per-user read state separately.
-	ReadSequence int64 `protobuf:"varint,7,opt,name=read_sequence,json=readSequence,proto3" json:"read_sequence,omitempty"`
-	// True when the caller has unread events in this thread.
-	// This is a response projection derived from latest_sequence and read_sequence.
-	HasUnread bool `protobuf:"varint,8,opt,name=has_unread,json=hasUnread,proto3" json:"has_unread,omitempty"`
 	// When this Thread was created.
 	CreateTime    *timestamppb.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -128,20 +120,6 @@ func (x *Thread) GetLatestSequence() int64 {
 		return x.LatestSequence
 	}
 	return 0
-}
-
-func (x *Thread) GetReadSequence() int64 {
-	if x != nil {
-		return x.ReadSequence
-	}
-	return 0
-}
-
-func (x *Thread) GetHasUnread() bool {
-	if x != nil {
-		return x.HasUnread
-	}
-	return false
 }
 
 func (x *Thread) GetCreateTime() *timestamppb.Timestamp {
@@ -299,6 +277,110 @@ func (*ThreadEvent_StatusUpdate) isThreadEvent_Payload() {}
 
 func (*ThreadEvent_ArtifactUpdate) isThreadEvent_Payload() {}
 
+// Per-user state for a Thread.
+type UserThreadState struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The resource name of the user-thread-state row.
+	// threads/{context_id}/userStates/{userId}
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	// The parent Thread resource name.
+	// threads/{context_id}
+	Thread string `protobuf:"bytes,2,opt,name=thread,proto3" json:"thread,omitempty"`
+	// The user resource name this user-thread state belongs to.
+	// Format: users/{user}
+	User string `protobuf:"bytes,3,opt,name=user,proto3" json:"user,omitempty"`
+	// Highest event sequence acknowledged by this user.
+	ReadSequence int64 `protobuf:"varint,4,opt,name=read_sequence,json=readSequence,proto3" json:"read_sequence,omitempty"`
+	// True when this user has pinned the thread.
+	Pinned bool `protobuf:"varint,5,opt,name=pinned,proto3" json:"pinned,omitempty"`
+	// When this user pinned the thread.
+	// Unset when pinned is false.
+	PinnedTime *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=pinned_time,json=pinnedTime,proto3" json:"pinned_time,omitempty"`
+	// When this user-thread state was last updated.
+	UpdateTime    *timestamppb.Timestamp `protobuf:"bytes,98,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UserThreadState) Reset() {
+	*x = UserThreadState{}
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UserThreadState) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserThreadState) ProtoMessage() {}
+
+func (x *UserThreadState) ProtoReflect() protoreflect.Message {
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserThreadState.ProtoReflect.Descriptor instead.
+func (*UserThreadState) Descriptor() ([]byte, []int) {
+	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *UserThreadState) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *UserThreadState) GetThread() string {
+	if x != nil {
+		return x.Thread
+	}
+	return ""
+}
+
+func (x *UserThreadState) GetUser() string {
+	if x != nil {
+		return x.User
+	}
+	return ""
+}
+
+func (x *UserThreadState) GetReadSequence() int64 {
+	if x != nil {
+		return x.ReadSequence
+	}
+	return 0
+}
+
+func (x *UserThreadState) GetPinned() bool {
+	if x != nil {
+		return x.Pinned
+	}
+	return false
+}
+
+func (x *UserThreadState) GetPinnedTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.PinnedTime
+	}
+	return nil
+}
+
+func (x *UserThreadState) GetUpdateTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.UpdateTime
+	}
+	return nil
+}
+
 // Request to get an Thread.
 type GetThreadRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -313,7 +395,7 @@ type GetThreadRequest struct {
 
 func (x *GetThreadRequest) Reset() {
 	*x = GetThreadRequest{}
-	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[2]
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -325,7 +407,7 @@ func (x *GetThreadRequest) String() string {
 func (*GetThreadRequest) ProtoMessage() {}
 
 func (x *GetThreadRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[2]
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -338,7 +420,7 @@ func (x *GetThreadRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetThreadRequest.ProtoReflect.Descriptor instead.
 func (*GetThreadRequest) Descriptor() ([]byte, []int) {
-	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{2}
+	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *GetThreadRequest) GetName() string {
@@ -349,6 +431,63 @@ func (x *GetThreadRequest) GetName() string {
 }
 
 func (x *GetThreadRequest) GetReadMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.ReadMask
+	}
+	return nil
+}
+
+// Request to get UserThreadState.
+type GetUserThreadStateRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The resource name of the user-thread state to retrieve.
+	// Format: threads/{context_id}/userStates/{userId}
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	// A read mask to specify which fields to return.
+	// If not specified, view will determine the fields returned.
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,3,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetUserThreadStateRequest) Reset() {
+	*x = GetUserThreadStateRequest{}
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetUserThreadStateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUserThreadStateRequest) ProtoMessage() {}
+
+func (x *GetUserThreadStateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUserThreadStateRequest.ProtoReflect.Descriptor instead.
+func (*GetUserThreadStateRequest) Descriptor() ([]byte, []int) {
+	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GetUserThreadStateRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *GetUserThreadStateRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
@@ -366,7 +505,7 @@ type DeleteThreadRequest struct {
 
 func (x *DeleteThreadRequest) Reset() {
 	*x = DeleteThreadRequest{}
-	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[3]
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -378,7 +517,7 @@ func (x *DeleteThreadRequest) String() string {
 func (*DeleteThreadRequest) ProtoMessage() {}
 
 func (x *DeleteThreadRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[3]
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -391,7 +530,7 @@ func (x *DeleteThreadRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteThreadRequest.ProtoReflect.Descriptor instead.
 func (*DeleteThreadRequest) Descriptor() ([]byte, []int) {
-	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{3}
+	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *DeleteThreadRequest) GetName() string {
@@ -420,7 +559,7 @@ type ListThreadsRequest struct {
 
 func (x *ListThreadsRequest) Reset() {
 	*x = ListThreadsRequest{}
-	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[4]
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -432,7 +571,7 @@ func (x *ListThreadsRequest) String() string {
 func (*ListThreadsRequest) ProtoMessage() {}
 
 func (x *ListThreadsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[4]
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -445,7 +584,7 @@ func (x *ListThreadsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListThreadsRequest.ProtoReflect.Descriptor instead.
 func (*ListThreadsRequest) Descriptor() ([]byte, []int) {
-	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{4}
+	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *ListThreadsRequest) GetPageSize() int32 {
@@ -476,11 +615,93 @@ func (x *ListThreadsRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	return nil
 }
 
+// Caller-scoped thread projection returned by list/read APIs.
+type ThreadView struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The shared thread resource.
+	Thread *Thread `protobuf:"bytes,1,opt,name=thread,proto3" json:"thread,omitempty"`
+	// Highest event sequence acknowledged by the caller.
+	ReadSequence int64 `protobuf:"varint,2,opt,name=read_sequence,json=readSequence,proto3" json:"read_sequence,omitempty"`
+	// True when latest_sequence is greater than read_sequence.
+	HasUnread bool `protobuf:"varint,3,opt,name=has_unread,json=hasUnread,proto3" json:"has_unread,omitempty"`
+	// True when the caller has pinned this thread.
+	Pinned bool `protobuf:"varint,4,opt,name=pinned,proto3" json:"pinned,omitempty"`
+	// When the caller pinned this thread.
+	PinnedTime    *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=pinned_time,json=pinnedTime,proto3" json:"pinned_time,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ThreadView) Reset() {
+	*x = ThreadView{}
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ThreadView) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ThreadView) ProtoMessage() {}
+
+func (x *ThreadView) ProtoReflect() protoreflect.Message {
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ThreadView.ProtoReflect.Descriptor instead.
+func (*ThreadView) Descriptor() ([]byte, []int) {
+	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *ThreadView) GetThread() *Thread {
+	if x != nil {
+		return x.Thread
+	}
+	return nil
+}
+
+func (x *ThreadView) GetReadSequence() int64 {
+	if x != nil {
+		return x.ReadSequence
+	}
+	return 0
+}
+
+func (x *ThreadView) GetHasUnread() bool {
+	if x != nil {
+		return x.HasUnread
+	}
+	return false
+}
+
+func (x *ThreadView) GetPinned() bool {
+	if x != nil {
+		return x.Pinned
+	}
+	return false
+}
+
+func (x *ThreadView) GetPinnedTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.PinnedTime
+	}
+	return nil
+}
+
 // Response for ListThreads.
 type ListThreadsResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The list of a2a treads.
-	Threads []*Thread `protobuf:"bytes,1,rep,name=threads,proto3" json:"threads,omitempty"`
+	// The list of caller-scoped thread views.
+	Threads []*ThreadView `protobuf:"bytes,1,rep,name=threads,proto3" json:"threads,omitempty"`
 	// A token to retrieve the next page of results.
 	NextPageToken string `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -489,7 +710,7 @@ type ListThreadsResponse struct {
 
 func (x *ListThreadsResponse) Reset() {
 	*x = ListThreadsResponse{}
-	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[5]
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -501,7 +722,7 @@ func (x *ListThreadsResponse) String() string {
 func (*ListThreadsResponse) ProtoMessage() {}
 
 func (x *ListThreadsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[5]
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -514,10 +735,10 @@ func (x *ListThreadsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListThreadsResponse.ProtoReflect.Descriptor instead.
 func (*ListThreadsResponse) Descriptor() ([]byte, []int) {
-	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{5}
+	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *ListThreadsResponse) GetThreads() []*Thread {
+func (x *ListThreadsResponse) GetThreads() []*ThreadView {
 	if x != nil {
 		return x.Threads
 	}
@@ -546,7 +767,7 @@ type GetThreadEventRequest struct {
 
 func (x *GetThreadEventRequest) Reset() {
 	*x = GetThreadEventRequest{}
-	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[6]
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -558,7 +779,7 @@ func (x *GetThreadEventRequest) String() string {
 func (*GetThreadEventRequest) ProtoMessage() {}
 
 func (x *GetThreadEventRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[6]
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -571,7 +792,7 @@ func (x *GetThreadEventRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetThreadEventRequest.ProtoReflect.Descriptor instead.
 func (*GetThreadEventRequest) Descriptor() ([]byte, []int) {
-	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{6}
+	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *GetThreadEventRequest) GetName() string {
@@ -607,7 +828,7 @@ type ListThreadEventsRequest struct {
 
 func (x *ListThreadEventsRequest) Reset() {
 	*x = ListThreadEventsRequest{}
-	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[7]
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -619,7 +840,7 @@ func (x *ListThreadEventsRequest) String() string {
 func (*ListThreadEventsRequest) ProtoMessage() {}
 
 func (x *ListThreadEventsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[7]
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -632,7 +853,7 @@ func (x *ListThreadEventsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListThreadEventsRequest.ProtoReflect.Descriptor instead.
 func (*ListThreadEventsRequest) Descriptor() ([]byte, []int) {
-	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{7}
+	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ListThreadEventsRequest) GetParent() string {
@@ -676,7 +897,7 @@ type ListThreadEventsResponse struct {
 
 func (x *ListThreadEventsResponse) Reset() {
 	*x = ListThreadEventsResponse{}
-	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[8]
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -688,7 +909,7 @@ func (x *ListThreadEventsResponse) String() string {
 func (*ListThreadEventsResponse) ProtoMessage() {}
 
 func (x *ListThreadEventsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[8]
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -701,7 +922,7 @@ func (x *ListThreadEventsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListThreadEventsResponse.ProtoReflect.Descriptor instead.
 func (*ListThreadEventsResponse) Descriptor() ([]byte, []int) {
-	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{8}
+	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ListThreadEventsResponse) GetEvents() []*ThreadEvent {
@@ -716,6 +937,61 @@ func (x *ListThreadEventsResponse) GetNextPageToken() string {
 		return x.NextPageToken
 	}
 	return ""
+}
+
+// Request to update UserThreadState.
+type UpdateUserThreadStateRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The user-thread-state resource to update.
+	UserThreadState *UserThreadState `protobuf:"bytes,1,opt,name=user_thread_state,json=userThreadState,proto3" json:"user_thread_state,omitempty"`
+	// A field mask controlling which fields are updated.
+	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateUserThreadStateRequest) Reset() {
+	*x = UpdateUserThreadStateRequest{}
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateUserThreadStateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateUserThreadStateRequest) ProtoMessage() {}
+
+func (x *UpdateUserThreadStateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateUserThreadStateRequest.ProtoReflect.Descriptor instead.
+func (*UpdateUserThreadStateRequest) Descriptor() ([]byte, []int) {
+	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *UpdateUserThreadStateRequest) GetUserThreadState() *UserThreadState {
+	if x != nil {
+		return x.UserThreadState
+	}
+	return nil
+}
+
+func (x *UpdateUserThreadStateRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
 }
 
 // Request to stream events.
@@ -733,7 +1009,7 @@ type StreamThreadEventsRequest struct {
 
 func (x *StreamThreadEventsRequest) Reset() {
 	*x = StreamThreadEventsRequest{}
-	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[9]
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -745,7 +1021,7 @@ func (x *StreamThreadEventsRequest) String() string {
 func (*StreamThreadEventsRequest) ProtoMessage() {}
 
 func (x *StreamThreadEventsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[9]
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -758,7 +1034,7 @@ func (x *StreamThreadEventsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreamThreadEventsRequest.ProtoReflect.Descriptor instead.
 func (*StreamThreadEventsRequest) Descriptor() ([]byte, []int) {
-	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{9}
+	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *StreamThreadEventsRequest) GetParent() string {
@@ -790,7 +1066,7 @@ type AppendThreadEventRequest struct {
 
 func (x *AppendThreadEventRequest) Reset() {
 	*x = AppendThreadEventRequest{}
-	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[10]
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -802,7 +1078,7 @@ func (x *AppendThreadEventRequest) String() string {
 func (*AppendThreadEventRequest) ProtoMessage() {}
 
 func (x *AppendThreadEventRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[10]
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -815,7 +1091,7 @@ func (x *AppendThreadEventRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AppendThreadEventRequest.ProtoReflect.Descriptor instead.
 func (*AppendThreadEventRequest) Descriptor() ([]byte, []int) {
-	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{10}
+	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *AppendThreadEventRequest) GetEvent() *ThreadEvent {
@@ -841,7 +1117,7 @@ type AppendThreadEventResponse struct {
 
 func (x *AppendThreadEventResponse) Reset() {
 	*x = AppendThreadEventResponse{}
-	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[11]
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -853,7 +1129,7 @@ func (x *AppendThreadEventResponse) String() string {
 func (*AppendThreadEventResponse) ProtoMessage() {}
 
 func (x *AppendThreadEventResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[11]
+	mi := &file_alis_a2a_extension_history_v1_history_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -866,26 +1142,24 @@ func (x *AppendThreadEventResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AppendThreadEventResponse.ProtoReflect.Descriptor instead.
 func (*AppendThreadEventResponse) Descriptor() ([]byte, []int) {
-	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{11}
+	return file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP(), []int{15}
 }
 
 var File_alis_a2a_extension_history_v1_history_proto protoreflect.FileDescriptor
 
 const file_alis_a2a_extension_history_v1_history_proto_rawDesc = "" +
 	"\n" +
-	"+alis/a2a/extension/history/v1/history.proto\x12\x1dalis.a2a.extension.history.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a google/protobuf/field_mask.proto\x1a\x1agoogle/iam/v1/policy.proto\x1a\x1egoogle/iam/v1/iam_policy.proto\x1a\x15alis/iam/v1/iam.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x13lf/a2a/v1/a2a.proto\"\xd7\x02\n" +
+	"+alis/a2a/extension/history/v1/history.proto\x12\x1dalis.a2a.extension.history.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a google/protobuf/field_mask.proto\x1a\x1agoogle/iam/v1/policy.proto\x1a\x1egoogle/iam/v1/iam_policy.proto\x1a\x15alis/iam/v1/iam.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x13lf/a2a/v1/a2a.proto\"\xba\x02\n" +
 	"\x06Thread\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12!\n" +
 	"\fdisplay_name\x18\x02 \x01(\tR\vdisplayName\x12\x19\n" +
 	"\bagent_id\x18\x03 \x01(\tR\aagentId\x12,\n" +
 	"\x12agent_display_name\x18\x04 \x01(\tR\x10agentDisplayName\x12#\n" +
 	"\rnext_sequence\x18\x05 \x01(\x03R\fnextSequence\x12'\n" +
-	"\x0flatest_sequence\x18\x06 \x01(\x03R\x0elatestSequence\x12#\n" +
-	"\rread_sequence\x18\a \x01(\x03R\freadSequence\x12\x1d\n" +
-	"\n" +
-	"has_unread\x18\b \x01(\bR\thasUnread\x12;\n" +
+	"\x0flatest_sequence\x18\x06 \x01(\x03R\x0elatestSequence\x12;\n" +
 	"\vcreate_time\x18b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"createTime\"\xf4\x02\n" +
+	"createTimeJ\x04\b\a\x10\bJ\x04\b\b\x10\tR\rread_sequenceR\n" +
+	"has_unread\"\xf4\x02\n" +
 	"\vThreadEvent\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12%\n" +
 	"\x04task\x18\x02 \x01(\v2\x0f.lf.a2a.v1.TaskH\x00R\x04task\x12.\n" +
@@ -895,8 +1169,21 @@ const file_alis_a2a_extension_history_v1_history_proto_rawDesc = "" +
 	"\bsequence\x18\x06 \x01(\x03R\bsequence\x12;\n" +
 	"\vcreate_time\x18b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"createTimeB\t\n" +
-	"\apayload\"_\n" +
+	"\apayload\"\x88\x02\n" +
+	"\x0fUserThreadState\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x16\n" +
+	"\x06thread\x18\x02 \x01(\tR\x06thread\x12\x12\n" +
+	"\x04user\x18\x03 \x01(\tR\x04user\x12#\n" +
+	"\rread_sequence\x18\x04 \x01(\x03R\freadSequence\x12\x16\n" +
+	"\x06pinned\x18\x05 \x01(\bR\x06pinned\x12;\n" +
+	"\vpinned_time\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"pinnedTime\x12;\n" +
+	"\vupdate_time\x18b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"updateTime\"_\n" +
 	"\x10GetThreadRequest\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x127\n" +
+	"\tread_mask\x18\x03 \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\"h\n" +
+	"\x19GetUserThreadStateRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x127\n" +
 	"\tread_mask\x18\x03 \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\")\n" +
 	"\x13DeleteThreadRequest\x12\x12\n" +
@@ -906,9 +1193,18 @@ const file_alis_a2a_extension_history_v1_history_proto_rawDesc = "" +
 	"\n" +
 	"page_token\x18\x03 \x01(\tR\tpageToken\x12\x19\n" +
 	"\bagent_id\x18\x04 \x01(\tR\aagentId\x127\n" +
-	"\tread_mask\x18\x05 \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMaskJ\x04\b\x01\x10\x02\"~\n" +
-	"\x13ListThreadsResponse\x12?\n" +
-	"\athreads\x18\x01 \x03(\v2%.alis.a2a.extension.history.v1.ThreadR\athreads\x12&\n" +
+	"\tread_mask\x18\x05 \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMaskJ\x04\b\x01\x10\x02\"\xe4\x01\n" +
+	"\n" +
+	"ThreadView\x12=\n" +
+	"\x06thread\x18\x01 \x01(\v2%.alis.a2a.extension.history.v1.ThreadR\x06thread\x12#\n" +
+	"\rread_sequence\x18\x02 \x01(\x03R\freadSequence\x12\x1d\n" +
+	"\n" +
+	"has_unread\x18\x03 \x01(\bR\thasUnread\x12\x16\n" +
+	"\x06pinned\x18\x04 \x01(\bR\x06pinned\x12;\n" +
+	"\vpinned_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"pinnedTime\"\x82\x01\n" +
+	"\x13ListThreadsResponse\x12C\n" +
+	"\athreads\x18\x01 \x03(\v2).alis.a2a.extension.history.v1.ThreadViewR\athreads\x12&\n" +
 	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"d\n" +
 	"\x15GetThreadEventRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x127\n" +
@@ -921,14 +1217,19 @@ const file_alis_a2a_extension_history_v1_history_proto_rawDesc = "" +
 	"\tread_mask\x18\x05 \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\"\x86\x01\n" +
 	"\x18ListThreadEventsResponse\x12B\n" +
 	"\x06events\x18\x01 \x03(\v2*.alis.a2a.extension.history.v1.ThreadEventR\x06events\x12&\n" +
-	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"l\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xb7\x01\n" +
+	"\x1cUpdateUserThreadStateRequest\x12Z\n" +
+	"\x11user_thread_state\x18\x01 \x01(\v2..alis.a2a.extension.history.v1.UserThreadStateR\x0fuserThreadState\x12;\n" +
+	"\vupdate_mask\x18\x02 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMask\"l\n" +
 	"\x19StreamThreadEventsRequest\x12\x16\n" +
 	"\x06parent\x18\x01 \x01(\tR\x06parent\x127\n" +
 	"\tread_mask\x18\x03 \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\"}\n" +
 	"\x18AppendThreadEventRequest\x12@\n" +
 	"\x05event\x18\x02 \x01(\v2*.alis.a2a.extension.history.v1.ThreadEventR\x05event\x12\x19\n" +
 	"\bagent_id\x18\x03 \x01(\tR\aagentIdJ\x04\b\x01\x10\x02\"\x1b\n" +
-	"\x19AppendThreadEventResponse2\x9d\b\n" +
+	"\x19AppendThreadEventResponse2\xa9\n" +
+	"\n" +
 	"\rThreadService\x12K\n" +
 	"\fGetIamPolicy\x12\".google.iam.v1.GetIamPolicyRequest\x1a\x15.google.iam.v1.Policy\"\x00\x12K\n" +
 	"\fSetIamPolicy\x12\".google.iam.v1.SetIamPolicyRequest\x1a\x15.google.iam.v1.Policy\"\x00\x12M\n" +
@@ -937,7 +1238,9 @@ const file_alis_a2a_extension_history_v1_history_proto_rawDesc = "" +
 	"\vListThreads\x121.alis.a2a.extension.history.v1.ListThreadsRequest\x1a2.alis.a2a.extension.history.v1.ListThreadsResponse\"\x00\x12e\n" +
 	"\tGetThread\x12/.alis.a2a.extension.history.v1.GetThreadRequest\x1a%.alis.a2a.extension.history.v1.Thread\"\x00\x12\\\n" +
 	"\fDeleteThread\x122.alis.a2a.extension.history.v1.DeleteThreadRequest\x1a\x16.google.protobuf.Empty\"\x00\x12\x88\x01\n" +
-	"\x11AppendThreadEvent\x127.alis.a2a.extension.history.v1.AppendThreadEventRequest\x1a8.alis.a2a.extension.history.v1.AppendThreadEventResponse\"\x00\x12\x85\x01\n" +
+	"\x11AppendThreadEvent\x127.alis.a2a.extension.history.v1.AppendThreadEventRequest\x1a8.alis.a2a.extension.history.v1.AppendThreadEventResponse\"\x00\x12\x80\x01\n" +
+	"\x12GetUserThreadState\x128.alis.a2a.extension.history.v1.GetUserThreadStateRequest\x1a..alis.a2a.extension.history.v1.UserThreadState\"\x00\x12\x86\x01\n" +
+	"\x15UpdateUserThreadState\x12;.alis.a2a.extension.history.v1.UpdateUserThreadStateRequest\x1a..alis.a2a.extension.history.v1.UserThreadState\"\x00\x12\x85\x01\n" +
 	"\x10ListThreadEvents\x126.alis.a2a.extension.history.v1.ListThreadEventsRequest\x1a7.alis.a2a.extension.history.v1.ListThreadEventsResponse\"\x00\x12~\n" +
 	"\x12StreamThreadEvents\x128.alis.a2a.extension.history.v1.StreamThreadEventsRequest\x1a*.alis.a2a.extension.history.v1.ThreadEvent\"\x000\x01B4Z2go.alis.build/common/alis/a2a/extension/history/v1b\x06proto3"
 
@@ -953,73 +1256,88 @@ func file_alis_a2a_extension_history_v1_history_proto_rawDescGZIP() []byte {
 	return file_alis_a2a_extension_history_v1_history_proto_rawDescData
 }
 
-var file_alis_a2a_extension_history_v1_history_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_alis_a2a_extension_history_v1_history_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_alis_a2a_extension_history_v1_history_proto_goTypes = []any{
 	(*Thread)(nil),                       // 0: alis.a2a.extension.history.v1.Thread
 	(*ThreadEvent)(nil),                  // 1: alis.a2a.extension.history.v1.ThreadEvent
-	(*GetThreadRequest)(nil),             // 2: alis.a2a.extension.history.v1.GetThreadRequest
-	(*DeleteThreadRequest)(nil),          // 3: alis.a2a.extension.history.v1.DeleteThreadRequest
-	(*ListThreadsRequest)(nil),           // 4: alis.a2a.extension.history.v1.ListThreadsRequest
-	(*ListThreadsResponse)(nil),          // 5: alis.a2a.extension.history.v1.ListThreadsResponse
-	(*GetThreadEventRequest)(nil),        // 6: alis.a2a.extension.history.v1.GetThreadEventRequest
-	(*ListThreadEventsRequest)(nil),      // 7: alis.a2a.extension.history.v1.ListThreadEventsRequest
-	(*ListThreadEventsResponse)(nil),     // 8: alis.a2a.extension.history.v1.ListThreadEventsResponse
-	(*StreamThreadEventsRequest)(nil),    // 9: alis.a2a.extension.history.v1.StreamThreadEventsRequest
-	(*AppendThreadEventRequest)(nil),     // 10: alis.a2a.extension.history.v1.AppendThreadEventRequest
-	(*AppendThreadEventResponse)(nil),    // 11: alis.a2a.extension.history.v1.AppendThreadEventResponse
-	(*timestamppb.Timestamp)(nil),        // 12: google.protobuf.Timestamp
-	(*v1.Task)(nil),                      // 13: lf.a2a.v1.Task
-	(*v1.Message)(nil),                   // 14: lf.a2a.v1.Message
-	(*v1.TaskStatusUpdateEvent)(nil),     // 15: lf.a2a.v1.TaskStatusUpdateEvent
-	(*v1.TaskArtifactUpdateEvent)(nil),   // 16: lf.a2a.v1.TaskArtifactUpdateEvent
-	(*fieldmaskpb.FieldMask)(nil),        // 17: google.protobuf.FieldMask
-	(*v11.GetIamPolicyRequest)(nil),      // 18: google.iam.v1.GetIamPolicyRequest
-	(*v11.SetIamPolicyRequest)(nil),      // 19: google.iam.v1.SetIamPolicyRequest
-	(*v12.AddIamBindingsRequest)(nil),    // 20: alis.iam.v1.AddIamBindingsRequest
-	(*v12.RemoveIamBindingsRequest)(nil), // 21: alis.iam.v1.RemoveIamBindingsRequest
-	(*v11.Policy)(nil),                   // 22: google.iam.v1.Policy
-	(*emptypb.Empty)(nil),                // 23: google.protobuf.Empty
+	(*UserThreadState)(nil),              // 2: alis.a2a.extension.history.v1.UserThreadState
+	(*GetThreadRequest)(nil),             // 3: alis.a2a.extension.history.v1.GetThreadRequest
+	(*GetUserThreadStateRequest)(nil),    // 4: alis.a2a.extension.history.v1.GetUserThreadStateRequest
+	(*DeleteThreadRequest)(nil),          // 5: alis.a2a.extension.history.v1.DeleteThreadRequest
+	(*ListThreadsRequest)(nil),           // 6: alis.a2a.extension.history.v1.ListThreadsRequest
+	(*ThreadView)(nil),                   // 7: alis.a2a.extension.history.v1.ThreadView
+	(*ListThreadsResponse)(nil),          // 8: alis.a2a.extension.history.v1.ListThreadsResponse
+	(*GetThreadEventRequest)(nil),        // 9: alis.a2a.extension.history.v1.GetThreadEventRequest
+	(*ListThreadEventsRequest)(nil),      // 10: alis.a2a.extension.history.v1.ListThreadEventsRequest
+	(*ListThreadEventsResponse)(nil),     // 11: alis.a2a.extension.history.v1.ListThreadEventsResponse
+	(*UpdateUserThreadStateRequest)(nil), // 12: alis.a2a.extension.history.v1.UpdateUserThreadStateRequest
+	(*StreamThreadEventsRequest)(nil),    // 13: alis.a2a.extension.history.v1.StreamThreadEventsRequest
+	(*AppendThreadEventRequest)(nil),     // 14: alis.a2a.extension.history.v1.AppendThreadEventRequest
+	(*AppendThreadEventResponse)(nil),    // 15: alis.a2a.extension.history.v1.AppendThreadEventResponse
+	(*timestamppb.Timestamp)(nil),        // 16: google.protobuf.Timestamp
+	(*v1.Task)(nil),                      // 17: lf.a2a.v1.Task
+	(*v1.Message)(nil),                   // 18: lf.a2a.v1.Message
+	(*v1.TaskStatusUpdateEvent)(nil),     // 19: lf.a2a.v1.TaskStatusUpdateEvent
+	(*v1.TaskArtifactUpdateEvent)(nil),   // 20: lf.a2a.v1.TaskArtifactUpdateEvent
+	(*fieldmaskpb.FieldMask)(nil),        // 21: google.protobuf.FieldMask
+	(*v11.GetIamPolicyRequest)(nil),      // 22: google.iam.v1.GetIamPolicyRequest
+	(*v11.SetIamPolicyRequest)(nil),      // 23: google.iam.v1.SetIamPolicyRequest
+	(*v12.AddIamBindingsRequest)(nil),    // 24: alis.iam.v1.AddIamBindingsRequest
+	(*v12.RemoveIamBindingsRequest)(nil), // 25: alis.iam.v1.RemoveIamBindingsRequest
+	(*v11.Policy)(nil),                   // 26: google.iam.v1.Policy
+	(*emptypb.Empty)(nil),                // 27: google.protobuf.Empty
 }
 var file_alis_a2a_extension_history_v1_history_proto_depIdxs = []int32{
-	12, // 0: alis.a2a.extension.history.v1.Thread.create_time:type_name -> google.protobuf.Timestamp
-	13, // 1: alis.a2a.extension.history.v1.ThreadEvent.task:type_name -> lf.a2a.v1.Task
-	14, // 2: alis.a2a.extension.history.v1.ThreadEvent.message:type_name -> lf.a2a.v1.Message
-	15, // 3: alis.a2a.extension.history.v1.ThreadEvent.status_update:type_name -> lf.a2a.v1.TaskStatusUpdateEvent
-	16, // 4: alis.a2a.extension.history.v1.ThreadEvent.artifact_update:type_name -> lf.a2a.v1.TaskArtifactUpdateEvent
-	12, // 5: alis.a2a.extension.history.v1.ThreadEvent.create_time:type_name -> google.protobuf.Timestamp
-	17, // 6: alis.a2a.extension.history.v1.GetThreadRequest.read_mask:type_name -> google.protobuf.FieldMask
-	17, // 7: alis.a2a.extension.history.v1.ListThreadsRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 8: alis.a2a.extension.history.v1.ListThreadsResponse.threads:type_name -> alis.a2a.extension.history.v1.Thread
-	17, // 9: alis.a2a.extension.history.v1.GetThreadEventRequest.read_mask:type_name -> google.protobuf.FieldMask
-	17, // 10: alis.a2a.extension.history.v1.ListThreadEventsRequest.read_mask:type_name -> google.protobuf.FieldMask
-	1,  // 11: alis.a2a.extension.history.v1.ListThreadEventsResponse.events:type_name -> alis.a2a.extension.history.v1.ThreadEvent
-	17, // 12: alis.a2a.extension.history.v1.StreamThreadEventsRequest.read_mask:type_name -> google.protobuf.FieldMask
-	1,  // 13: alis.a2a.extension.history.v1.AppendThreadEventRequest.event:type_name -> alis.a2a.extension.history.v1.ThreadEvent
-	18, // 14: alis.a2a.extension.history.v1.ThreadService.GetIamPolicy:input_type -> google.iam.v1.GetIamPolicyRequest
-	19, // 15: alis.a2a.extension.history.v1.ThreadService.SetIamPolicy:input_type -> google.iam.v1.SetIamPolicyRequest
-	20, // 16: alis.a2a.extension.history.v1.ThreadService.AddIamBindings:input_type -> alis.iam.v1.AddIamBindingsRequest
-	21, // 17: alis.a2a.extension.history.v1.ThreadService.RemoveIamBindings:input_type -> alis.iam.v1.RemoveIamBindingsRequest
-	4,  // 18: alis.a2a.extension.history.v1.ThreadService.ListThreads:input_type -> alis.a2a.extension.history.v1.ListThreadsRequest
-	2,  // 19: alis.a2a.extension.history.v1.ThreadService.GetThread:input_type -> alis.a2a.extension.history.v1.GetThreadRequest
-	3,  // 20: alis.a2a.extension.history.v1.ThreadService.DeleteThread:input_type -> alis.a2a.extension.history.v1.DeleteThreadRequest
-	10, // 21: alis.a2a.extension.history.v1.ThreadService.AppendThreadEvent:input_type -> alis.a2a.extension.history.v1.AppendThreadEventRequest
-	7,  // 22: alis.a2a.extension.history.v1.ThreadService.ListThreadEvents:input_type -> alis.a2a.extension.history.v1.ListThreadEventsRequest
-	9,  // 23: alis.a2a.extension.history.v1.ThreadService.StreamThreadEvents:input_type -> alis.a2a.extension.history.v1.StreamThreadEventsRequest
-	22, // 24: alis.a2a.extension.history.v1.ThreadService.GetIamPolicy:output_type -> google.iam.v1.Policy
-	22, // 25: alis.a2a.extension.history.v1.ThreadService.SetIamPolicy:output_type -> google.iam.v1.Policy
-	22, // 26: alis.a2a.extension.history.v1.ThreadService.AddIamBindings:output_type -> google.iam.v1.Policy
-	22, // 27: alis.a2a.extension.history.v1.ThreadService.RemoveIamBindings:output_type -> google.iam.v1.Policy
-	5,  // 28: alis.a2a.extension.history.v1.ThreadService.ListThreads:output_type -> alis.a2a.extension.history.v1.ListThreadsResponse
-	0,  // 29: alis.a2a.extension.history.v1.ThreadService.GetThread:output_type -> alis.a2a.extension.history.v1.Thread
-	23, // 30: alis.a2a.extension.history.v1.ThreadService.DeleteThread:output_type -> google.protobuf.Empty
-	11, // 31: alis.a2a.extension.history.v1.ThreadService.AppendThreadEvent:output_type -> alis.a2a.extension.history.v1.AppendThreadEventResponse
-	8,  // 32: alis.a2a.extension.history.v1.ThreadService.ListThreadEvents:output_type -> alis.a2a.extension.history.v1.ListThreadEventsResponse
-	1,  // 33: alis.a2a.extension.history.v1.ThreadService.StreamThreadEvents:output_type -> alis.a2a.extension.history.v1.ThreadEvent
-	24, // [24:34] is the sub-list for method output_type
-	14, // [14:24] is the sub-list for method input_type
-	14, // [14:14] is the sub-list for extension type_name
-	14, // [14:14] is the sub-list for extension extendee
-	0,  // [0:14] is the sub-list for field type_name
+	16, // 0: alis.a2a.extension.history.v1.Thread.create_time:type_name -> google.protobuf.Timestamp
+	17, // 1: alis.a2a.extension.history.v1.ThreadEvent.task:type_name -> lf.a2a.v1.Task
+	18, // 2: alis.a2a.extension.history.v1.ThreadEvent.message:type_name -> lf.a2a.v1.Message
+	19, // 3: alis.a2a.extension.history.v1.ThreadEvent.status_update:type_name -> lf.a2a.v1.TaskStatusUpdateEvent
+	20, // 4: alis.a2a.extension.history.v1.ThreadEvent.artifact_update:type_name -> lf.a2a.v1.TaskArtifactUpdateEvent
+	16, // 5: alis.a2a.extension.history.v1.ThreadEvent.create_time:type_name -> google.protobuf.Timestamp
+	16, // 6: alis.a2a.extension.history.v1.UserThreadState.pinned_time:type_name -> google.protobuf.Timestamp
+	16, // 7: alis.a2a.extension.history.v1.UserThreadState.update_time:type_name -> google.protobuf.Timestamp
+	21, // 8: alis.a2a.extension.history.v1.GetThreadRequest.read_mask:type_name -> google.protobuf.FieldMask
+	21, // 9: alis.a2a.extension.history.v1.GetUserThreadStateRequest.read_mask:type_name -> google.protobuf.FieldMask
+	21, // 10: alis.a2a.extension.history.v1.ListThreadsRequest.read_mask:type_name -> google.protobuf.FieldMask
+	0,  // 11: alis.a2a.extension.history.v1.ThreadView.thread:type_name -> alis.a2a.extension.history.v1.Thread
+	16, // 12: alis.a2a.extension.history.v1.ThreadView.pinned_time:type_name -> google.protobuf.Timestamp
+	7,  // 13: alis.a2a.extension.history.v1.ListThreadsResponse.threads:type_name -> alis.a2a.extension.history.v1.ThreadView
+	21, // 14: alis.a2a.extension.history.v1.GetThreadEventRequest.read_mask:type_name -> google.protobuf.FieldMask
+	21, // 15: alis.a2a.extension.history.v1.ListThreadEventsRequest.read_mask:type_name -> google.protobuf.FieldMask
+	1,  // 16: alis.a2a.extension.history.v1.ListThreadEventsResponse.events:type_name -> alis.a2a.extension.history.v1.ThreadEvent
+	2,  // 17: alis.a2a.extension.history.v1.UpdateUserThreadStateRequest.user_thread_state:type_name -> alis.a2a.extension.history.v1.UserThreadState
+	21, // 18: alis.a2a.extension.history.v1.UpdateUserThreadStateRequest.update_mask:type_name -> google.protobuf.FieldMask
+	21, // 19: alis.a2a.extension.history.v1.StreamThreadEventsRequest.read_mask:type_name -> google.protobuf.FieldMask
+	1,  // 20: alis.a2a.extension.history.v1.AppendThreadEventRequest.event:type_name -> alis.a2a.extension.history.v1.ThreadEvent
+	22, // 21: alis.a2a.extension.history.v1.ThreadService.GetIamPolicy:input_type -> google.iam.v1.GetIamPolicyRequest
+	23, // 22: alis.a2a.extension.history.v1.ThreadService.SetIamPolicy:input_type -> google.iam.v1.SetIamPolicyRequest
+	24, // 23: alis.a2a.extension.history.v1.ThreadService.AddIamBindings:input_type -> alis.iam.v1.AddIamBindingsRequest
+	25, // 24: alis.a2a.extension.history.v1.ThreadService.RemoveIamBindings:input_type -> alis.iam.v1.RemoveIamBindingsRequest
+	6,  // 25: alis.a2a.extension.history.v1.ThreadService.ListThreads:input_type -> alis.a2a.extension.history.v1.ListThreadsRequest
+	3,  // 26: alis.a2a.extension.history.v1.ThreadService.GetThread:input_type -> alis.a2a.extension.history.v1.GetThreadRequest
+	5,  // 27: alis.a2a.extension.history.v1.ThreadService.DeleteThread:input_type -> alis.a2a.extension.history.v1.DeleteThreadRequest
+	14, // 28: alis.a2a.extension.history.v1.ThreadService.AppendThreadEvent:input_type -> alis.a2a.extension.history.v1.AppendThreadEventRequest
+	4,  // 29: alis.a2a.extension.history.v1.ThreadService.GetUserThreadState:input_type -> alis.a2a.extension.history.v1.GetUserThreadStateRequest
+	12, // 30: alis.a2a.extension.history.v1.ThreadService.UpdateUserThreadState:input_type -> alis.a2a.extension.history.v1.UpdateUserThreadStateRequest
+	10, // 31: alis.a2a.extension.history.v1.ThreadService.ListThreadEvents:input_type -> alis.a2a.extension.history.v1.ListThreadEventsRequest
+	13, // 32: alis.a2a.extension.history.v1.ThreadService.StreamThreadEvents:input_type -> alis.a2a.extension.history.v1.StreamThreadEventsRequest
+	26, // 33: alis.a2a.extension.history.v1.ThreadService.GetIamPolicy:output_type -> google.iam.v1.Policy
+	26, // 34: alis.a2a.extension.history.v1.ThreadService.SetIamPolicy:output_type -> google.iam.v1.Policy
+	26, // 35: alis.a2a.extension.history.v1.ThreadService.AddIamBindings:output_type -> google.iam.v1.Policy
+	26, // 36: alis.a2a.extension.history.v1.ThreadService.RemoveIamBindings:output_type -> google.iam.v1.Policy
+	8,  // 37: alis.a2a.extension.history.v1.ThreadService.ListThreads:output_type -> alis.a2a.extension.history.v1.ListThreadsResponse
+	0,  // 38: alis.a2a.extension.history.v1.ThreadService.GetThread:output_type -> alis.a2a.extension.history.v1.Thread
+	27, // 39: alis.a2a.extension.history.v1.ThreadService.DeleteThread:output_type -> google.protobuf.Empty
+	15, // 40: alis.a2a.extension.history.v1.ThreadService.AppendThreadEvent:output_type -> alis.a2a.extension.history.v1.AppendThreadEventResponse
+	2,  // 41: alis.a2a.extension.history.v1.ThreadService.GetUserThreadState:output_type -> alis.a2a.extension.history.v1.UserThreadState
+	2,  // 42: alis.a2a.extension.history.v1.ThreadService.UpdateUserThreadState:output_type -> alis.a2a.extension.history.v1.UserThreadState
+	11, // 43: alis.a2a.extension.history.v1.ThreadService.ListThreadEvents:output_type -> alis.a2a.extension.history.v1.ListThreadEventsResponse
+	1,  // 44: alis.a2a.extension.history.v1.ThreadService.StreamThreadEvents:output_type -> alis.a2a.extension.history.v1.ThreadEvent
+	33, // [33:45] is the sub-list for method output_type
+	21, // [21:33] is the sub-list for method input_type
+	21, // [21:21] is the sub-list for extension type_name
+	21, // [21:21] is the sub-list for extension extendee
+	0,  // [0:21] is the sub-list for field type_name
 }
 
 func init() { file_alis_a2a_extension_history_v1_history_proto_init() }
@@ -1039,7 +1357,7 @@ func file_alis_a2a_extension_history_v1_history_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_alis_a2a_extension_history_v1_history_proto_rawDesc), len(file_alis_a2a_extension_history_v1_history_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   12,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

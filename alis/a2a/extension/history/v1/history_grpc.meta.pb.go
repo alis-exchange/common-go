@@ -3,7 +3,7 @@
 // Source: alis/a2a/extension/history/v1/history.proto
 // Plugin version: v0.0.1
 //
-// Generated on: 2026-04-07 11:00:49 UTC
+// Generated on: 2026-04-07 20:07:09 UTC
 
 package v1
 
@@ -24,6 +24,10 @@ const (
 	ThreadService_DeleteThread_FullMethodDescription = "Deletes an Thread."
 	// ThreadService_AppendThreadEvent_FullMethodDescription returns the description of the alis.a2a.extension.history.v1.ThreadService.AppendThreadEvent method.
 	ThreadService_AppendThreadEvent_FullMethodDescription = "Appends an event to a given Thread"
+	// ThreadService_GetUserThreadState_FullMethodDescription returns the description of the alis.a2a.extension.history.v1.ThreadService.GetUserThreadState method.
+	ThreadService_GetUserThreadState_FullMethodDescription = "Gets per-user state for a Thread."
+	// ThreadService_UpdateUserThreadState_FullMethodDescription returns the description of the alis.a2a.extension.history.v1.ThreadService.UpdateUserThreadState method.
+	ThreadService_UpdateUserThreadState_FullMethodDescription = "Updates per-user state for a Thread."
 	// ThreadService_ListThreadEvents_FullMethodDescription returns the description of the alis.a2a.extension.history.v1.ThreadService.ListThreadEvents method.
 	ThreadService_ListThreadEvents_FullMethodDescription = "Lists all events."
 	// ThreadService_StreamThreadEvents_FullMethodDescription returns the description of the alis.a2a.extension.history.v1.ThreadService.StreamThreadEvents method.

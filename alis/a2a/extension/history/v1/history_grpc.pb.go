@@ -22,16 +22,18 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ThreadService_GetIamPolicy_FullMethodName       = "/alis.a2a.extension.history.v1.ThreadService/GetIamPolicy"
-	ThreadService_SetIamPolicy_FullMethodName       = "/alis.a2a.extension.history.v1.ThreadService/SetIamPolicy"
-	ThreadService_AddIamBindings_FullMethodName     = "/alis.a2a.extension.history.v1.ThreadService/AddIamBindings"
-	ThreadService_RemoveIamBindings_FullMethodName  = "/alis.a2a.extension.history.v1.ThreadService/RemoveIamBindings"
-	ThreadService_ListThreads_FullMethodName        = "/alis.a2a.extension.history.v1.ThreadService/ListThreads"
-	ThreadService_GetThread_FullMethodName          = "/alis.a2a.extension.history.v1.ThreadService/GetThread"
-	ThreadService_DeleteThread_FullMethodName       = "/alis.a2a.extension.history.v1.ThreadService/DeleteThread"
-	ThreadService_AppendThreadEvent_FullMethodName  = "/alis.a2a.extension.history.v1.ThreadService/AppendThreadEvent"
-	ThreadService_ListThreadEvents_FullMethodName   = "/alis.a2a.extension.history.v1.ThreadService/ListThreadEvents"
-	ThreadService_StreamThreadEvents_FullMethodName = "/alis.a2a.extension.history.v1.ThreadService/StreamThreadEvents"
+	ThreadService_GetIamPolicy_FullMethodName          = "/alis.a2a.extension.history.v1.ThreadService/GetIamPolicy"
+	ThreadService_SetIamPolicy_FullMethodName          = "/alis.a2a.extension.history.v1.ThreadService/SetIamPolicy"
+	ThreadService_AddIamBindings_FullMethodName        = "/alis.a2a.extension.history.v1.ThreadService/AddIamBindings"
+	ThreadService_RemoveIamBindings_FullMethodName     = "/alis.a2a.extension.history.v1.ThreadService/RemoveIamBindings"
+	ThreadService_ListThreads_FullMethodName           = "/alis.a2a.extension.history.v1.ThreadService/ListThreads"
+	ThreadService_GetThread_FullMethodName             = "/alis.a2a.extension.history.v1.ThreadService/GetThread"
+	ThreadService_DeleteThread_FullMethodName          = "/alis.a2a.extension.history.v1.ThreadService/DeleteThread"
+	ThreadService_AppendThreadEvent_FullMethodName     = "/alis.a2a.extension.history.v1.ThreadService/AppendThreadEvent"
+	ThreadService_GetUserThreadState_FullMethodName    = "/alis.a2a.extension.history.v1.ThreadService/GetUserThreadState"
+	ThreadService_UpdateUserThreadState_FullMethodName = "/alis.a2a.extension.history.v1.ThreadService/UpdateUserThreadState"
+	ThreadService_ListThreadEvents_FullMethodName      = "/alis.a2a.extension.history.v1.ThreadService/ListThreadEvents"
+	ThreadService_StreamThreadEvents_FullMethodName    = "/alis.a2a.extension.history.v1.ThreadService/StreamThreadEvents"
 )
 
 // ThreadServiceClient is the client API for ThreadService service.
@@ -57,6 +59,10 @@ type ThreadServiceClient interface {
 	DeleteThread(ctx context.Context, in *DeleteThreadRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Appends an event to a given Thread
 	AppendThreadEvent(ctx context.Context, in *AppendThreadEventRequest, opts ...grpc.CallOption) (*AppendThreadEventResponse, error)
+	// Gets per-user state for a Thread.
+	GetUserThreadState(ctx context.Context, in *GetUserThreadStateRequest, opts ...grpc.CallOption) (*UserThreadState, error)
+	// Updates per-user state for a Thread.
+	UpdateUserThreadState(ctx context.Context, in *UpdateUserThreadStateRequest, opts ...grpc.CallOption) (*UserThreadState, error)
 	// Lists all events.
 	ListThreadEvents(ctx context.Context, in *ListThreadEventsRequest, opts ...grpc.CallOption) (*ListThreadEventsResponse, error)
 	// Stream events.
@@ -151,6 +157,26 @@ func (c *threadServiceClient) AppendThreadEvent(ctx context.Context, in *AppendT
 	return out, nil
 }
 
+func (c *threadServiceClient) GetUserThreadState(ctx context.Context, in *GetUserThreadStateRequest, opts ...grpc.CallOption) (*UserThreadState, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserThreadState)
+	err := c.cc.Invoke(ctx, ThreadService_GetUserThreadState_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *threadServiceClient) UpdateUserThreadState(ctx context.Context, in *UpdateUserThreadStateRequest, opts ...grpc.CallOption) (*UserThreadState, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserThreadState)
+	err := c.cc.Invoke(ctx, ThreadService_UpdateUserThreadState_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *threadServiceClient) ListThreadEvents(ctx context.Context, in *ListThreadEventsRequest, opts ...grpc.CallOption) (*ListThreadEventsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListThreadEventsResponse)
@@ -203,6 +229,10 @@ type ThreadServiceServer interface {
 	DeleteThread(context.Context, *DeleteThreadRequest) (*emptypb.Empty, error)
 	// Appends an event to a given Thread
 	AppendThreadEvent(context.Context, *AppendThreadEventRequest) (*AppendThreadEventResponse, error)
+	// Gets per-user state for a Thread.
+	GetUserThreadState(context.Context, *GetUserThreadStateRequest) (*UserThreadState, error)
+	// Updates per-user state for a Thread.
+	UpdateUserThreadState(context.Context, *UpdateUserThreadStateRequest) (*UserThreadState, error)
 	// Lists all events.
 	ListThreadEvents(context.Context, *ListThreadEventsRequest) (*ListThreadEventsResponse, error)
 	// Stream events.
@@ -240,6 +270,12 @@ func (UnimplementedThreadServiceServer) DeleteThread(context.Context, *DeleteThr
 }
 func (UnimplementedThreadServiceServer) AppendThreadEvent(context.Context, *AppendThreadEventRequest) (*AppendThreadEventResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method AppendThreadEvent not implemented")
+}
+func (UnimplementedThreadServiceServer) GetUserThreadState(context.Context, *GetUserThreadStateRequest) (*UserThreadState, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetUserThreadState not implemented")
+}
+func (UnimplementedThreadServiceServer) UpdateUserThreadState(context.Context, *UpdateUserThreadStateRequest) (*UserThreadState, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateUserThreadState not implemented")
 }
 func (UnimplementedThreadServiceServer) ListThreadEvents(context.Context, *ListThreadEventsRequest) (*ListThreadEventsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListThreadEvents not implemented")
@@ -412,6 +448,42 @@ func _ThreadService_AppendThreadEvent_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ThreadService_GetUserThreadState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserThreadStateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ThreadServiceServer).GetUserThreadState(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ThreadService_GetUserThreadState_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ThreadServiceServer).GetUserThreadState(ctx, req.(*GetUserThreadStateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ThreadService_UpdateUserThreadState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserThreadStateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ThreadServiceServer).UpdateUserThreadState(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ThreadService_UpdateUserThreadState_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ThreadServiceServer).UpdateUserThreadState(ctx, req.(*UpdateUserThreadStateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ThreadService_ListThreadEvents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListThreadEventsRequest)
 	if err := dec(in); err != nil {
@@ -479,6 +551,14 @@ var ThreadService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AppendThreadEvent",
 			Handler:    _ThreadService_AppendThreadEvent_Handler,
+		},
+		{
+			MethodName: "GetUserThreadState",
+			Handler:    _ThreadService_GetUserThreadState_Handler,
+		},
+		{
+			MethodName: "UpdateUserThreadState",
+			Handler:    _ThreadService_UpdateUserThreadState_Handler,
 		},
 		{
 			MethodName: "ListThreadEvents",
