@@ -11,6 +11,8 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	durationpb "google.golang.org/protobuf/types/known/durationpb"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
 	structpb "google.golang.org/protobuf/types/known/structpb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
@@ -304,7 +306,7 @@ func (x ExecutableCode_Language) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ExecutableCode_Language.Descriptor instead.
 func (ExecutableCode_Language) EnumDescriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{16, 0}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{27, 0}
 }
 
 // Enumeration of possible outcomes of the code execution.
@@ -363,7 +365,7 @@ func (x CodeExecutionResult_Outcome) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CodeExecutionResult_Outcome.Descriptor instead.
 func (CodeExecutionResult_Outcome) EnumDescriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{17, 0}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{28, 0}
 }
 
 // Session represents a conversation session between a user and an agent.
@@ -935,6 +937,640 @@ func (x *SessionEvent) GetTimestamp() *timestamppb.Timestamp {
 	return nil
 }
 
+// Request message for SessionService.CreateSession.
+type CreateSessionRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required. The session to create.
+	Session *Session `protobuf:"bytes,1,opt,name=session,proto3" json:"session,omitempty"`
+	// Optional. The session ID to create.
+	// If not provided, a new session ID will be generated.
+	SessionId     string `protobuf:"bytes,2,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateSessionRequest) Reset() {
+	*x = CreateSessionRequest{}
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateSessionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateSessionRequest) ProtoMessage() {}
+
+func (x *CreateSessionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateSessionRequest.ProtoReflect.Descriptor instead.
+func (*CreateSessionRequest) Descriptor() ([]byte, []int) {
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *CreateSessionRequest) GetSession() *Session {
+	if x != nil {
+		return x.Session
+	}
+	return nil
+}
+
+func (x *CreateSessionRequest) GetSessionId() string {
+	if x != nil {
+		return x.SessionId
+	}
+	return ""
+}
+
+// Request message for SessionService.GetSession.
+type GetSessionRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required. The resource name of the session.
+	// Format: `sessions/{session}`
+	Name          string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSessionRequest) Reset() {
+	*x = GetSessionRequest{}
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSessionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSessionRequest) ProtoMessage() {}
+
+func (x *GetSessionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSessionRequest.ProtoReflect.Descriptor instead.
+func (*GetSessionRequest) Descriptor() ([]byte, []int) {
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GetSessionRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+// Request message for SessionService.ListSessions.
+type ListSessionsRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Optional. The maximum number of sessions to return.
+	// The service may return fewer than this value.
+	// If unspecified, at most 100 sessions will be returned.
+	PageSize int32 `protobuf:"varint,1,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	// Optional. A page token, received from a previous ListSessions call.
+	// Provide this to retrieve the next page of results.
+	PageToken string `protobuf:"bytes,2,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	// Optional. The standard list filter.
+	// Supported fields:
+	//   - `display_name`
+	//   - `user_id`
+	//   - `app_name`
+	Filter string `protobuf:"bytes,3,opt,name=filter,proto3" json:"filter,omitempty"`
+	// Optional. A comma-separated list of fields to order by, sorted in ascending
+	// order. Use "desc" after a field name for descending.
+	// Supported fields:
+	//   - `create_time`
+	//   - `update_time`
+	OrderBy       string `protobuf:"bytes,4,opt,name=order_by,json=orderBy,proto3" json:"order_by,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSessionsRequest) Reset() {
+	*x = ListSessionsRequest{}
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSessionsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSessionsRequest) ProtoMessage() {}
+
+func (x *ListSessionsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSessionsRequest.ProtoReflect.Descriptor instead.
+func (*ListSessionsRequest) Descriptor() ([]byte, []int) {
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ListSessionsRequest) GetPageSize() int32 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
+func (x *ListSessionsRequest) GetPageToken() string {
+	if x != nil {
+		return x.PageToken
+	}
+	return ""
+}
+
+func (x *ListSessionsRequest) GetFilter() string {
+	if x != nil {
+		return x.Filter
+	}
+	return ""
+}
+
+func (x *ListSessionsRequest) GetOrderBy() string {
+	if x != nil {
+		return x.OrderBy
+	}
+	return ""
+}
+
+// Response message for SessionService.ListSessions.
+type ListSessionsResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// A list of sessions matching the request.
+	Sessions []*Session `protobuf:"bytes,1,rep,name=sessions,proto3" json:"sessions,omitempty"`
+	// A token, which can be sent as ListSessionsRequest.page_token to retrieve
+	// the next page. Absence of this field indicates there are no subsequent
+	// pages.
+	NextPageToken string `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSessionsResponse) Reset() {
+	*x = ListSessionsResponse{}
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSessionsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSessionsResponse) ProtoMessage() {}
+
+func (x *ListSessionsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSessionsResponse.ProtoReflect.Descriptor instead.
+func (*ListSessionsResponse) Descriptor() ([]byte, []int) {
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *ListSessionsResponse) GetSessions() []*Session {
+	if x != nil {
+		return x.Sessions
+	}
+	return nil
+}
+
+func (x *ListSessionsResponse) GetNextPageToken() string {
+	if x != nil {
+		return x.NextPageToken
+	}
+	return ""
+}
+
+// Request message for SessionService.UpdateSession.
+type UpdateSessionRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required. The session to update.
+	Session *Session `protobuf:"bytes,1,opt,name=session,proto3" json:"session,omitempty"`
+	// Required. The list of fields to update.
+	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateSessionRequest) Reset() {
+	*x = UpdateSessionRequest{}
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateSessionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateSessionRequest) ProtoMessage() {}
+
+func (x *UpdateSessionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateSessionRequest.ProtoReflect.Descriptor instead.
+func (*UpdateSessionRequest) Descriptor() ([]byte, []int) {
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *UpdateSessionRequest) GetSession() *Session {
+	if x != nil {
+		return x.Session
+	}
+	return nil
+}
+
+func (x *UpdateSessionRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
+}
+
+// Request message for SessionService.DeleteSession.
+type DeleteSessionRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required. The resource name of the session.
+	// Format: `sessions/{session}`
+	Name          string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteSessionRequest) Reset() {
+	*x = DeleteSessionRequest{}
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteSessionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteSessionRequest) ProtoMessage() {}
+
+func (x *DeleteSessionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteSessionRequest.ProtoReflect.Descriptor instead.
+func (*DeleteSessionRequest) Descriptor() ([]byte, []int) {
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *DeleteSessionRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+// Request message for SessionService.GetEvent.
+type GetEventRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required. The resource name of the event.
+	// Format: `sessions/{session}/events/{event}`
+	Name          string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetEventRequest) Reset() {
+	*x = GetEventRequest{}
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetEventRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetEventRequest) ProtoMessage() {}
+
+func (x *GetEventRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetEventRequest.ProtoReflect.Descriptor instead.
+func (*GetEventRequest) Descriptor() ([]byte, []int) {
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *GetEventRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+// Request message for SessionService.ListEvents.
+type ListEventsRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required. The resource name of the session to list events from.
+	// Format: `sessions/{session}`
+	Parent string `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
+	// Optional. The maximum number of events to return.
+	// The service may return fewer than this value.
+	// If unspecified, at most 100 events will be returned.
+	PageSize int32 `protobuf:"varint,2,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	// Optional. A page token, received from a previous ListEvents call.
+	// Provide this to retrieve the next page of results.
+	PageToken string `protobuf:"bytes,3,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	// Optional. The standard list filter.
+	// Supported fields:
+	//   - `timestamp` range in RFC 3339 format.
+	Filter string `protobuf:"bytes,4,opt,name=filter,proto3" json:"filter,omitempty"`
+	// Optional. A comma-separated list of fields to order by, sorted in ascending
+	// order. Use "desc" after a field name for descending.
+	// Supported fields:
+	//   - `timestamp`
+	OrderBy       string `protobuf:"bytes,5,opt,name=order_by,json=orderBy,proto3" json:"order_by,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListEventsRequest) Reset() {
+	*x = ListEventsRequest{}
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListEventsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListEventsRequest) ProtoMessage() {}
+
+func (x *ListEventsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListEventsRequest.ProtoReflect.Descriptor instead.
+func (*ListEventsRequest) Descriptor() ([]byte, []int) {
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *ListEventsRequest) GetParent() string {
+	if x != nil {
+		return x.Parent
+	}
+	return ""
+}
+
+func (x *ListEventsRequest) GetPageSize() int32 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
+func (x *ListEventsRequest) GetPageToken() string {
+	if x != nil {
+		return x.PageToken
+	}
+	return ""
+}
+
+func (x *ListEventsRequest) GetFilter() string {
+	if x != nil {
+		return x.Filter
+	}
+	return ""
+}
+
+func (x *ListEventsRequest) GetOrderBy() string {
+	if x != nil {
+		return x.OrderBy
+	}
+	return ""
+}
+
+// Response message for SessionService.ListEvents.
+type ListEventsResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// A list of events matching the request.
+	SessionEvents []*SessionEvent `protobuf:"bytes,1,rep,name=session_events,json=sessionEvents,proto3" json:"session_events,omitempty"`
+	// A token, which can be sent as ListEventsRequest.page_token to retrieve
+	// the next page. Absence of this field indicates there are no subsequent
+	// pages.
+	NextPageToken string `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListEventsResponse) Reset() {
+	*x = ListEventsResponse{}
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListEventsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListEventsResponse) ProtoMessage() {}
+
+func (x *ListEventsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListEventsResponse.ProtoReflect.Descriptor instead.
+func (*ListEventsResponse) Descriptor() ([]byte, []int) {
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *ListEventsResponse) GetSessionEvents() []*SessionEvent {
+	if x != nil {
+		return x.SessionEvents
+	}
+	return nil
+}
+
+func (x *ListEventsResponse) GetNextPageToken() string {
+	if x != nil {
+		return x.NextPageToken
+	}
+	return ""
+}
+
+// Request message for SessionService.AppendEvent.
+type AppendEventRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required. The resource name of the session to append the event to.
+	// Format: `sessions/{session}`
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	// Required. The event to append.
+	Event         *SessionEvent `protobuf:"bytes,2,opt,name=event,proto3" json:"event,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AppendEventRequest) Reset() {
+	*x = AppendEventRequest{}
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AppendEventRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AppendEventRequest) ProtoMessage() {}
+
+func (x *AppendEventRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AppendEventRequest.ProtoReflect.Descriptor instead.
+func (*AppendEventRequest) Descriptor() ([]byte, []int) {
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *AppendEventRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *AppendEventRequest) GetEvent() *SessionEvent {
+	if x != nil {
+		return x.Event
+	}
+	return nil
+}
+
+// Response message for SessionService.AppendEvent.
+type AppendEventResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AppendEventResponse) Reset() {
+	*x = AppendEventResponse{}
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AppendEventResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AppendEventResponse) ProtoMessage() {}
+
+func (x *AppendEventResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AppendEventResponse.ProtoReflect.Descriptor instead.
+func (*AppendEventResponse) Descriptor() ([]byte, []int) {
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{14}
+}
+
 // EventMetadata contains metadata relating to an LLM response event.
 type EventMetadata struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -967,7 +1603,7 @@ type EventMetadata struct {
 
 func (x *EventMetadata) Reset() {
 	*x = EventMetadata{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[4]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -979,7 +1615,7 @@ func (x *EventMetadata) String() string {
 func (*EventMetadata) ProtoMessage() {}
 
 func (x *EventMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[4]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -992,7 +1628,7 @@ func (x *EventMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EventMetadata.ProtoReflect.Descriptor instead.
 func (*EventMetadata) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{4}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *EventMetadata) GetGroundingMetadata() *GroundingMetadata {
@@ -1072,7 +1708,7 @@ type EventActions struct {
 
 func (x *EventActions) Reset() {
 	*x = EventActions{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[5]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1084,7 +1720,7 @@ func (x *EventActions) String() string {
 func (*EventActions) ProtoMessage() {}
 
 func (x *EventActions) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[5]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1097,7 +1733,7 @@ func (x *EventActions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EventActions.ProtoReflect.Descriptor instead.
 func (*EventActions) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{5}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *EventActions) GetSkipSummarization() bool {
@@ -1164,7 +1800,7 @@ type Content struct {
 
 func (x *Content) Reset() {
 	*x = Content{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[6]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1176,7 +1812,7 @@ func (x *Content) String() string {
 func (*Content) ProtoMessage() {}
 
 func (x *Content) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[6]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1189,7 +1825,7 @@ func (x *Content) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Content.ProtoReflect.Descriptor instead.
 func (*Content) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{6}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *Content) GetRole() string {
@@ -1241,7 +1877,7 @@ type Part struct {
 
 func (x *Part) Reset() {
 	*x = Part{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[7]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1253,7 +1889,7 @@ func (x *Part) String() string {
 func (*Part) ProtoMessage() {}
 
 func (x *Part) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[7]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1266,7 +1902,7 @@ func (x *Part) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Part.ProtoReflect.Descriptor instead.
 func (*Part) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{7}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *Part) GetData() isPart_Data {
@@ -1454,7 +2090,7 @@ type Blob struct {
 
 func (x *Blob) Reset() {
 	*x = Blob{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[8]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1466,7 +2102,7 @@ func (x *Blob) String() string {
 func (*Blob) ProtoMessage() {}
 
 func (x *Blob) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[8]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1479,7 +2115,7 @@ func (x *Blob) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Blob.ProtoReflect.Descriptor instead.
 func (*Blob) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{8}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *Blob) GetMimeType() string {
@@ -1509,7 +2145,7 @@ type FileData struct {
 
 func (x *FileData) Reset() {
 	*x = FileData{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[9]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1521,7 +2157,7 @@ func (x *FileData) String() string {
 func (*FileData) ProtoMessage() {}
 
 func (x *FileData) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[9]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1534,7 +2170,7 @@ func (x *FileData) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FileData.ProtoReflect.Descriptor instead.
 func (*FileData) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{9}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *FileData) GetMimeType() string {
@@ -1564,7 +2200,7 @@ type VideoMetadata struct {
 
 func (x *VideoMetadata) Reset() {
 	*x = VideoMetadata{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[10]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1576,7 +2212,7 @@ func (x *VideoMetadata) String() string {
 func (*VideoMetadata) ProtoMessage() {}
 
 func (x *VideoMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[10]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1589,7 +2225,7 @@ func (x *VideoMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VideoMetadata.ProtoReflect.Descriptor instead.
 func (*VideoMetadata) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{10}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *VideoMetadata) GetStartOffset() *durationpb.Duration {
@@ -1627,7 +2263,7 @@ type FunctionCall struct {
 
 func (x *FunctionCall) Reset() {
 	*x = FunctionCall{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[11]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1639,7 +2275,7 @@ func (x *FunctionCall) String() string {
 func (*FunctionCall) ProtoMessage() {}
 
 func (x *FunctionCall) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[11]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1652,7 +2288,7 @@ func (x *FunctionCall) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FunctionCall.ProtoReflect.Descriptor instead.
 func (*FunctionCall) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{11}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *FunctionCall) GetName() string {
@@ -1705,7 +2341,7 @@ type FunctionResponse struct {
 
 func (x *FunctionResponse) Reset() {
 	*x = FunctionResponse{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[12]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1717,7 +2353,7 @@ func (x *FunctionResponse) String() string {
 func (*FunctionResponse) ProtoMessage() {}
 
 func (x *FunctionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[12]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1730,7 +2366,7 @@ func (x *FunctionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FunctionResponse.ProtoReflect.Descriptor instead.
 func (*FunctionResponse) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{12}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *FunctionResponse) GetName() string {
@@ -1784,7 +2420,7 @@ type FunctionResponsePart struct {
 
 func (x *FunctionResponsePart) Reset() {
 	*x = FunctionResponsePart{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[13]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1796,7 +2432,7 @@ func (x *FunctionResponsePart) String() string {
 func (*FunctionResponsePart) ProtoMessage() {}
 
 func (x *FunctionResponsePart) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[13]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1809,7 +2445,7 @@ func (x *FunctionResponsePart) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FunctionResponsePart.ProtoReflect.Descriptor instead.
 func (*FunctionResponsePart) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{13}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *FunctionResponsePart) GetData() isFunctionResponsePart_Data {
@@ -1878,7 +2514,7 @@ type FunctionResponseBlob struct {
 
 func (x *FunctionResponseBlob) Reset() {
 	*x = FunctionResponseBlob{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[14]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1890,7 +2526,7 @@ func (x *FunctionResponseBlob) String() string {
 func (*FunctionResponseBlob) ProtoMessage() {}
 
 func (x *FunctionResponseBlob) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[14]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1903,7 +2539,7 @@ func (x *FunctionResponseBlob) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FunctionResponseBlob.ProtoReflect.Descriptor instead.
 func (*FunctionResponseBlob) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{14}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *FunctionResponseBlob) GetMimeType() string {
@@ -1948,7 +2584,7 @@ type FunctionResponseFileData struct {
 
 func (x *FunctionResponseFileData) Reset() {
 	*x = FunctionResponseFileData{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[15]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1960,7 +2596,7 @@ func (x *FunctionResponseFileData) String() string {
 func (*FunctionResponseFileData) ProtoMessage() {}
 
 func (x *FunctionResponseFileData) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[15]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1973,7 +2609,7 @@ func (x *FunctionResponseFileData) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FunctionResponseFileData.ProtoReflect.Descriptor instead.
 func (*FunctionResponseFileData) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{15}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *FunctionResponseFileData) GetMimeType() string {
@@ -2014,7 +2650,7 @@ type ExecutableCode struct {
 
 func (x *ExecutableCode) Reset() {
 	*x = ExecutableCode{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[16]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2026,7 +2662,7 @@ func (x *ExecutableCode) String() string {
 func (*ExecutableCode) ProtoMessage() {}
 
 func (x *ExecutableCode) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[16]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2039,7 +2675,7 @@ func (x *ExecutableCode) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExecutableCode.ProtoReflect.Descriptor instead.
 func (*ExecutableCode) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{16}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *ExecutableCode) GetLanguage() ExecutableCode_Language {
@@ -2072,7 +2708,7 @@ type CodeExecutionResult struct {
 
 func (x *CodeExecutionResult) Reset() {
 	*x = CodeExecutionResult{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[17]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2084,7 +2720,7 @@ func (x *CodeExecutionResult) String() string {
 func (*CodeExecutionResult) ProtoMessage() {}
 
 func (x *CodeExecutionResult) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[17]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2097,7 +2733,7 @@ func (x *CodeExecutionResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CodeExecutionResult.ProtoReflect.Descriptor instead.
 func (*CodeExecutionResult) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{17}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *CodeExecutionResult) GetOutcome() CodeExecutionResult_Outcome {
@@ -2143,7 +2779,7 @@ type GroundingMetadata struct {
 
 func (x *GroundingMetadata) Reset() {
 	*x = GroundingMetadata{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[18]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2155,7 +2791,7 @@ func (x *GroundingMetadata) String() string {
 func (*GroundingMetadata) ProtoMessage() {}
 
 func (x *GroundingMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[18]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2168,7 +2804,7 @@ func (x *GroundingMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GroundingMetadata.ProtoReflect.Descriptor instead.
 func (*GroundingMetadata) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{18}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *GroundingMetadata) GetWebSearchQueries() []string {
@@ -2245,7 +2881,7 @@ type GroundingChunk struct {
 
 func (x *GroundingChunk) Reset() {
 	*x = GroundingChunk{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[19]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2257,7 +2893,7 @@ func (x *GroundingChunk) String() string {
 func (*GroundingChunk) ProtoMessage() {}
 
 func (x *GroundingChunk) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[19]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2270,7 +2906,7 @@ func (x *GroundingChunk) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GroundingChunk.ProtoReflect.Descriptor instead.
 func (*GroundingChunk) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{19}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *GroundingChunk) GetChunkType() isGroundingChunk_ChunkType {
@@ -2352,7 +2988,7 @@ type GroundingSupport struct {
 
 func (x *GroundingSupport) Reset() {
 	*x = GroundingSupport{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[20]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2364,7 +3000,7 @@ func (x *GroundingSupport) String() string {
 func (*GroundingSupport) ProtoMessage() {}
 
 func (x *GroundingSupport) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[20]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2377,7 +3013,7 @@ func (x *GroundingSupport) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GroundingSupport.ProtoReflect.Descriptor instead.
 func (*GroundingSupport) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{20}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *GroundingSupport) GetSegment() *Segment {
@@ -2420,7 +3056,7 @@ type Segment struct {
 
 func (x *Segment) Reset() {
 	*x = Segment{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[21]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2432,7 +3068,7 @@ func (x *Segment) String() string {
 func (*Segment) ProtoMessage() {}
 
 func (x *Segment) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[21]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2445,7 +3081,7 @@ func (x *Segment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Segment.ProtoReflect.Descriptor instead.
 func (*Segment) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{21}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *Segment) GetPartIndex() int32 {
@@ -2491,7 +3127,7 @@ type SearchEntryPoint struct {
 
 func (x *SearchEntryPoint) Reset() {
 	*x = SearchEntryPoint{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[22]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2503,7 +3139,7 @@ func (x *SearchEntryPoint) String() string {
 func (*SearchEntryPoint) ProtoMessage() {}
 
 func (x *SearchEntryPoint) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[22]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2516,7 +3152,7 @@ func (x *SearchEntryPoint) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SearchEntryPoint.ProtoReflect.Descriptor instead.
 func (*SearchEntryPoint) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{22}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *SearchEntryPoint) GetRenderedContent() string {
@@ -2549,7 +3185,7 @@ type RetrievalMetadata struct {
 
 func (x *RetrievalMetadata) Reset() {
 	*x = RetrievalMetadata{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[23]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2561,7 +3197,7 @@ func (x *RetrievalMetadata) String() string {
 func (*RetrievalMetadata) ProtoMessage() {}
 
 func (x *RetrievalMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[23]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2574,7 +3210,7 @@ func (x *RetrievalMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RetrievalMetadata.ProtoReflect.Descriptor instead.
 func (*RetrievalMetadata) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{23}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *RetrievalMetadata) GetGoogleSearchDynamicRetrievalScore() float32 {
@@ -2599,7 +3235,7 @@ type RagChunk struct {
 
 func (x *RagChunk) Reset() {
 	*x = RagChunk{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[24]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2611,7 +3247,7 @@ func (x *RagChunk) String() string {
 func (*RagChunk) ProtoMessage() {}
 
 func (x *RagChunk) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[24]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2624,7 +3260,7 @@ func (x *RagChunk) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RagChunk.ProtoReflect.Descriptor instead.
 func (*RagChunk) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{24}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *RagChunk) GetText() string {
@@ -2685,7 +3321,7 @@ type UsageMetadata struct {
 
 func (x *UsageMetadata) Reset() {
 	*x = UsageMetadata{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[25]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2697,7 +3333,7 @@ func (x *UsageMetadata) String() string {
 func (*UsageMetadata) ProtoMessage() {}
 
 func (x *UsageMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[25]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2710,7 +3346,7 @@ func (x *UsageMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UsageMetadata.ProtoReflect.Descriptor instead.
 func (*UsageMetadata) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{25}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *UsageMetadata) GetCacheTokensDetails() []*ModalityTokenCount {
@@ -2803,7 +3439,7 @@ type ModalityTokenCount struct {
 
 func (x *ModalityTokenCount) Reset() {
 	*x = ModalityTokenCount{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[26]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2815,7 +3451,7 @@ func (x *ModalityTokenCount) String() string {
 func (*ModalityTokenCount) ProtoMessage() {}
 
 func (x *ModalityTokenCount) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[26]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2828,7 +3464,7 @@ func (x *ModalityTokenCount) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ModalityTokenCount.ProtoReflect.Descriptor instead.
 func (*ModalityTokenCount) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{26}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *ModalityTokenCount) GetModality() MediaModality {
@@ -2859,7 +3495,7 @@ type CitationMetadata struct {
 
 func (x *CitationMetadata) Reset() {
 	*x = CitationMetadata{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[27]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2871,7 +3507,7 @@ func (x *CitationMetadata) String() string {
 func (*CitationMetadata) ProtoMessage() {}
 
 func (x *CitationMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[27]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2884,7 +3520,7 @@ func (x *CitationMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CitationMetadata.ProtoReflect.Descriptor instead.
 func (*CitationMetadata) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{27}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *CitationMetadata) GetCitations() []*CitationMetadata_Citation {
@@ -2914,7 +3550,7 @@ type ToolConfirmation struct {
 
 func (x *ToolConfirmation) Reset() {
 	*x = ToolConfirmation{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[28]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2926,7 +3562,7 @@ func (x *ToolConfirmation) String() string {
 func (*ToolConfirmation) ProtoMessage() {}
 
 func (x *ToolConfirmation) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[28]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2939,7 +3575,7 @@ func (x *ToolConfirmation) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToolConfirmation.ProtoReflect.Descriptor instead.
 func (*ToolConfirmation) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{28}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *ToolConfirmation) GetHint() string {
@@ -2978,7 +3614,7 @@ type LogprobsResultCandidate struct {
 
 func (x *LogprobsResultCandidate) Reset() {
 	*x = LogprobsResultCandidate{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[29]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2990,7 +3626,7 @@ func (x *LogprobsResultCandidate) String() string {
 func (*LogprobsResultCandidate) ProtoMessage() {}
 
 func (x *LogprobsResultCandidate) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[29]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3003,7 +3639,7 @@ func (x *LogprobsResultCandidate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LogprobsResultCandidate.ProtoReflect.Descriptor instead.
 func (*LogprobsResultCandidate) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{29}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *LogprobsResultCandidate) GetLogProbability() float32 {
@@ -3038,7 +3674,7 @@ type LogprobsResultTopCandidates struct {
 
 func (x *LogprobsResultTopCandidates) Reset() {
 	*x = LogprobsResultTopCandidates{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[30]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3050,7 +3686,7 @@ func (x *LogprobsResultTopCandidates) String() string {
 func (*LogprobsResultTopCandidates) ProtoMessage() {}
 
 func (x *LogprobsResultTopCandidates) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[30]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3063,7 +3699,7 @@ func (x *LogprobsResultTopCandidates) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LogprobsResultTopCandidates.ProtoReflect.Descriptor instead.
 func (*LogprobsResultTopCandidates) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{30}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *LogprobsResultTopCandidates) GetCandidates() []*LogprobsResultCandidate {
@@ -3087,7 +3723,7 @@ type LogprobsResult struct {
 
 func (x *LogprobsResult) Reset() {
 	*x = LogprobsResult{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[31]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3099,7 +3735,7 @@ func (x *LogprobsResult) String() string {
 func (*LogprobsResult) ProtoMessage() {}
 
 func (x *LogprobsResult) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[31]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3112,7 +3748,7 @@ func (x *LogprobsResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LogprobsResult.ProtoReflect.Descriptor instead.
 func (*LogprobsResult) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{31}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *LogprobsResult) GetChosenCandidates() []*LogprobsResultCandidate {
@@ -3146,7 +3782,7 @@ type GroundingMetadata_SourceFlaggingUri struct {
 
 func (x *GroundingMetadata_SourceFlaggingUri) Reset() {
 	*x = GroundingMetadata_SourceFlaggingUri{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[34]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[45]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3158,7 +3794,7 @@ func (x *GroundingMetadata_SourceFlaggingUri) String() string {
 func (*GroundingMetadata_SourceFlaggingUri) ProtoMessage() {}
 
 func (x *GroundingMetadata_SourceFlaggingUri) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[34]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[45]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3171,7 +3807,7 @@ func (x *GroundingMetadata_SourceFlaggingUri) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use GroundingMetadata_SourceFlaggingUri.ProtoReflect.Descriptor instead.
 func (*GroundingMetadata_SourceFlaggingUri) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{18, 0}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{29, 0}
 }
 
 func (x *GroundingMetadata_SourceFlaggingUri) GetSourceId() string {
@@ -3203,7 +3839,7 @@ type GroundingChunk_Web struct {
 
 func (x *GroundingChunk_Web) Reset() {
 	*x = GroundingChunk_Web{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[35]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[46]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3215,7 +3851,7 @@ func (x *GroundingChunk_Web) String() string {
 func (*GroundingChunk_Web) ProtoMessage() {}
 
 func (x *GroundingChunk_Web) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[35]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[46]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3228,7 +3864,7 @@ func (x *GroundingChunk_Web) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GroundingChunk_Web.ProtoReflect.Descriptor instead.
 func (*GroundingChunk_Web) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{19, 0}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{30, 0}
 }
 
 func (x *GroundingChunk_Web) GetDomain() string {
@@ -3277,7 +3913,7 @@ type GroundingChunk_RetrievedContext struct {
 
 func (x *GroundingChunk_RetrievedContext) Reset() {
 	*x = GroundingChunk_RetrievedContext{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[36]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[47]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3289,7 +3925,7 @@ func (x *GroundingChunk_RetrievedContext) String() string {
 func (*GroundingChunk_RetrievedContext) ProtoMessage() {}
 
 func (x *GroundingChunk_RetrievedContext) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[36]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[47]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3302,7 +3938,7 @@ func (x *GroundingChunk_RetrievedContext) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GroundingChunk_RetrievedContext.ProtoReflect.Descriptor instead.
 func (*GroundingChunk_RetrievedContext) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{19, 1}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{30, 1}
 }
 
 func (x *GroundingChunk_RetrievedContext) GetUri() string {
@@ -3383,7 +4019,7 @@ type GroundingChunk_Maps struct {
 
 func (x *GroundingChunk_Maps) Reset() {
 	*x = GroundingChunk_Maps{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[37]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[48]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3395,7 +4031,7 @@ func (x *GroundingChunk_Maps) String() string {
 func (*GroundingChunk_Maps) ProtoMessage() {}
 
 func (x *GroundingChunk_Maps) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[37]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[48]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3408,7 +4044,7 @@ func (x *GroundingChunk_Maps) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GroundingChunk_Maps.ProtoReflect.Descriptor instead.
 func (*GroundingChunk_Maps) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{19, 2}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{30, 2}
 }
 
 func (x *GroundingChunk_Maps) GetUri() string {
@@ -3459,7 +4095,7 @@ type GroundingChunk_Maps_PlaceAnswerSources struct {
 
 func (x *GroundingChunk_Maps_PlaceAnswerSources) Reset() {
 	*x = GroundingChunk_Maps_PlaceAnswerSources{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[38]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[49]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3471,7 +4107,7 @@ func (x *GroundingChunk_Maps_PlaceAnswerSources) String() string {
 func (*GroundingChunk_Maps_PlaceAnswerSources) ProtoMessage() {}
 
 func (x *GroundingChunk_Maps_PlaceAnswerSources) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[38]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[49]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3484,7 +4120,7 @@ func (x *GroundingChunk_Maps_PlaceAnswerSources) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use GroundingChunk_Maps_PlaceAnswerSources.ProtoReflect.Descriptor instead.
 func (*GroundingChunk_Maps_PlaceAnswerSources) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{19, 2, 0}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{30, 2, 0}
 }
 
 func (x *GroundingChunk_Maps_PlaceAnswerSources) GetReviewSnippets() []*GroundingChunk_Maps_PlaceAnswerSources_ReviewSnippet {
@@ -3525,7 +4161,7 @@ type GroundingChunk_Maps_PlaceAnswerSources_ReviewSnippet struct {
 
 func (x *GroundingChunk_Maps_PlaceAnswerSources_ReviewSnippet) Reset() {
 	*x = GroundingChunk_Maps_PlaceAnswerSources_ReviewSnippet{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[39]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[50]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3537,7 +4173,7 @@ func (x *GroundingChunk_Maps_PlaceAnswerSources_ReviewSnippet) String() string {
 func (*GroundingChunk_Maps_PlaceAnswerSources_ReviewSnippet) ProtoMessage() {}
 
 func (x *GroundingChunk_Maps_PlaceAnswerSources_ReviewSnippet) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[39]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[50]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3550,7 +4186,7 @@ func (x *GroundingChunk_Maps_PlaceAnswerSources_ReviewSnippet) ProtoReflect() pr
 
 // Deprecated: Use GroundingChunk_Maps_PlaceAnswerSources_ReviewSnippet.ProtoReflect.Descriptor instead.
 func (*GroundingChunk_Maps_PlaceAnswerSources_ReviewSnippet) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{19, 2, 0, 0}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{30, 2, 0, 0}
 }
 
 func (x *GroundingChunk_Maps_PlaceAnswerSources_ReviewSnippet) GetReviewId() string {
@@ -3608,7 +4244,7 @@ type RagChunk_PageSpan struct {
 
 func (x *RagChunk_PageSpan) Reset() {
 	*x = RagChunk_PageSpan{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[40]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[51]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3620,7 +4256,7 @@ func (x *RagChunk_PageSpan) String() string {
 func (*RagChunk_PageSpan) ProtoMessage() {}
 
 func (x *RagChunk_PageSpan) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[40]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[51]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3633,7 +4269,7 @@ func (x *RagChunk_PageSpan) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RagChunk_PageSpan.ProtoReflect.Descriptor instead.
 func (*RagChunk_PageSpan) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{24, 0}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{35, 0}
 }
 
 func (x *RagChunk_PageSpan) GetFirstPage() int32 {
@@ -3671,7 +4307,7 @@ type CitationMetadata_Citation struct {
 
 func (x *CitationMetadata_Citation) Reset() {
 	*x = CitationMetadata_Citation{}
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[41]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[52]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3683,7 +4319,7 @@ func (x *CitationMetadata_Citation) String() string {
 func (*CitationMetadata_Citation) ProtoMessage() {}
 
 func (x *CitationMetadata_Citation) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[41]
+	mi := &file_alis_adk_sessions_v1_sessions_proto_msgTypes[52]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3696,7 +4332,7 @@ func (x *CitationMetadata_Citation) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CitationMetadata_Citation.ProtoReflect.Descriptor instead.
 func (*CitationMetadata_Citation) Descriptor() ([]byte, []int) {
-	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{27, 0}
+	return file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP(), []int{38, 0}
 }
 
 func (x *CitationMetadata_Citation) GetEndIndex() int32 {
@@ -3745,7 +4381,7 @@ var File_alis_adk_sessions_v1_sessions_proto protoreflect.FileDescriptor
 
 const file_alis_adk_sessions_v1_sessions_proto_rawDesc = "" +
 	"\n" +
-	"#alis/adk/sessions/v1/sessions.proto\x12\x14alis.adk.sessions.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x16google/type/date.proto\"\xab\x03\n" +
+	"#alis/adk/sessions/v1/sessions.proto\x12\x14alis.adk.sessions.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x16google/type/date.proto\"\xab\x03\n" +
 	"\aSession\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x19\n" +
 	"\bapp_name\x18\x02 \x01(\tR\aappName\x12\x17\n" +
@@ -3811,7 +4447,44 @@ const file_alis_adk_sessions_v1_sessions_proto_rawDesc = "" +
 	"\x0e_error_messageB\x0e\n" +
 	"\f_interruptedB\x0f\n" +
 	"\r_avg_logprobsB\x10\n" +
-	"\x0e_model_version\"\xd5\x02\n" +
+	"\x0e_model_version\"n\n" +
+	"\x14CreateSessionRequest\x127\n" +
+	"\asession\x18\x01 \x01(\v2\x1d.alis.adk.sessions.v1.SessionR\asession\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x02 \x01(\tR\tsessionId\"'\n" +
+	"\x11GetSessionRequest\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\"\x84\x01\n" +
+	"\x13ListSessionsRequest\x12\x1b\n" +
+	"\tpage_size\x18\x01 \x01(\x05R\bpageSize\x12\x1d\n" +
+	"\n" +
+	"page_token\x18\x02 \x01(\tR\tpageToken\x12\x16\n" +
+	"\x06filter\x18\x03 \x01(\tR\x06filter\x12\x19\n" +
+	"\border_by\x18\x04 \x01(\tR\aorderBy\"y\n" +
+	"\x14ListSessionsResponse\x129\n" +
+	"\bsessions\x18\x01 \x03(\v2\x1d.alis.adk.sessions.v1.SessionR\bsessions\x12&\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\x8c\x01\n" +
+	"\x14UpdateSessionRequest\x127\n" +
+	"\asession\x18\x01 \x01(\v2\x1d.alis.adk.sessions.v1.SessionR\asession\x12;\n" +
+	"\vupdate_mask\x18\x02 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMask\"*\n" +
+	"\x14DeleteSessionRequest\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\"%\n" +
+	"\x0fGetEventRequest\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\"\x9a\x01\n" +
+	"\x11ListEventsRequest\x12\x16\n" +
+	"\x06parent\x18\x01 \x01(\tR\x06parent\x12\x1b\n" +
+	"\tpage_size\x18\x02 \x01(\x05R\bpageSize\x12\x1d\n" +
+	"\n" +
+	"page_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n" +
+	"\x06filter\x18\x04 \x01(\tR\x06filter\x12\x19\n" +
+	"\border_by\x18\x05 \x01(\tR\aorderBy\"\x87\x01\n" +
+	"\x12ListEventsResponse\x12I\n" +
+	"\x0esession_events\x18\x01 \x03(\v2\".alis.adk.sessions.v1.SessionEventR\rsessionEvents\x12&\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"b\n" +
+	"\x12AppendEventRequest\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x128\n" +
+	"\x05event\x18\x02 \x01(\v2\".alis.adk.sessions.v1.SessionEventR\x05event\"\x15\n" +
+	"\x13AppendEventResponse\"\xd5\x02\n" +
 	"\rEventMetadata\x12V\n" +
 	"\x12grounding_metadata\x18\x01 \x01(\v2'.alis.adk.sessions.v1.GroundingMetadataR\x11groundingMetadata\x12\x18\n" +
 	"\apartial\x18\x02 \x01(\bR\apartial\x12#\n" +
@@ -4040,7 +4713,18 @@ const file_alis_adk_sessions_v1_sessions_proto_rawDesc = "" +
 	"&FINISH_REASON_IMAGE_PROHIBITED_CONTENT\x10\r\x12\x1a\n" +
 	"\x16FINISH_REASON_NO_IMAGE\x10\x0e\x12\"\n" +
 	"\x1eFINISH_REASON_IMAGE_RECITATION\x10\x0f\x12\x1d\n" +
-	"\x19FINISH_REASON_IMAGE_OTHER\x10\x10B+Z)go.alis.build/common/alis/adk/sessions/v1b\x06proto3"
+	"\x19FINISH_REASON_IMAGE_OTHER\x10\x102\xf6\x05\n" +
+	"\x0eSessionService\x12Z\n" +
+	"\rCreateSession\x12*.alis.adk.sessions.v1.CreateSessionRequest\x1a\x1d.alis.adk.sessions.v1.Session\x12T\n" +
+	"\n" +
+	"GetSession\x12'.alis.adk.sessions.v1.GetSessionRequest\x1a\x1d.alis.adk.sessions.v1.Session\x12e\n" +
+	"\fListSessions\x12).alis.adk.sessions.v1.ListSessionsRequest\x1a*.alis.adk.sessions.v1.ListSessionsResponse\x12Z\n" +
+	"\rUpdateSession\x12*.alis.adk.sessions.v1.UpdateSessionRequest\x1a\x1d.alis.adk.sessions.v1.Session\x12S\n" +
+	"\rDeleteSession\x12*.alis.adk.sessions.v1.DeleteSessionRequest\x1a\x16.google.protobuf.Empty\x12U\n" +
+	"\bGetEvent\x12%.alis.adk.sessions.v1.GetEventRequest\x1a\".alis.adk.sessions.v1.SessionEvent\x12_\n" +
+	"\n" +
+	"ListEvents\x12'.alis.adk.sessions.v1.ListEventsRequest\x1a(.alis.adk.sessions.v1.ListEventsResponse\x12b\n" +
+	"\vAppendEvent\x12(.alis.adk.sessions.v1.AppendEventRequest\x1a).alis.adk.sessions.v1.AppendEventResponseB+Z)go.alis.build/common/alis/adk/sessions/v1b\x06proto3"
 
 var (
 	file_alis_adk_sessions_v1_sessions_proto_rawDescOnce sync.Once
@@ -4055,7 +4739,7 @@ func file_alis_adk_sessions_v1_sessions_proto_rawDescGZIP() []byte {
 }
 
 var file_alis_adk_sessions_v1_sessions_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
-var file_alis_adk_sessions_v1_sessions_proto_msgTypes = make([]protoimpl.MessageInfo, 42)
+var file_alis_adk_sessions_v1_sessions_proto_msgTypes = make([]protoimpl.MessageInfo, 53)
 var file_alis_adk_sessions_v1_sessions_proto_goTypes = []any{
 	(MediaModality)(0),                             // 0: alis.adk.sessions.v1.MediaModality
 	(TrafficType)(0),                               // 1: alis.adk.sessions.v1.TrafficType
@@ -4066,122 +4750,157 @@ var file_alis_adk_sessions_v1_sessions_proto_goTypes = []any{
 	(*AppState)(nil),                               // 6: alis.adk.sessions.v1.AppState
 	(*UserState)(nil),                              // 7: alis.adk.sessions.v1.UserState
 	(*SessionEvent)(nil),                           // 8: alis.adk.sessions.v1.SessionEvent
-	(*EventMetadata)(nil),                          // 9: alis.adk.sessions.v1.EventMetadata
-	(*EventActions)(nil),                           // 10: alis.adk.sessions.v1.EventActions
-	(*Content)(nil),                                // 11: alis.adk.sessions.v1.Content
-	(*Part)(nil),                                   // 12: alis.adk.sessions.v1.Part
-	(*Blob)(nil),                                   // 13: alis.adk.sessions.v1.Blob
-	(*FileData)(nil),                               // 14: alis.adk.sessions.v1.FileData
-	(*VideoMetadata)(nil),                          // 15: alis.adk.sessions.v1.VideoMetadata
-	(*FunctionCall)(nil),                           // 16: alis.adk.sessions.v1.FunctionCall
-	(*FunctionResponse)(nil),                       // 17: alis.adk.sessions.v1.FunctionResponse
-	(*FunctionResponsePart)(nil),                   // 18: alis.adk.sessions.v1.FunctionResponsePart
-	(*FunctionResponseBlob)(nil),                   // 19: alis.adk.sessions.v1.FunctionResponseBlob
-	(*FunctionResponseFileData)(nil),               // 20: alis.adk.sessions.v1.FunctionResponseFileData
-	(*ExecutableCode)(nil),                         // 21: alis.adk.sessions.v1.ExecutableCode
-	(*CodeExecutionResult)(nil),                    // 22: alis.adk.sessions.v1.CodeExecutionResult
-	(*GroundingMetadata)(nil),                      // 23: alis.adk.sessions.v1.GroundingMetadata
-	(*GroundingChunk)(nil),                         // 24: alis.adk.sessions.v1.GroundingChunk
-	(*GroundingSupport)(nil),                       // 25: alis.adk.sessions.v1.GroundingSupport
-	(*Segment)(nil),                                // 26: alis.adk.sessions.v1.Segment
-	(*SearchEntryPoint)(nil),                       // 27: alis.adk.sessions.v1.SearchEntryPoint
-	(*RetrievalMetadata)(nil),                      // 28: alis.adk.sessions.v1.RetrievalMetadata
-	(*RagChunk)(nil),                               // 29: alis.adk.sessions.v1.RagChunk
-	(*UsageMetadata)(nil),                          // 30: alis.adk.sessions.v1.UsageMetadata
-	(*ModalityTokenCount)(nil),                     // 31: alis.adk.sessions.v1.ModalityTokenCount
-	(*CitationMetadata)(nil),                       // 32: alis.adk.sessions.v1.CitationMetadata
-	(*ToolConfirmation)(nil),                       // 33: alis.adk.sessions.v1.ToolConfirmation
-	(*LogprobsResultCandidate)(nil),                // 34: alis.adk.sessions.v1.LogprobsResultCandidate
-	(*LogprobsResultTopCandidates)(nil),            // 35: alis.adk.sessions.v1.LogprobsResultTopCandidates
-	(*LogprobsResult)(nil),                         // 36: alis.adk.sessions.v1.LogprobsResult
-	nil,                                            // 37: alis.adk.sessions.v1.EventActions.ArtifactDeltaEntry
-	nil,                                            // 38: alis.adk.sessions.v1.EventActions.RequestedToolConfirmationsEntry
-	(*GroundingMetadata_SourceFlaggingUri)(nil),    // 39: alis.adk.sessions.v1.GroundingMetadata.SourceFlaggingUri
-	(*GroundingChunk_Web)(nil),                     // 40: alis.adk.sessions.v1.GroundingChunk.Web
-	(*GroundingChunk_RetrievedContext)(nil),        // 41: alis.adk.sessions.v1.GroundingChunk.RetrievedContext
-	(*GroundingChunk_Maps)(nil),                    // 42: alis.adk.sessions.v1.GroundingChunk.Maps
-	(*GroundingChunk_Maps_PlaceAnswerSources)(nil), // 43: alis.adk.sessions.v1.GroundingChunk.Maps.PlaceAnswerSources
-	(*GroundingChunk_Maps_PlaceAnswerSources_ReviewSnippet)(nil), // 44: alis.adk.sessions.v1.GroundingChunk.Maps.PlaceAnswerSources.ReviewSnippet
-	(*RagChunk_PageSpan)(nil),                                    // 45: alis.adk.sessions.v1.RagChunk.PageSpan
-	(*CitationMetadata_Citation)(nil),                            // 46: alis.adk.sessions.v1.CitationMetadata.Citation
-	(*structpb.Struct)(nil),                                      // 47: google.protobuf.Struct
-	(*timestamppb.Timestamp)(nil),                                // 48: google.protobuf.Timestamp
-	(*durationpb.Duration)(nil),                                  // 49: google.protobuf.Duration
-	(*structpb.Value)(nil),                                       // 50: google.protobuf.Value
-	(*date.Date)(nil),                                            // 51: google.type.Date
+	(*CreateSessionRequest)(nil),                   // 9: alis.adk.sessions.v1.CreateSessionRequest
+	(*GetSessionRequest)(nil),                      // 10: alis.adk.sessions.v1.GetSessionRequest
+	(*ListSessionsRequest)(nil),                    // 11: alis.adk.sessions.v1.ListSessionsRequest
+	(*ListSessionsResponse)(nil),                   // 12: alis.adk.sessions.v1.ListSessionsResponse
+	(*UpdateSessionRequest)(nil),                   // 13: alis.adk.sessions.v1.UpdateSessionRequest
+	(*DeleteSessionRequest)(nil),                   // 14: alis.adk.sessions.v1.DeleteSessionRequest
+	(*GetEventRequest)(nil),                        // 15: alis.adk.sessions.v1.GetEventRequest
+	(*ListEventsRequest)(nil),                      // 16: alis.adk.sessions.v1.ListEventsRequest
+	(*ListEventsResponse)(nil),                     // 17: alis.adk.sessions.v1.ListEventsResponse
+	(*AppendEventRequest)(nil),                     // 18: alis.adk.sessions.v1.AppendEventRequest
+	(*AppendEventResponse)(nil),                    // 19: alis.adk.sessions.v1.AppendEventResponse
+	(*EventMetadata)(nil),                          // 20: alis.adk.sessions.v1.EventMetadata
+	(*EventActions)(nil),                           // 21: alis.adk.sessions.v1.EventActions
+	(*Content)(nil),                                // 22: alis.adk.sessions.v1.Content
+	(*Part)(nil),                                   // 23: alis.adk.sessions.v1.Part
+	(*Blob)(nil),                                   // 24: alis.adk.sessions.v1.Blob
+	(*FileData)(nil),                               // 25: alis.adk.sessions.v1.FileData
+	(*VideoMetadata)(nil),                          // 26: alis.adk.sessions.v1.VideoMetadata
+	(*FunctionCall)(nil),                           // 27: alis.adk.sessions.v1.FunctionCall
+	(*FunctionResponse)(nil),                       // 28: alis.adk.sessions.v1.FunctionResponse
+	(*FunctionResponsePart)(nil),                   // 29: alis.adk.sessions.v1.FunctionResponsePart
+	(*FunctionResponseBlob)(nil),                   // 30: alis.adk.sessions.v1.FunctionResponseBlob
+	(*FunctionResponseFileData)(nil),               // 31: alis.adk.sessions.v1.FunctionResponseFileData
+	(*ExecutableCode)(nil),                         // 32: alis.adk.sessions.v1.ExecutableCode
+	(*CodeExecutionResult)(nil),                    // 33: alis.adk.sessions.v1.CodeExecutionResult
+	(*GroundingMetadata)(nil),                      // 34: alis.adk.sessions.v1.GroundingMetadata
+	(*GroundingChunk)(nil),                         // 35: alis.adk.sessions.v1.GroundingChunk
+	(*GroundingSupport)(nil),                       // 36: alis.adk.sessions.v1.GroundingSupport
+	(*Segment)(nil),                                // 37: alis.adk.sessions.v1.Segment
+	(*SearchEntryPoint)(nil),                       // 38: alis.adk.sessions.v1.SearchEntryPoint
+	(*RetrievalMetadata)(nil),                      // 39: alis.adk.sessions.v1.RetrievalMetadata
+	(*RagChunk)(nil),                               // 40: alis.adk.sessions.v1.RagChunk
+	(*UsageMetadata)(nil),                          // 41: alis.adk.sessions.v1.UsageMetadata
+	(*ModalityTokenCount)(nil),                     // 42: alis.adk.sessions.v1.ModalityTokenCount
+	(*CitationMetadata)(nil),                       // 43: alis.adk.sessions.v1.CitationMetadata
+	(*ToolConfirmation)(nil),                       // 44: alis.adk.sessions.v1.ToolConfirmation
+	(*LogprobsResultCandidate)(nil),                // 45: alis.adk.sessions.v1.LogprobsResultCandidate
+	(*LogprobsResultTopCandidates)(nil),            // 46: alis.adk.sessions.v1.LogprobsResultTopCandidates
+	(*LogprobsResult)(nil),                         // 47: alis.adk.sessions.v1.LogprobsResult
+	nil,                                            // 48: alis.adk.sessions.v1.EventActions.ArtifactDeltaEntry
+	nil,                                            // 49: alis.adk.sessions.v1.EventActions.RequestedToolConfirmationsEntry
+	(*GroundingMetadata_SourceFlaggingUri)(nil),    // 50: alis.adk.sessions.v1.GroundingMetadata.SourceFlaggingUri
+	(*GroundingChunk_Web)(nil),                     // 51: alis.adk.sessions.v1.GroundingChunk.Web
+	(*GroundingChunk_RetrievedContext)(nil),        // 52: alis.adk.sessions.v1.GroundingChunk.RetrievedContext
+	(*GroundingChunk_Maps)(nil),                    // 53: alis.adk.sessions.v1.GroundingChunk.Maps
+	(*GroundingChunk_Maps_PlaceAnswerSources)(nil), // 54: alis.adk.sessions.v1.GroundingChunk.Maps.PlaceAnswerSources
+	(*GroundingChunk_Maps_PlaceAnswerSources_ReviewSnippet)(nil), // 55: alis.adk.sessions.v1.GroundingChunk.Maps.PlaceAnswerSources.ReviewSnippet
+	(*RagChunk_PageSpan)(nil),                                    // 56: alis.adk.sessions.v1.RagChunk.PageSpan
+	(*CitationMetadata_Citation)(nil),                            // 57: alis.adk.sessions.v1.CitationMetadata.Citation
+	(*structpb.Struct)(nil),                                      // 58: google.protobuf.Struct
+	(*timestamppb.Timestamp)(nil),                                // 59: google.protobuf.Timestamp
+	(*durationpb.Duration)(nil),                                  // 60: google.protobuf.Duration
+	(*fieldmaskpb.FieldMask)(nil),                                // 61: google.protobuf.FieldMask
+	(*structpb.Value)(nil),                                       // 62: google.protobuf.Value
+	(*date.Date)(nil),                                            // 63: google.type.Date
+	(*emptypb.Empty)(nil),                                        // 64: google.protobuf.Empty
 }
 var file_alis_adk_sessions_v1_sessions_proto_depIdxs = []int32{
-	47, // 0: alis.adk.sessions.v1.Session.state:type_name -> google.protobuf.Struct
-	48, // 1: alis.adk.sessions.v1.Session.expire_time:type_name -> google.protobuf.Timestamp
-	49, // 2: alis.adk.sessions.v1.Session.ttl:type_name -> google.protobuf.Duration
-	48, // 3: alis.adk.sessions.v1.Session.create_time:type_name -> google.protobuf.Timestamp
-	48, // 4: alis.adk.sessions.v1.Session.update_time:type_name -> google.protobuf.Timestamp
-	47, // 5: alis.adk.sessions.v1.AppState.state:type_name -> google.protobuf.Struct
-	48, // 6: alis.adk.sessions.v1.AppState.update_time:type_name -> google.protobuf.Timestamp
-	47, // 7: alis.adk.sessions.v1.UserState.state:type_name -> google.protobuf.Struct
-	48, // 8: alis.adk.sessions.v1.UserState.update_time:type_name -> google.protobuf.Timestamp
-	10, // 9: alis.adk.sessions.v1.SessionEvent.actions:type_name -> alis.adk.sessions.v1.EventActions
-	11, // 10: alis.adk.sessions.v1.SessionEvent.content:type_name -> alis.adk.sessions.v1.Content
-	23, // 11: alis.adk.sessions.v1.SessionEvent.grounding_metadata:type_name -> alis.adk.sessions.v1.GroundingMetadata
-	47, // 12: alis.adk.sessions.v1.SessionEvent.custom_metadata:type_name -> google.protobuf.Struct
-	30, // 13: alis.adk.sessions.v1.SessionEvent.usage_metadata:type_name -> alis.adk.sessions.v1.UsageMetadata
-	32, // 14: alis.adk.sessions.v1.SessionEvent.citation_metadata:type_name -> alis.adk.sessions.v1.CitationMetadata
+	58, // 0: alis.adk.sessions.v1.Session.state:type_name -> google.protobuf.Struct
+	59, // 1: alis.adk.sessions.v1.Session.expire_time:type_name -> google.protobuf.Timestamp
+	60, // 2: alis.adk.sessions.v1.Session.ttl:type_name -> google.protobuf.Duration
+	59, // 3: alis.adk.sessions.v1.Session.create_time:type_name -> google.protobuf.Timestamp
+	59, // 4: alis.adk.sessions.v1.Session.update_time:type_name -> google.protobuf.Timestamp
+	58, // 5: alis.adk.sessions.v1.AppState.state:type_name -> google.protobuf.Struct
+	59, // 6: alis.adk.sessions.v1.AppState.update_time:type_name -> google.protobuf.Timestamp
+	58, // 7: alis.adk.sessions.v1.UserState.state:type_name -> google.protobuf.Struct
+	59, // 8: alis.adk.sessions.v1.UserState.update_time:type_name -> google.protobuf.Timestamp
+	21, // 9: alis.adk.sessions.v1.SessionEvent.actions:type_name -> alis.adk.sessions.v1.EventActions
+	22, // 10: alis.adk.sessions.v1.SessionEvent.content:type_name -> alis.adk.sessions.v1.Content
+	34, // 11: alis.adk.sessions.v1.SessionEvent.grounding_metadata:type_name -> alis.adk.sessions.v1.GroundingMetadata
+	58, // 12: alis.adk.sessions.v1.SessionEvent.custom_metadata:type_name -> google.protobuf.Struct
+	41, // 13: alis.adk.sessions.v1.SessionEvent.usage_metadata:type_name -> alis.adk.sessions.v1.UsageMetadata
+	43, // 14: alis.adk.sessions.v1.SessionEvent.citation_metadata:type_name -> alis.adk.sessions.v1.CitationMetadata
 	2,  // 15: alis.adk.sessions.v1.SessionEvent.finish_reason:type_name -> alis.adk.sessions.v1.FinishReason
-	36, // 16: alis.adk.sessions.v1.SessionEvent.logprobs_result:type_name -> alis.adk.sessions.v1.LogprobsResult
-	48, // 17: alis.adk.sessions.v1.SessionEvent.timestamp:type_name -> google.protobuf.Timestamp
-	23, // 18: alis.adk.sessions.v1.EventMetadata.grounding_metadata:type_name -> alis.adk.sessions.v1.GroundingMetadata
-	47, // 19: alis.adk.sessions.v1.EventMetadata.custom_metadata:type_name -> google.protobuf.Struct
-	47, // 20: alis.adk.sessions.v1.EventActions.state_delta:type_name -> google.protobuf.Struct
-	37, // 21: alis.adk.sessions.v1.EventActions.artifact_delta:type_name -> alis.adk.sessions.v1.EventActions.ArtifactDeltaEntry
-	38, // 22: alis.adk.sessions.v1.EventActions.requested_tool_confirmations:type_name -> alis.adk.sessions.v1.EventActions.RequestedToolConfirmationsEntry
-	12, // 23: alis.adk.sessions.v1.Content.parts:type_name -> alis.adk.sessions.v1.Part
-	13, // 24: alis.adk.sessions.v1.Part.inline_data:type_name -> alis.adk.sessions.v1.Blob
-	14, // 25: alis.adk.sessions.v1.Part.file_data:type_name -> alis.adk.sessions.v1.FileData
-	16, // 26: alis.adk.sessions.v1.Part.function_call:type_name -> alis.adk.sessions.v1.FunctionCall
-	17, // 27: alis.adk.sessions.v1.Part.function_response:type_name -> alis.adk.sessions.v1.FunctionResponse
-	21, // 28: alis.adk.sessions.v1.Part.executable_code:type_name -> alis.adk.sessions.v1.ExecutableCode
-	22, // 29: alis.adk.sessions.v1.Part.code_execution_result:type_name -> alis.adk.sessions.v1.CodeExecutionResult
-	15, // 30: alis.adk.sessions.v1.Part.video_metadata:type_name -> alis.adk.sessions.v1.VideoMetadata
-	49, // 31: alis.adk.sessions.v1.VideoMetadata.start_offset:type_name -> google.protobuf.Duration
-	49, // 32: alis.adk.sessions.v1.VideoMetadata.end_offset:type_name -> google.protobuf.Duration
-	47, // 33: alis.adk.sessions.v1.FunctionCall.args:type_name -> google.protobuf.Struct
-	47, // 34: alis.adk.sessions.v1.FunctionResponse.response:type_name -> google.protobuf.Struct
-	18, // 35: alis.adk.sessions.v1.FunctionResponse.parts:type_name -> alis.adk.sessions.v1.FunctionResponsePart
-	19, // 36: alis.adk.sessions.v1.FunctionResponsePart.inline_data:type_name -> alis.adk.sessions.v1.FunctionResponseBlob
-	20, // 37: alis.adk.sessions.v1.FunctionResponsePart.file_data:type_name -> alis.adk.sessions.v1.FunctionResponseFileData
-	3,  // 38: alis.adk.sessions.v1.ExecutableCode.language:type_name -> alis.adk.sessions.v1.ExecutableCode.Language
-	4,  // 39: alis.adk.sessions.v1.CodeExecutionResult.outcome:type_name -> alis.adk.sessions.v1.CodeExecutionResult.Outcome
-	27, // 40: alis.adk.sessions.v1.GroundingMetadata.search_entry_point:type_name -> alis.adk.sessions.v1.SearchEntryPoint
-	24, // 41: alis.adk.sessions.v1.GroundingMetadata.grounding_chunks:type_name -> alis.adk.sessions.v1.GroundingChunk
-	25, // 42: alis.adk.sessions.v1.GroundingMetadata.grounding_supports:type_name -> alis.adk.sessions.v1.GroundingSupport
-	28, // 43: alis.adk.sessions.v1.GroundingMetadata.retrieval_metadata:type_name -> alis.adk.sessions.v1.RetrievalMetadata
-	39, // 44: alis.adk.sessions.v1.GroundingMetadata.source_flagging_uris:type_name -> alis.adk.sessions.v1.GroundingMetadata.SourceFlaggingUri
-	40, // 45: alis.adk.sessions.v1.GroundingChunk.web:type_name -> alis.adk.sessions.v1.GroundingChunk.Web
-	41, // 46: alis.adk.sessions.v1.GroundingChunk.retrieved_context:type_name -> alis.adk.sessions.v1.GroundingChunk.RetrievedContext
-	42, // 47: alis.adk.sessions.v1.GroundingChunk.maps:type_name -> alis.adk.sessions.v1.GroundingChunk.Maps
-	26, // 48: alis.adk.sessions.v1.GroundingSupport.segment:type_name -> alis.adk.sessions.v1.Segment
-	45, // 49: alis.adk.sessions.v1.RagChunk.page_span:type_name -> alis.adk.sessions.v1.RagChunk.PageSpan
-	31, // 50: alis.adk.sessions.v1.UsageMetadata.cache_tokens_details:type_name -> alis.adk.sessions.v1.ModalityTokenCount
-	31, // 51: alis.adk.sessions.v1.UsageMetadata.candidates_tokens_details:type_name -> alis.adk.sessions.v1.ModalityTokenCount
-	31, // 52: alis.adk.sessions.v1.UsageMetadata.prompt_tokens_details:type_name -> alis.adk.sessions.v1.ModalityTokenCount
-	31, // 53: alis.adk.sessions.v1.UsageMetadata.tool_use_prompt_tokens_details:type_name -> alis.adk.sessions.v1.ModalityTokenCount
-	1,  // 54: alis.adk.sessions.v1.UsageMetadata.traffic_type:type_name -> alis.adk.sessions.v1.TrafficType
-	0,  // 55: alis.adk.sessions.v1.ModalityTokenCount.modality:type_name -> alis.adk.sessions.v1.MediaModality
-	46, // 56: alis.adk.sessions.v1.CitationMetadata.citations:type_name -> alis.adk.sessions.v1.CitationMetadata.Citation
-	50, // 57: alis.adk.sessions.v1.ToolConfirmation.payload:type_name -> google.protobuf.Value
-	34, // 58: alis.adk.sessions.v1.LogprobsResultTopCandidates.candidates:type_name -> alis.adk.sessions.v1.LogprobsResultCandidate
-	34, // 59: alis.adk.sessions.v1.LogprobsResult.chosen_candidates:type_name -> alis.adk.sessions.v1.LogprobsResultCandidate
-	35, // 60: alis.adk.sessions.v1.LogprobsResult.top_candidates:type_name -> alis.adk.sessions.v1.LogprobsResultTopCandidates
-	33, // 61: alis.adk.sessions.v1.EventActions.RequestedToolConfirmationsEntry.value:type_name -> alis.adk.sessions.v1.ToolConfirmation
-	29, // 62: alis.adk.sessions.v1.GroundingChunk.RetrievedContext.rag_chunk:type_name -> alis.adk.sessions.v1.RagChunk
-	43, // 63: alis.adk.sessions.v1.GroundingChunk.Maps.place_answer_sources:type_name -> alis.adk.sessions.v1.GroundingChunk.Maps.PlaceAnswerSources
-	44, // 64: alis.adk.sessions.v1.GroundingChunk.Maps.PlaceAnswerSources.review_snippets:type_name -> alis.adk.sessions.v1.GroundingChunk.Maps.PlaceAnswerSources.ReviewSnippet
-	51, // 65: alis.adk.sessions.v1.CitationMetadata.Citation.publication_date:type_name -> google.type.Date
-	66, // [66:66] is the sub-list for method output_type
-	66, // [66:66] is the sub-list for method input_type
-	66, // [66:66] is the sub-list for extension type_name
-	66, // [66:66] is the sub-list for extension extendee
-	0,  // [0:66] is the sub-list for field type_name
+	47, // 16: alis.adk.sessions.v1.SessionEvent.logprobs_result:type_name -> alis.adk.sessions.v1.LogprobsResult
+	59, // 17: alis.adk.sessions.v1.SessionEvent.timestamp:type_name -> google.protobuf.Timestamp
+	5,  // 18: alis.adk.sessions.v1.CreateSessionRequest.session:type_name -> alis.adk.sessions.v1.Session
+	5,  // 19: alis.adk.sessions.v1.ListSessionsResponse.sessions:type_name -> alis.adk.sessions.v1.Session
+	5,  // 20: alis.adk.sessions.v1.UpdateSessionRequest.session:type_name -> alis.adk.sessions.v1.Session
+	61, // 21: alis.adk.sessions.v1.UpdateSessionRequest.update_mask:type_name -> google.protobuf.FieldMask
+	8,  // 22: alis.adk.sessions.v1.ListEventsResponse.session_events:type_name -> alis.adk.sessions.v1.SessionEvent
+	8,  // 23: alis.adk.sessions.v1.AppendEventRequest.event:type_name -> alis.adk.sessions.v1.SessionEvent
+	34, // 24: alis.adk.sessions.v1.EventMetadata.grounding_metadata:type_name -> alis.adk.sessions.v1.GroundingMetadata
+	58, // 25: alis.adk.sessions.v1.EventMetadata.custom_metadata:type_name -> google.protobuf.Struct
+	58, // 26: alis.adk.sessions.v1.EventActions.state_delta:type_name -> google.protobuf.Struct
+	48, // 27: alis.adk.sessions.v1.EventActions.artifact_delta:type_name -> alis.adk.sessions.v1.EventActions.ArtifactDeltaEntry
+	49, // 28: alis.adk.sessions.v1.EventActions.requested_tool_confirmations:type_name -> alis.adk.sessions.v1.EventActions.RequestedToolConfirmationsEntry
+	23, // 29: alis.adk.sessions.v1.Content.parts:type_name -> alis.adk.sessions.v1.Part
+	24, // 30: alis.adk.sessions.v1.Part.inline_data:type_name -> alis.adk.sessions.v1.Blob
+	25, // 31: alis.adk.sessions.v1.Part.file_data:type_name -> alis.adk.sessions.v1.FileData
+	27, // 32: alis.adk.sessions.v1.Part.function_call:type_name -> alis.adk.sessions.v1.FunctionCall
+	28, // 33: alis.adk.sessions.v1.Part.function_response:type_name -> alis.adk.sessions.v1.FunctionResponse
+	32, // 34: alis.adk.sessions.v1.Part.executable_code:type_name -> alis.adk.sessions.v1.ExecutableCode
+	33, // 35: alis.adk.sessions.v1.Part.code_execution_result:type_name -> alis.adk.sessions.v1.CodeExecutionResult
+	26, // 36: alis.adk.sessions.v1.Part.video_metadata:type_name -> alis.adk.sessions.v1.VideoMetadata
+	60, // 37: alis.adk.sessions.v1.VideoMetadata.start_offset:type_name -> google.protobuf.Duration
+	60, // 38: alis.adk.sessions.v1.VideoMetadata.end_offset:type_name -> google.protobuf.Duration
+	58, // 39: alis.adk.sessions.v1.FunctionCall.args:type_name -> google.protobuf.Struct
+	58, // 40: alis.adk.sessions.v1.FunctionResponse.response:type_name -> google.protobuf.Struct
+	29, // 41: alis.adk.sessions.v1.FunctionResponse.parts:type_name -> alis.adk.sessions.v1.FunctionResponsePart
+	30, // 42: alis.adk.sessions.v1.FunctionResponsePart.inline_data:type_name -> alis.adk.sessions.v1.FunctionResponseBlob
+	31, // 43: alis.adk.sessions.v1.FunctionResponsePart.file_data:type_name -> alis.adk.sessions.v1.FunctionResponseFileData
+	3,  // 44: alis.adk.sessions.v1.ExecutableCode.language:type_name -> alis.adk.sessions.v1.ExecutableCode.Language
+	4,  // 45: alis.adk.sessions.v1.CodeExecutionResult.outcome:type_name -> alis.adk.sessions.v1.CodeExecutionResult.Outcome
+	38, // 46: alis.adk.sessions.v1.GroundingMetadata.search_entry_point:type_name -> alis.adk.sessions.v1.SearchEntryPoint
+	35, // 47: alis.adk.sessions.v1.GroundingMetadata.grounding_chunks:type_name -> alis.adk.sessions.v1.GroundingChunk
+	36, // 48: alis.adk.sessions.v1.GroundingMetadata.grounding_supports:type_name -> alis.adk.sessions.v1.GroundingSupport
+	39, // 49: alis.adk.sessions.v1.GroundingMetadata.retrieval_metadata:type_name -> alis.adk.sessions.v1.RetrievalMetadata
+	50, // 50: alis.adk.sessions.v1.GroundingMetadata.source_flagging_uris:type_name -> alis.adk.sessions.v1.GroundingMetadata.SourceFlaggingUri
+	51, // 51: alis.adk.sessions.v1.GroundingChunk.web:type_name -> alis.adk.sessions.v1.GroundingChunk.Web
+	52, // 52: alis.adk.sessions.v1.GroundingChunk.retrieved_context:type_name -> alis.adk.sessions.v1.GroundingChunk.RetrievedContext
+	53, // 53: alis.adk.sessions.v1.GroundingChunk.maps:type_name -> alis.adk.sessions.v1.GroundingChunk.Maps
+	37, // 54: alis.adk.sessions.v1.GroundingSupport.segment:type_name -> alis.adk.sessions.v1.Segment
+	56, // 55: alis.adk.sessions.v1.RagChunk.page_span:type_name -> alis.adk.sessions.v1.RagChunk.PageSpan
+	42, // 56: alis.adk.sessions.v1.UsageMetadata.cache_tokens_details:type_name -> alis.adk.sessions.v1.ModalityTokenCount
+	42, // 57: alis.adk.sessions.v1.UsageMetadata.candidates_tokens_details:type_name -> alis.adk.sessions.v1.ModalityTokenCount
+	42, // 58: alis.adk.sessions.v1.UsageMetadata.prompt_tokens_details:type_name -> alis.adk.sessions.v1.ModalityTokenCount
+	42, // 59: alis.adk.sessions.v1.UsageMetadata.tool_use_prompt_tokens_details:type_name -> alis.adk.sessions.v1.ModalityTokenCount
+	1,  // 60: alis.adk.sessions.v1.UsageMetadata.traffic_type:type_name -> alis.adk.sessions.v1.TrafficType
+	0,  // 61: alis.adk.sessions.v1.ModalityTokenCount.modality:type_name -> alis.adk.sessions.v1.MediaModality
+	57, // 62: alis.adk.sessions.v1.CitationMetadata.citations:type_name -> alis.adk.sessions.v1.CitationMetadata.Citation
+	62, // 63: alis.adk.sessions.v1.ToolConfirmation.payload:type_name -> google.protobuf.Value
+	45, // 64: alis.adk.sessions.v1.LogprobsResultTopCandidates.candidates:type_name -> alis.adk.sessions.v1.LogprobsResultCandidate
+	45, // 65: alis.adk.sessions.v1.LogprobsResult.chosen_candidates:type_name -> alis.adk.sessions.v1.LogprobsResultCandidate
+	46, // 66: alis.adk.sessions.v1.LogprobsResult.top_candidates:type_name -> alis.adk.sessions.v1.LogprobsResultTopCandidates
+	44, // 67: alis.adk.sessions.v1.EventActions.RequestedToolConfirmationsEntry.value:type_name -> alis.adk.sessions.v1.ToolConfirmation
+	40, // 68: alis.adk.sessions.v1.GroundingChunk.RetrievedContext.rag_chunk:type_name -> alis.adk.sessions.v1.RagChunk
+	54, // 69: alis.adk.sessions.v1.GroundingChunk.Maps.place_answer_sources:type_name -> alis.adk.sessions.v1.GroundingChunk.Maps.PlaceAnswerSources
+	55, // 70: alis.adk.sessions.v1.GroundingChunk.Maps.PlaceAnswerSources.review_snippets:type_name -> alis.adk.sessions.v1.GroundingChunk.Maps.PlaceAnswerSources.ReviewSnippet
+	63, // 71: alis.adk.sessions.v1.CitationMetadata.Citation.publication_date:type_name -> google.type.Date
+	9,  // 72: alis.adk.sessions.v1.SessionService.CreateSession:input_type -> alis.adk.sessions.v1.CreateSessionRequest
+	10, // 73: alis.adk.sessions.v1.SessionService.GetSession:input_type -> alis.adk.sessions.v1.GetSessionRequest
+	11, // 74: alis.adk.sessions.v1.SessionService.ListSessions:input_type -> alis.adk.sessions.v1.ListSessionsRequest
+	13, // 75: alis.adk.sessions.v1.SessionService.UpdateSession:input_type -> alis.adk.sessions.v1.UpdateSessionRequest
+	14, // 76: alis.adk.sessions.v1.SessionService.DeleteSession:input_type -> alis.adk.sessions.v1.DeleteSessionRequest
+	15, // 77: alis.adk.sessions.v1.SessionService.GetEvent:input_type -> alis.adk.sessions.v1.GetEventRequest
+	16, // 78: alis.adk.sessions.v1.SessionService.ListEvents:input_type -> alis.adk.sessions.v1.ListEventsRequest
+	18, // 79: alis.adk.sessions.v1.SessionService.AppendEvent:input_type -> alis.adk.sessions.v1.AppendEventRequest
+	5,  // 80: alis.adk.sessions.v1.SessionService.CreateSession:output_type -> alis.adk.sessions.v1.Session
+	5,  // 81: alis.adk.sessions.v1.SessionService.GetSession:output_type -> alis.adk.sessions.v1.Session
+	12, // 82: alis.adk.sessions.v1.SessionService.ListSessions:output_type -> alis.adk.sessions.v1.ListSessionsResponse
+	5,  // 83: alis.adk.sessions.v1.SessionService.UpdateSession:output_type -> alis.adk.sessions.v1.Session
+	64, // 84: alis.adk.sessions.v1.SessionService.DeleteSession:output_type -> google.protobuf.Empty
+	8,  // 85: alis.adk.sessions.v1.SessionService.GetEvent:output_type -> alis.adk.sessions.v1.SessionEvent
+	17, // 86: alis.adk.sessions.v1.SessionService.ListEvents:output_type -> alis.adk.sessions.v1.ListEventsResponse
+	19, // 87: alis.adk.sessions.v1.SessionService.AppendEvent:output_type -> alis.adk.sessions.v1.AppendEventResponse
+	80, // [80:88] is the sub-list for method output_type
+	72, // [72:80] is the sub-list for method input_type
+	72, // [72:72] is the sub-list for extension type_name
+	72, // [72:72] is the sub-list for extension extendee
+	0,  // [0:72] is the sub-list for field type_name
 }
 
 func init() { file_alis_adk_sessions_v1_sessions_proto_init() }
@@ -4194,7 +4913,7 @@ func file_alis_adk_sessions_v1_sessions_proto_init() {
 		(*Session_Ttl)(nil),
 	}
 	file_alis_adk_sessions_v1_sessions_proto_msgTypes[3].OneofWrappers = []any{}
-	file_alis_adk_sessions_v1_sessions_proto_msgTypes[7].OneofWrappers = []any{
+	file_alis_adk_sessions_v1_sessions_proto_msgTypes[18].OneofWrappers = []any{
 		(*Part_Text)(nil),
 		(*Part_InlineData)(nil),
 		(*Part_FileData)(nil),
@@ -4204,16 +4923,16 @@ func file_alis_adk_sessions_v1_sessions_proto_init() {
 		(*Part_CodeExecutionResult)(nil),
 		(*Part_VideoMetadata)(nil),
 	}
-	file_alis_adk_sessions_v1_sessions_proto_msgTypes[13].OneofWrappers = []any{
+	file_alis_adk_sessions_v1_sessions_proto_msgTypes[24].OneofWrappers = []any{
 		(*FunctionResponsePart_InlineData)(nil),
 		(*FunctionResponsePart_FileData)(nil),
 	}
-	file_alis_adk_sessions_v1_sessions_proto_msgTypes[19].OneofWrappers = []any{
+	file_alis_adk_sessions_v1_sessions_proto_msgTypes[30].OneofWrappers = []any{
 		(*GroundingChunk_Web_)(nil),
 		(*GroundingChunk_RetrievedContext_)(nil),
 		(*GroundingChunk_Maps_)(nil),
 	}
-	file_alis_adk_sessions_v1_sessions_proto_msgTypes[36].OneofWrappers = []any{
+	file_alis_adk_sessions_v1_sessions_proto_msgTypes[47].OneofWrappers = []any{
 		(*GroundingChunk_RetrievedContext_RagChunk)(nil),
 	}
 	type x struct{}
@@ -4222,9 +4941,9 @@ func file_alis_adk_sessions_v1_sessions_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_alis_adk_sessions_v1_sessions_proto_rawDesc), len(file_alis_adk_sessions_v1_sessions_proto_rawDesc)),
 			NumEnums:      5,
-			NumMessages:   42,
+			NumMessages:   53,
 			NumExtensions: 0,
-			NumServices:   0,
+			NumServices:   1,
 		},
 		GoTypes:           file_alis_adk_sessions_v1_sessions_proto_goTypes,
 		DependencyIndexes: file_alis_adk_sessions_v1_sessions_proto_depIdxs,
