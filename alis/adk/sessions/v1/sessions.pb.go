@@ -2138,7 +2138,9 @@ type FileData struct {
 	// Required. The IANA standard MIME type of the source data.
 	MimeType string `protobuf:"bytes,1,opt,name=mime_type,json=mimeType,proto3" json:"mime_type,omitempty"`
 	// Required. URI.
-	FileUri       string `protobuf:"bytes,2,opt,name=file_uri,json=fileUri,proto3" json:"file_uri,omitempty"`
+	FileUri string `protobuf:"bytes,2,opt,name=file_uri,json=fileUri,proto3" json:"file_uri,omitempty"`
+	// Optional. The display name of the file.
+	DisplayName   string `protobuf:"bytes,3,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2183,6 +2185,13 @@ func (x *FileData) GetMimeType() string {
 func (x *FileData) GetFileUri() string {
 	if x != nil {
 		return x.FileUri
+	}
+	return ""
+}
+
+func (x *FileData) GetDisplayName() string {
+	if x != nil {
+		return x.DisplayName
 	}
 	return ""
 }
@@ -4528,10 +4537,11 @@ const file_alis_adk_sessions_v1_sessions_proto_rawDesc = "" +
 	"\bmetadata\"7\n" +
 	"\x04Blob\x12\x1b\n" +
 	"\tmime_type\x18\x01 \x01(\tR\bmimeType\x12\x12\n" +
-	"\x04data\x18\x02 \x01(\fR\x04data\"B\n" +
+	"\x04data\x18\x02 \x01(\fR\x04data\"e\n" +
 	"\bFileData\x12\x1b\n" +
 	"\tmime_type\x18\x01 \x01(\tR\bmimeType\x12\x19\n" +
-	"\bfile_uri\x18\x02 \x01(\tR\afileUri\"\x87\x01\n" +
+	"\bfile_uri\x18\x02 \x01(\tR\afileUri\x12!\n" +
+	"\fdisplay_name\x18\x03 \x01(\tR\vdisplayName\"\x87\x01\n" +
 	"\rVideoMetadata\x12<\n" +
 	"\fstart_offset\x18\x01 \x01(\v2\x19.google.protobuf.DurationR\vstartOffset\x128\n" +
 	"\n" +
