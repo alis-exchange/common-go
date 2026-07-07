@@ -187,6 +187,11 @@ type Cron struct {
 	// Opaque user-defined key/value metadata for launcher run callbacks.
 	// Not interpreted by SchedulerService scheduling logic; stored and returned on CRUD.
 	Metadata *structpb.Struct `protobuf:"bytes,15,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	// When this Cron was last failed.
+	LastFailureTime *timestamppb.Timestamp `protobuf:"bytes,16,opt,name=last_failure_time,json=lastFailureTime,proto3" json:"last_failure_time,omitempty"`
+	// Optional message describing the last failure.
+	// This will only be set for jobs that fail to run.
+	LastFailureMessage *string `protobuf:"bytes,17,opt,name=last_failure_message,json=lastFailureMessage,proto3,oneof" json:"last_failure_message,omitempty"`
 	// When this Cron was created.
 	CreateTime *timestamppb.Timestamp `protobuf:"bytes,98,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// When this Cron was last updated.
@@ -328,6 +333,20 @@ func (x *Cron) GetMetadata() *structpb.Struct {
 		return x.Metadata
 	}
 	return nil
+}
+
+func (x *Cron) GetLastFailureTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LastFailureTime
+	}
+	return nil
+}
+
+func (x *Cron) GetLastFailureMessage() string {
+	if x != nil && x.LastFailureMessage != nil {
+		return *x.LastFailureMessage
+	}
+	return ""
 }
 
 func (x *Cron) GetCreateTime() *timestamppb.Timestamp {
@@ -754,7 +773,7 @@ var File_alis_agui_scheduler_v1_scheduler_proto protoreflect.FileDescriptor
 
 const file_alis_agui_scheduler_v1_scheduler_proto_rawDesc = "" +
 	"\n" +
-	"&alis/agui/scheduler/v1/scheduler.proto\x12\x16alis.agui.scheduler.v1\x1a\x15alis/iam/v1/iam.proto\x1a\x1egoogle/iam/v1/iam_policy.proto\x1a\x1agoogle/iam/v1/policy.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xb3\x06\n" +
+	"&alis/agui/scheduler/v1/scheduler.proto\x12\x16alis.agui.scheduler.v1\x1a\x15alis/iam/v1/iam.proto\x1a\x1egoogle/iam/v1/iam_policy.proto\x1a\x1agoogle/iam/v1/policy.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xcb\a\n" +
 	"\x04Cron\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x16\n" +
 	"\x06prompt\x18\x02 \x01(\tR\x06prompt\x12%\n" +
@@ -771,7 +790,9 @@ const file_alis_agui_scheduler_v1_scheduler_proto_rawDesc = "" +
 	"\rlast_run_time\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\vlastRunTime\x12=\n" +
 	"\farchive_time\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\varchiveTime\x12\x19\n" +
 	"\bagent_id\x18\x0e \x01(\tR\aagentId\x123\n" +
-	"\bmetadata\x18\x0f \x01(\v2\x17.google.protobuf.StructR\bmetadata\x12;\n" +
+	"\bmetadata\x18\x0f \x01(\v2\x17.google.protobuf.StructR\bmetadata\x12F\n" +
+	"\x11last_failure_time\x18\x10 \x01(\v2\x1a.google.protobuf.TimestampR\x0flastFailureTime\x125\n" +
+	"\x14last_failure_message\x18\x11 \x01(\tH\x00R\x12lastFailureMessage\x88\x01\x01\x12;\n" +
 	"\vcreate_time\x18b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"createTime\x12;\n" +
 	"\vupdate_time\x18c \x01(\v2\x1a.google.protobuf.TimestampR\n" +
@@ -783,7 +804,8 @@ const file_alis_agui_scheduler_v1_scheduler_proto_rawDesc = "" +
 	"\x05State\x12\x15\n" +
 	"\x11STATE_UNSPECIFIED\x10\x00\x12\x10\n" +
 	"\fSTATE_ACTIVE\x10\x01\x12\x12\n" +
-	"\x0eSTATE_ARCHIVED\x10\x02\"E\n" +
+	"\x0eSTATE_ARCHIVED\x10\x02B\x17\n" +
+	"\x15_last_failure_message\"E\n" +
 	"\x11CreateCronRequest\x120\n" +
 	"\x04cron\x18\x01 \x01(\v2\x1c.alis.agui.scheduler.v1.CronR\x04cron\"\x82\x01\n" +
 	"\x11UpdateCronRequest\x120\n" +
@@ -864,39 +886,40 @@ var file_alis_agui_scheduler_v1_scheduler_proto_depIdxs = []int32{
 	11, // 3: alis.agui.scheduler.v1.Cron.last_run_time:type_name -> google.protobuf.Timestamp
 	11, // 4: alis.agui.scheduler.v1.Cron.archive_time:type_name -> google.protobuf.Timestamp
 	12, // 5: alis.agui.scheduler.v1.Cron.metadata:type_name -> google.protobuf.Struct
-	11, // 6: alis.agui.scheduler.v1.Cron.create_time:type_name -> google.protobuf.Timestamp
-	11, // 7: alis.agui.scheduler.v1.Cron.update_time:type_name -> google.protobuf.Timestamp
-	2,  // 8: alis.agui.scheduler.v1.CreateCronRequest.cron:type_name -> alis.agui.scheduler.v1.Cron
-	2,  // 9: alis.agui.scheduler.v1.UpdateCronRequest.cron:type_name -> alis.agui.scheduler.v1.Cron
-	13, // 10: alis.agui.scheduler.v1.UpdateCronRequest.update_mask:type_name -> google.protobuf.FieldMask
-	13, // 11: alis.agui.scheduler.v1.GetCronRequest.read_mask:type_name -> google.protobuf.FieldMask
-	13, // 12: alis.agui.scheduler.v1.ListCronsRequest.read_mask:type_name -> google.protobuf.FieldMask
-	2,  // 13: alis.agui.scheduler.v1.ListCronsResponse.crons:type_name -> alis.agui.scheduler.v1.Cron
-	14, // 14: alis.agui.scheduler.v1.SchedulerService.GetIamPolicy:input_type -> google.iam.v1.GetIamPolicyRequest
-	15, // 15: alis.agui.scheduler.v1.SchedulerService.SetIamPolicy:input_type -> google.iam.v1.SetIamPolicyRequest
-	16, // 16: alis.agui.scheduler.v1.SchedulerService.AddIamBindings:input_type -> alis.iam.v1.AddIamBindingsRequest
-	17, // 17: alis.agui.scheduler.v1.SchedulerService.RemoveIamBindings:input_type -> alis.iam.v1.RemoveIamBindingsRequest
-	3,  // 18: alis.agui.scheduler.v1.SchedulerService.CreateCron:input_type -> alis.agui.scheduler.v1.CreateCronRequest
-	7,  // 19: alis.agui.scheduler.v1.SchedulerService.ListCrons:input_type -> alis.agui.scheduler.v1.ListCronsRequest
-	5,  // 20: alis.agui.scheduler.v1.SchedulerService.GetCron:input_type -> alis.agui.scheduler.v1.GetCronRequest
-	4,  // 21: alis.agui.scheduler.v1.SchedulerService.UpdateCron:input_type -> alis.agui.scheduler.v1.UpdateCronRequest
-	6,  // 22: alis.agui.scheduler.v1.SchedulerService.DeleteCron:input_type -> alis.agui.scheduler.v1.DeleteCronRequest
-	9,  // 23: alis.agui.scheduler.v1.SchedulerService.RunCron:input_type -> alis.agui.scheduler.v1.RunCronRequest
-	18, // 24: alis.agui.scheduler.v1.SchedulerService.GetIamPolicy:output_type -> google.iam.v1.Policy
-	18, // 25: alis.agui.scheduler.v1.SchedulerService.SetIamPolicy:output_type -> google.iam.v1.Policy
-	18, // 26: alis.agui.scheduler.v1.SchedulerService.AddIamBindings:output_type -> google.iam.v1.Policy
-	18, // 27: alis.agui.scheduler.v1.SchedulerService.RemoveIamBindings:output_type -> google.iam.v1.Policy
-	2,  // 28: alis.agui.scheduler.v1.SchedulerService.CreateCron:output_type -> alis.agui.scheduler.v1.Cron
-	8,  // 29: alis.agui.scheduler.v1.SchedulerService.ListCrons:output_type -> alis.agui.scheduler.v1.ListCronsResponse
-	2,  // 30: alis.agui.scheduler.v1.SchedulerService.GetCron:output_type -> alis.agui.scheduler.v1.Cron
-	2,  // 31: alis.agui.scheduler.v1.SchedulerService.UpdateCron:output_type -> alis.agui.scheduler.v1.Cron
-	19, // 32: alis.agui.scheduler.v1.SchedulerService.DeleteCron:output_type -> google.protobuf.Empty
-	10, // 33: alis.agui.scheduler.v1.SchedulerService.RunCron:output_type -> alis.agui.scheduler.v1.RunCronResponse
-	24, // [24:34] is the sub-list for method output_type
-	14, // [14:24] is the sub-list for method input_type
-	14, // [14:14] is the sub-list for extension type_name
-	14, // [14:14] is the sub-list for extension extendee
-	0,  // [0:14] is the sub-list for field type_name
+	11, // 6: alis.agui.scheduler.v1.Cron.last_failure_time:type_name -> google.protobuf.Timestamp
+	11, // 7: alis.agui.scheduler.v1.Cron.create_time:type_name -> google.protobuf.Timestamp
+	11, // 8: alis.agui.scheduler.v1.Cron.update_time:type_name -> google.protobuf.Timestamp
+	2,  // 9: alis.agui.scheduler.v1.CreateCronRequest.cron:type_name -> alis.agui.scheduler.v1.Cron
+	2,  // 10: alis.agui.scheduler.v1.UpdateCronRequest.cron:type_name -> alis.agui.scheduler.v1.Cron
+	13, // 11: alis.agui.scheduler.v1.UpdateCronRequest.update_mask:type_name -> google.protobuf.FieldMask
+	13, // 12: alis.agui.scheduler.v1.GetCronRequest.read_mask:type_name -> google.protobuf.FieldMask
+	13, // 13: alis.agui.scheduler.v1.ListCronsRequest.read_mask:type_name -> google.protobuf.FieldMask
+	2,  // 14: alis.agui.scheduler.v1.ListCronsResponse.crons:type_name -> alis.agui.scheduler.v1.Cron
+	14, // 15: alis.agui.scheduler.v1.SchedulerService.GetIamPolicy:input_type -> google.iam.v1.GetIamPolicyRequest
+	15, // 16: alis.agui.scheduler.v1.SchedulerService.SetIamPolicy:input_type -> google.iam.v1.SetIamPolicyRequest
+	16, // 17: alis.agui.scheduler.v1.SchedulerService.AddIamBindings:input_type -> alis.iam.v1.AddIamBindingsRequest
+	17, // 18: alis.agui.scheduler.v1.SchedulerService.RemoveIamBindings:input_type -> alis.iam.v1.RemoveIamBindingsRequest
+	3,  // 19: alis.agui.scheduler.v1.SchedulerService.CreateCron:input_type -> alis.agui.scheduler.v1.CreateCronRequest
+	7,  // 20: alis.agui.scheduler.v1.SchedulerService.ListCrons:input_type -> alis.agui.scheduler.v1.ListCronsRequest
+	5,  // 21: alis.agui.scheduler.v1.SchedulerService.GetCron:input_type -> alis.agui.scheduler.v1.GetCronRequest
+	4,  // 22: alis.agui.scheduler.v1.SchedulerService.UpdateCron:input_type -> alis.agui.scheduler.v1.UpdateCronRequest
+	6,  // 23: alis.agui.scheduler.v1.SchedulerService.DeleteCron:input_type -> alis.agui.scheduler.v1.DeleteCronRequest
+	9,  // 24: alis.agui.scheduler.v1.SchedulerService.RunCron:input_type -> alis.agui.scheduler.v1.RunCronRequest
+	18, // 25: alis.agui.scheduler.v1.SchedulerService.GetIamPolicy:output_type -> google.iam.v1.Policy
+	18, // 26: alis.agui.scheduler.v1.SchedulerService.SetIamPolicy:output_type -> google.iam.v1.Policy
+	18, // 27: alis.agui.scheduler.v1.SchedulerService.AddIamBindings:output_type -> google.iam.v1.Policy
+	18, // 28: alis.agui.scheduler.v1.SchedulerService.RemoveIamBindings:output_type -> google.iam.v1.Policy
+	2,  // 29: alis.agui.scheduler.v1.SchedulerService.CreateCron:output_type -> alis.agui.scheduler.v1.Cron
+	8,  // 30: alis.agui.scheduler.v1.SchedulerService.ListCrons:output_type -> alis.agui.scheduler.v1.ListCronsResponse
+	2,  // 31: alis.agui.scheduler.v1.SchedulerService.GetCron:output_type -> alis.agui.scheduler.v1.Cron
+	2,  // 32: alis.agui.scheduler.v1.SchedulerService.UpdateCron:output_type -> alis.agui.scheduler.v1.Cron
+	19, // 33: alis.agui.scheduler.v1.SchedulerService.DeleteCron:output_type -> google.protobuf.Empty
+	10, // 34: alis.agui.scheduler.v1.SchedulerService.RunCron:output_type -> alis.agui.scheduler.v1.RunCronResponse
+	25, // [25:35] is the sub-list for method output_type
+	15, // [15:25] is the sub-list for method input_type
+	15, // [15:15] is the sub-list for extension type_name
+	15, // [15:15] is the sub-list for extension extendee
+	0,  // [0:15] is the sub-list for field type_name
 }
 
 func init() { file_alis_agui_scheduler_v1_scheduler_proto_init() }
@@ -904,6 +927,7 @@ func file_alis_agui_scheduler_v1_scheduler_proto_init() {
 	if File_alis_agui_scheduler_v1_scheduler_proto != nil {
 		return
 	}
+	file_alis_agui_scheduler_v1_scheduler_proto_msgTypes[0].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
