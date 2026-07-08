@@ -3,7 +3,7 @@
 // Source: alis/a2a/extension/scheduler/v1/scheduler.proto
 // Plugin version: v0.0.1
 //
-// Generated on: 2026-07-08 08:07:13 UTC
+// Generated on: 2026-07-08 13:02:15 UTC
 
 package v1
 
