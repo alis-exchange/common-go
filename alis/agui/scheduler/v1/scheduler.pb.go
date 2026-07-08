@@ -178,7 +178,8 @@ type Cron struct {
 	// When this Cron was last executed.
 	LastRunTime *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=last_run_time,json=lastRunTime,proto3" json:"last_run_time,omitempty"`
 	// When this Cron was archived.
-	// For TYPE_AT jobs this is typically set automatically after successful execution.
+	// For TYPE_AT jobs this is set automatically after successful execution or a
+	// terminal failed execution.
 	ArchiveTime *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=archive_time,json=archiveTime,proto3" json:"archive_time,omitempty"`
 	// Optional agent identifier to run when this Cron fires.
 	// When empty, the launcher default app_name is used.

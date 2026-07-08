@@ -3,7 +3,7 @@
 // Source: standards/open/fundholdings/v1/apex_instruments.proto
 // Plugin version: v0.0.1
 //
-// Generated on: 2026-07-07 14:20:06 UTC
+// Generated on: 2026-07-08 08:07:13 UTC
 
 package v1
 
