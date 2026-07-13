@@ -3,7 +3,7 @@
 // Source: standards/open/distributions/v1/secdist.proto
 // Plugin version: v0.0.1
 //
-// Generated on: 2026-07-08 13:02:15 UTC
+// Generated on: 2026-07-13 07:29:12 UTC
 
 package v1
 
