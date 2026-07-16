@@ -20,9 +20,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	TestService_RunIntegrationTest_FullMethodName = "/alis.evals.v1.TestService/RunIntegrationTest"
-	TestService_RunLoadTest_FullMethodName        = "/alis.evals.v1.TestService/RunLoadTest"
-	TestService_RunAgentEval_FullMethodName       = "/alis.evals.v1.TestService/RunAgentEval"
+	TestService_RunIntegrationTest_FullMethodName  = "/alis.evals.v1.TestService/RunIntegrationTest"
+	TestService_RunLoadTest_FullMethodName         = "/alis.evals.v1.TestService/RunLoadTest"
+	TestService_RunAgentEval_FullMethodName        = "/alis.evals.v1.TestService/RunAgentEval"
+	TestService_RunInfraObservation_FullMethodName = "/alis.evals.v1.TestService/RunInfraObservation"
 )
 
 // TestServiceClient is the client API for TestService service.
@@ -65,6 +66,14 @@ type TestServiceClient interface {
 	// even if individual cases fail; inspect each Run status in the published
 	// payload to determine pass or fail.
 	RunAgentEval(ctx context.Context, in *RunAgentEvalRequest, opts ...grpc.CallOption) (*longrunning.Operation, error)
+	// Observes server-side infrastructure metrics without generating load.
+	// Fetches Cloud Monitoring snapshots for declared infrastructure targets, such as Cloud Run and Spanner
+	// over a configurable lookback window (for example peak-hour observation via an external scheduler).
+	//
+	// Returns a long-running operation. Poll GetOperation or wait on the operation
+	// name until done. The operation completes successfully when execution finishes;
+	// inspect each Run status and snapshot fetch_status in the published payload.
+	RunInfraObservation(ctx context.Context, in *RunInfraObservationRequest, opts ...grpc.CallOption) (*longrunning.Operation, error)
 }
 
 type testServiceClient struct {
@@ -99,6 +108,16 @@ func (c *testServiceClient) RunAgentEval(ctx context.Context, in *RunAgentEvalRe
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(longrunning.Operation)
 	err := c.cc.Invoke(ctx, TestService_RunAgentEval_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *testServiceClient) RunInfraObservation(ctx context.Context, in *RunInfraObservationRequest, opts ...grpc.CallOption) (*longrunning.Operation, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(longrunning.Operation)
+	err := c.cc.Invoke(ctx, TestService_RunInfraObservation_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -145,6 +164,14 @@ type TestServiceServer interface {
 	// even if individual cases fail; inspect each Run status in the published
 	// payload to determine pass or fail.
 	RunAgentEval(context.Context, *RunAgentEvalRequest) (*longrunning.Operation, error)
+	// Observes server-side infrastructure metrics without generating load.
+	// Fetches Cloud Monitoring snapshots for declared infrastructure targets, such as Cloud Run and Spanner
+	// over a configurable lookback window (for example peak-hour observation via an external scheduler).
+	//
+	// Returns a long-running operation. Poll GetOperation or wait on the operation
+	// name until done. The operation completes successfully when execution finishes;
+	// inspect each Run status and snapshot fetch_status in the published payload.
+	RunInfraObservation(context.Context, *RunInfraObservationRequest) (*longrunning.Operation, error)
 	mustEmbedUnimplementedTestServiceServer()
 }
 
@@ -163,6 +190,9 @@ func (UnimplementedTestServiceServer) RunLoadTest(context.Context, *RunLoadTestR
 }
 func (UnimplementedTestServiceServer) RunAgentEval(context.Context, *RunAgentEvalRequest) (*longrunning.Operation, error) {
 	return nil, status.Error(codes.Unimplemented, "method RunAgentEval not implemented")
+}
+func (UnimplementedTestServiceServer) RunInfraObservation(context.Context, *RunInfraObservationRequest) (*longrunning.Operation, error) {
+	return nil, status.Error(codes.Unimplemented, "method RunInfraObservation not implemented")
 }
 func (UnimplementedTestServiceServer) mustEmbedUnimplementedTestServiceServer() {}
 func (UnimplementedTestServiceServer) testEmbeddedByValue()                     {}
@@ -239,6 +269,24 @@ func _TestService_RunAgentEval_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TestService_RunInfraObservation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RunInfraObservationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TestServiceServer).RunInfraObservation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TestService_RunInfraObservation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TestServiceServer).RunInfraObservation(ctx, req.(*RunInfraObservationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TestService_ServiceDesc is the grpc.ServiceDesc for TestService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -257,6 +305,10 @@ var TestService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RunAgentEval",
 			Handler:    _TestService_RunAgentEval_Handler,
+		},
+		{
+			MethodName: "RunInfraObservation",
+			Handler:    _TestService_RunInfraObservation_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

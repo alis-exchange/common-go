@@ -3,7 +3,7 @@
 // Source: alis/evals/v1/evaluation.proto
 // Plugin version: v0.0.1
 //
-// Generated on: 2026-07-14 07:48:27 UTC
+// Generated on: 2026-07-16 09:56:14 UTC
 
 package v1
 
@@ -14,4 +14,6 @@ const (
 	TestService_RunLoadTest_FullMethodDescription = "Runs a load test: generates traffic at the requested intensity against\n each selected load case, records per-case performance in\n LoadTestResults.cases, and evaluates configured Service Level Objectives\n (SLOs). An SLO is a pass/fail bound on a metric such as latency, error\n rate, or throughput; every evaluated check appears in the case's checks\n with its observed value, limit, and status. Returns a long-running operation. Poll GetOperation or wait on the operation\n name until done. The operation completes successfully when execution finishes,\n even if thresholds are breached; inspect each Run status in the published\n payload to determine pass or fail."
 	// TestService_RunAgentEval_FullMethodDescription returns the description of the alis.evals.v1.TestService.RunAgentEval method.
 	TestService_RunAgentEval_FullMethodDescription = "Runs behavioral agent evaluation cases. Each case reports a flat list of\n metrics (deterministic checks, LLM-as-judge scores, rubric dimensions, and\n ADK prebuilt metrics) with per-metric status, score, and threshold. Returns a long-running operation. Poll GetOperation or wait on the operation\n name until done. The operation completes successfully when execution finishes,\n even if individual cases fail; inspect each Run status in the published\n payload to determine pass or fail."
+	// TestService_RunInfraObservation_FullMethodDescription returns the description of the alis.evals.v1.TestService.RunInfraObservation method.
+	TestService_RunInfraObservation_FullMethodDescription = "Observes server-side infrastructure metrics without generating load.\n Fetches Cloud Monitoring snapshots for declared infrastructure targets, such as Cloud Run and Spanner\n over a configurable lookback window (for example peak-hour observation via an external scheduler). Returns a long-running operation. Poll GetOperation or wait on the operation\n name until done. The operation completes successfully when execution finishes;\n inspect each Run status and snapshot fetch_status in the published payload."
 )

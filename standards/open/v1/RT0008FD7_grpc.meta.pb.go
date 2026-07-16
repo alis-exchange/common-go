@@ -3,7 +3,7 @@
 // Source: standards/open/v1/RT0008FD7.proto
 // Plugin version: v0.0.1
 //
-// Generated on: 2026-07-14 07:48:27 UTC
+// Generated on: 2026-07-16 09:56:14 UTC
 
 package v1
 
