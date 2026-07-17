@@ -2568,6 +2568,112 @@ func (x *IntegrationTestResults_Case_Check) GetMessage() string {
 	return ""
 }
 
+// Key/value entry for string-valued associative fields on the wire.
+type LoadTestResults_StringEntry struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Key           string                 `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Value         string                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LoadTestResults_StringEntry) Reset() {
+	*x = LoadTestResults_StringEntry{}
+	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LoadTestResults_StringEntry) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoadTestResults_StringEntry) ProtoMessage() {}
+
+func (x *LoadTestResults_StringEntry) ProtoReflect() protoreflect.Message {
+	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoadTestResults_StringEntry.ProtoReflect.Descriptor instead.
+func (*LoadTestResults_StringEntry) Descriptor() ([]byte, []int) {
+	return file_alis_evals_v1_evaluation_proto_rawDescGZIP(), []int{3, 0}
+}
+
+func (x *LoadTestResults_StringEntry) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+func (x *LoadTestResults_StringEntry) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+// Key/value entry for int64-valued associative fields on the wire.
+type LoadTestResults_Int64Entry struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Key           string                 `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Value         int64                  `protobuf:"varint,2,opt,name=value,proto3" json:"value,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LoadTestResults_Int64Entry) Reset() {
+	*x = LoadTestResults_Int64Entry{}
+	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LoadTestResults_Int64Entry) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoadTestResults_Int64Entry) ProtoMessage() {}
+
+func (x *LoadTestResults_Int64Entry) ProtoReflect() protoreflect.Message {
+	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoadTestResults_Int64Entry.ProtoReflect.Descriptor instead.
+func (*LoadTestResults_Int64Entry) Descriptor() ([]byte, []int) {
+	return file_alis_evals_v1_evaluation_proto_rawDescGZIP(), []int{3, 1}
+}
+
+func (x *LoadTestResults_Int64Entry) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+func (x *LoadTestResults_Int64Entry) GetValue() int64 {
+	if x != nil {
+		return x.Value
+	}
+	return 0
+}
+
 // The result of one load case.
 type LoadTestResults_Case struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -2585,7 +2691,7 @@ type LoadTestResults_Case struct {
 	// Author-declared labels for filtering and grouping in reports (for example
 	// model name, RPC method, or dataset slice). Empty when the case declares
 	// no tags.
-	Tags map[string]string `protobuf:"bytes,5,rep,name=tags,proto3" json:"tags,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Tags []*LoadTestResults_StringEntry `protobuf:"bytes,5,rep,name=tags,proto3" json:"tags,omitempty"`
 	// Server-side Cloud Run metrics for declared targets over this case's
 	// observation window. Empty when the suite declares no Cloud Run targets.
 	CloudRun []*CloudRunTargetSnapshot `protobuf:"bytes,6,rep,name=cloud_run,json=cloudRun,proto3" json:"cloud_run,omitempty"`
@@ -2601,7 +2707,7 @@ type LoadTestResults_Case struct {
 
 func (x *LoadTestResults_Case) Reset() {
 	*x = LoadTestResults_Case{}
-	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[28]
+	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2613,7 +2719,7 @@ func (x *LoadTestResults_Case) String() string {
 func (*LoadTestResults_Case) ProtoMessage() {}
 
 func (x *LoadTestResults_Case) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[28]
+	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2626,7 +2732,7 @@ func (x *LoadTestResults_Case) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoadTestResults_Case.ProtoReflect.Descriptor instead.
 func (*LoadTestResults_Case) Descriptor() ([]byte, []int) {
-	return file_alis_evals_v1_evaluation_proto_rawDescGZIP(), []int{3, 0}
+	return file_alis_evals_v1_evaluation_proto_rawDescGZIP(), []int{3, 2}
 }
 
 func (x *LoadTestResults_Case) GetId() string {
@@ -2657,7 +2763,7 @@ func (x *LoadTestResults_Case) GetChecks() []*LoadTestResults_SloCheck {
 	return nil
 }
 
-func (x *LoadTestResults_Case) GetTags() map[string]string {
+func (x *LoadTestResults_Case) GetTags() []*LoadTestResults_StringEntry {
 	if x != nil {
 		return x.Tags
 	}
@@ -2711,7 +2817,7 @@ type LoadTestResults_Summary struct {
 	Latency *LatencyPercentiles `protobuf:"bytes,8,opt,name=latency,proto3" json:"latency,omitempty"`
 	// Request errors grouped by canonical gRPC status code name (for example
 	// `UNAVAILABLE` or `DEADLINE_EXCEEDED`). Values sum to error_count.
-	ErrorsByCode map[string]int64 `protobuf:"bytes,9,rep,name=errors_by_code,json=errorsByCode,proto3" json:"errors_by_code,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"`
+	ErrorsByCode []*LoadTestResults_Int64Entry `protobuf:"bytes,9,rep,name=errors_by_code,json=errorsByCode,proto3" json:"errors_by_code,omitempty"`
 	// Scheduled request ticks that were not dispatched because all workers
 	// were busy. Distinct from error_count; surfaces generator saturation.
 	DroppedCount int64 `protobuf:"varint,10,opt,name=dropped_count,json=droppedCount,proto3" json:"dropped_count,omitempty"`
@@ -2736,7 +2842,7 @@ type LoadTestResults_Summary struct {
 
 func (x *LoadTestResults_Summary) Reset() {
 	*x = LoadTestResults_Summary{}
-	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[29]
+	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2748,7 +2854,7 @@ func (x *LoadTestResults_Summary) String() string {
 func (*LoadTestResults_Summary) ProtoMessage() {}
 
 func (x *LoadTestResults_Summary) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[29]
+	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2761,7 +2867,7 @@ func (x *LoadTestResults_Summary) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoadTestResults_Summary.ProtoReflect.Descriptor instead.
 func (*LoadTestResults_Summary) Descriptor() ([]byte, []int) {
-	return file_alis_evals_v1_evaluation_proto_rawDescGZIP(), []int{3, 1}
+	return file_alis_evals_v1_evaluation_proto_rawDescGZIP(), []int{3, 3}
 }
 
 func (x *LoadTestResults_Summary) GetMode() RunLoadTestRequest_Mode {
@@ -2820,7 +2926,7 @@ func (x *LoadTestResults_Summary) GetLatency() *LatencyPercentiles {
 	return nil
 }
 
-func (x *LoadTestResults_Summary) GetErrorsByCode() map[string]int64 {
+func (x *LoadTestResults_Summary) GetErrorsByCode() []*LoadTestResults_Int64Entry {
 	if x != nil {
 		return x.ErrorsByCode
 	}
@@ -2883,7 +2989,7 @@ type LoadTestResults_LoadStage struct {
 
 func (x *LoadTestResults_LoadStage) Reset() {
 	*x = LoadTestResults_LoadStage{}
-	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[30]
+	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2895,7 +3001,7 @@ func (x *LoadTestResults_LoadStage) String() string {
 func (*LoadTestResults_LoadStage) ProtoMessage() {}
 
 func (x *LoadTestResults_LoadStage) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[30]
+	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2908,7 +3014,7 @@ func (x *LoadTestResults_LoadStage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoadTestResults_LoadStage.ProtoReflect.Descriptor instead.
 func (*LoadTestResults_LoadStage) Descriptor() ([]byte, []int) {
-	return file_alis_evals_v1_evaluation_proto_rawDescGZIP(), []int{3, 2}
+	return file_alis_evals_v1_evaluation_proto_rawDescGZIP(), []int{3, 4}
 }
 
 func (x *LoadTestResults_LoadStage) GetDuration() *durationpb.Duration {
@@ -2946,7 +3052,7 @@ type LoadTestResults_StreamSummary struct {
 
 func (x *LoadTestResults_StreamSummary) Reset() {
 	*x = LoadTestResults_StreamSummary{}
-	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[31]
+	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2958,7 +3064,7 @@ func (x *LoadTestResults_StreamSummary) String() string {
 func (*LoadTestResults_StreamSummary) ProtoMessage() {}
 
 func (x *LoadTestResults_StreamSummary) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[31]
+	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2971,7 +3077,7 @@ func (x *LoadTestResults_StreamSummary) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoadTestResults_StreamSummary.ProtoReflect.Descriptor instead.
 func (*LoadTestResults_StreamSummary) Descriptor() ([]byte, []int) {
-	return file_alis_evals_v1_evaluation_proto_rawDescGZIP(), []int{3, 3}
+	return file_alis_evals_v1_evaluation_proto_rawDescGZIP(), []int{3, 5}
 }
 
 func (x *LoadTestResults_StreamSummary) GetStreamCount() int64 {
@@ -3040,7 +3146,7 @@ type LoadTestResults_SloCheck struct {
 
 func (x *LoadTestResults_SloCheck) Reset() {
 	*x = LoadTestResults_SloCheck{}
-	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[32]
+	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3052,7 +3158,7 @@ func (x *LoadTestResults_SloCheck) String() string {
 func (*LoadTestResults_SloCheck) ProtoMessage() {}
 
 func (x *LoadTestResults_SloCheck) ProtoReflect() protoreflect.Message {
-	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[32]
+	mi := &file_alis_evals_v1_evaluation_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3065,7 +3171,7 @@ func (x *LoadTestResults_SloCheck) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoadTestResults_SloCheck.ProtoReflect.Descriptor instead.
 func (*LoadTestResults_SloCheck) Descriptor() ([]byte, []int) {
-	return file_alis_evals_v1_evaluation_proto_rawDescGZIP(), []int{3, 4}
+	return file_alis_evals_v1_evaluation_proto_rawDescGZIP(), []int{3, 6}
 }
 
 func (x *LoadTestResults_SloCheck) GetId() string {
@@ -3603,21 +3709,25 @@ const file_alis_evals_v1_evaluation_proto_rawDesc = "" +
 	"\x06p99_ms\x18\x03 \x01(\x01R\x05p99Ms\x12\x15\n" +
 	"\x06min_ms\x18\x04 \x01(\x01R\x05minMs\x12\x17\n" +
 	"\amean_ms\x18\x05 \x01(\x01R\x06meanMs\x12\x15\n" +
-	"\x06max_ms\x18\x06 \x01(\x01R\x05maxMs\"\x90\x10\n" +
+	"\x06max_ms\x18\x06 \x01(\x01R\x05maxMs\"\xf1\x0f\n" +
 	"\x0fLoadTestResults\x129\n" +
-	"\x05cases\x18\x01 \x03(\v2#.alis.evals.v1.LoadTestResults.CaseR\x05cases\x1a\x89\x04\n" +
+	"\x05cases\x18\x01 \x03(\v2#.alis.evals.v1.LoadTestResults.CaseR\x05cases\x1a5\n" +
+	"\vStringEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value\x1a4\n" +
+	"\n" +
+	"Int64Entry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\x03R\x05value\x1a\xcd\x03\n" +
 	"\x04Case\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12-\n" +
 	"\x06status\x18\x02 \x01(\x0e2\x15.alis.evals.v1.StatusR\x06status\x12@\n" +
 	"\asummary\x18\x03 \x01(\v2&.alis.evals.v1.LoadTestResults.SummaryR\asummary\x12?\n" +
-	"\x06checks\x18\x04 \x03(\v2'.alis.evals.v1.LoadTestResults.SloCheckR\x06checks\x12A\n" +
-	"\x04tags\x18\x05 \x03(\v2-.alis.evals.v1.LoadTestResults.Case.TagsEntryR\x04tags\x12B\n" +
+	"\x06checks\x18\x04 \x03(\v2'.alis.evals.v1.LoadTestResults.SloCheckR\x06checks\x12>\n" +
+	"\x04tags\x18\x05 \x03(\v2*.alis.evals.v1.LoadTestResults.StringEntryR\x04tags\x12B\n" +
 	"\tcloud_run\x18\x06 \x03(\v2%.alis.evals.v1.CloudRunTargetSnapshotR\bcloudRun\x12>\n" +
 	"\aspanner\x18\a \x03(\v2$.alis.evals.v1.SpannerTargetSnapshotR\aspanner\x12?\n" +
-	"\finfra_checks\x18\b \x03(\v2\x1c.alis.evals.v1.InfraSloCheckR\vinfraChecks\x1a7\n" +
-	"\tTagsEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\x1a\xf9\x06\n" +
+	"\finfra_checks\x18\b \x03(\v2\x1c.alis.evals.v1.InfraSloCheckR\vinfraChecks\x1a\xa9\x06\n" +
 	"\aSummary\x12:\n" +
 	"\x04mode\x18\x01 \x01(\x0e2&.alis.evals.v1.RunLoadTestRequest.ModeR\x04mode\x12\x1d\n" +
 	"\n" +
@@ -3629,8 +3739,8 @@ const file_alis_evals_v1_evaluation_proto_rawDesc = "" +
 	"errorCount\x12\x1d\n" +
 	"\n" +
 	"actual_qps\x18\a \x01(\x01R\tactualQps\x12;\n" +
-	"\alatency\x18\b \x01(\v2!.alis.evals.v1.LatencyPercentilesR\alatency\x12^\n" +
-	"\x0eerrors_by_code\x18\t \x03(\v28.alis.evals.v1.LoadTestResults.Summary.ErrorsByCodeEntryR\ferrorsByCode\x12#\n" +
+	"\alatency\x18\b \x01(\v2!.alis.evals.v1.LatencyPercentilesR\alatency\x12O\n" +
+	"\x0eerrors_by_code\x18\t \x03(\v2).alis.evals.v1.LoadTestResults.Int64EntryR\ferrorsByCode\x12#\n" +
 	"\rdropped_count\x18\n" +
 	" \x01(\x03R\fdroppedCount\x12,\n" +
 	"\x12check_passed_count\x18\v \x01(\x03R\x10checkPassedCount\x12,\n" +
@@ -3638,10 +3748,7 @@ const file_alis_evals_v1_evaluation_proto_rawDesc = "" +
 	"\x06stream\x18\r \x01(\v2,.alis.evals.v1.LoadTestResults.StreamSummaryH\x00R\x06stream\x88\x01\x01\x12G\n" +
 	"\n" +
 	"qps_stages\x18\x0e \x03(\v2(.alis.evals.v1.LoadTestResults.LoadStageR\tqpsStages\x12W\n" +
-	"\x12concurrency_stages\x18\x0f \x03(\v2(.alis.evals.v1.LoadTestResults.LoadStageR\x11concurrencyStages\x1a?\n" +
-	"\x11ErrorsByCodeEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\x03R\x05value:\x028\x01B\t\n" +
+	"\x12concurrency_stages\x18\x0f \x03(\v2(.alis.evals.v1.LoadTestResults.LoadStageR\x11concurrencyStagesB\t\n" +
 	"\a_stream\x1aZ\n" +
 	"\tLoadStage\x125\n" +
 	"\bduration\x18\x01 \x01(\v2\x19.google.protobuf.DurationR\bduration\x12\x16\n" +
@@ -3921,13 +4028,13 @@ var file_alis_evals_v1_evaluation_proto_goTypes = []any{
 	(*RunPublishedEvent)(nil),                        // 31: alis.evals.v1.RunPublishedEvent
 	(*IntegrationTestResults_Case)(nil),              // 32: alis.evals.v1.IntegrationTestResults.Case
 	(*IntegrationTestResults_Case_Check)(nil),        // 33: alis.evals.v1.IntegrationTestResults.Case.Check
-	(*LoadTestResults_Case)(nil),                     // 34: alis.evals.v1.LoadTestResults.Case
-	(*LoadTestResults_Summary)(nil),                  // 35: alis.evals.v1.LoadTestResults.Summary
-	(*LoadTestResults_LoadStage)(nil),                // 36: alis.evals.v1.LoadTestResults.LoadStage
-	(*LoadTestResults_StreamSummary)(nil),            // 37: alis.evals.v1.LoadTestResults.StreamSummary
-	(*LoadTestResults_SloCheck)(nil),                 // 38: alis.evals.v1.LoadTestResults.SloCheck
-	nil,                                              // 39: alis.evals.v1.LoadTestResults.Case.TagsEntry
-	nil,                                              // 40: alis.evals.v1.LoadTestResults.Summary.ErrorsByCodeEntry
+	(*LoadTestResults_StringEntry)(nil),              // 34: alis.evals.v1.LoadTestResults.StringEntry
+	(*LoadTestResults_Int64Entry)(nil),               // 35: alis.evals.v1.LoadTestResults.Int64Entry
+	(*LoadTestResults_Case)(nil),                     // 36: alis.evals.v1.LoadTestResults.Case
+	(*LoadTestResults_Summary)(nil),                  // 37: alis.evals.v1.LoadTestResults.Summary
+	(*LoadTestResults_LoadStage)(nil),                // 38: alis.evals.v1.LoadTestResults.LoadStage
+	(*LoadTestResults_StreamSummary)(nil),            // 39: alis.evals.v1.LoadTestResults.StreamSummary
+	(*LoadTestResults_SloCheck)(nil),                 // 40: alis.evals.v1.LoadTestResults.SloCheck
 	(*AgentEvalResults_JudgeInfo)(nil),               // 41: alis.evals.v1.AgentEvalResults.JudgeInfo
 	(*AgentEvalResults_Case)(nil),                    // 42: alis.evals.v1.AgentEvalResults.Case
 	(*AgentEvalResults_Case_Metric)(nil),             // 43: alis.evals.v1.AgentEvalResults.Case.Metric
@@ -3950,7 +4057,7 @@ var file_alis_evals_v1_evaluation_proto_depIdxs = []int32{
 	47, // 8: alis.evals.v1.Run.error:type_name -> google.rpc.Status
 	46, // 9: alis.evals.v1.Run.create_time:type_name -> google.protobuf.Timestamp
 	32, // 10: alis.evals.v1.IntegrationTestResults.cases:type_name -> alis.evals.v1.IntegrationTestResults.Case
-	34, // 11: alis.evals.v1.LoadTestResults.cases:type_name -> alis.evals.v1.LoadTestResults.Case
+	36, // 11: alis.evals.v1.LoadTestResults.cases:type_name -> alis.evals.v1.LoadTestResults.Case
 	42, // 12: alis.evals.v1.AgentEvalResults.cases:type_name -> alis.evals.v1.AgentEvalResults.Case
 	41, // 13: alis.evals.v1.AgentEvalResults.judge:type_name -> alis.evals.v1.AgentEvalResults.JudgeInfo
 	8,  // 14: alis.evals.v1.CloudRunMetrics.latency:type_name -> alis.evals.v1.LatencyPercentiles
@@ -3979,19 +4086,19 @@ var file_alis_evals_v1_evaluation_proto_depIdxs = []int32{
 	48, // 37: alis.evals.v1.IntegrationTestResults.Case.duration:type_name -> google.protobuf.Duration
 	3,  // 38: alis.evals.v1.IntegrationTestResults.Case.Check.status:type_name -> alis.evals.v1.Status
 	3,  // 39: alis.evals.v1.LoadTestResults.Case.status:type_name -> alis.evals.v1.Status
-	35, // 40: alis.evals.v1.LoadTestResults.Case.summary:type_name -> alis.evals.v1.LoadTestResults.Summary
-	38, // 41: alis.evals.v1.LoadTestResults.Case.checks:type_name -> alis.evals.v1.LoadTestResults.SloCheck
-	39, // 42: alis.evals.v1.LoadTestResults.Case.tags:type_name -> alis.evals.v1.LoadTestResults.Case.TagsEntry
+	37, // 40: alis.evals.v1.LoadTestResults.Case.summary:type_name -> alis.evals.v1.LoadTestResults.Summary
+	40, // 41: alis.evals.v1.LoadTestResults.Case.checks:type_name -> alis.evals.v1.LoadTestResults.SloCheck
+	34, // 42: alis.evals.v1.LoadTestResults.Case.tags:type_name -> alis.evals.v1.LoadTestResults.StringEntry
 	15, // 43: alis.evals.v1.LoadTestResults.Case.cloud_run:type_name -> alis.evals.v1.CloudRunTargetSnapshot
 	16, // 44: alis.evals.v1.LoadTestResults.Case.spanner:type_name -> alis.evals.v1.SpannerTargetSnapshot
 	17, // 45: alis.evals.v1.LoadTestResults.Case.infra_checks:type_name -> alis.evals.v1.InfraSloCheck
 	5,  // 46: alis.evals.v1.LoadTestResults.Summary.mode:type_name -> alis.evals.v1.RunLoadTestRequest.Mode
 	48, // 47: alis.evals.v1.LoadTestResults.Summary.duration:type_name -> google.protobuf.Duration
 	8,  // 48: alis.evals.v1.LoadTestResults.Summary.latency:type_name -> alis.evals.v1.LatencyPercentiles
-	40, // 49: alis.evals.v1.LoadTestResults.Summary.errors_by_code:type_name -> alis.evals.v1.LoadTestResults.Summary.ErrorsByCodeEntry
-	37, // 50: alis.evals.v1.LoadTestResults.Summary.stream:type_name -> alis.evals.v1.LoadTestResults.StreamSummary
-	36, // 51: alis.evals.v1.LoadTestResults.Summary.qps_stages:type_name -> alis.evals.v1.LoadTestResults.LoadStage
-	36, // 52: alis.evals.v1.LoadTestResults.Summary.concurrency_stages:type_name -> alis.evals.v1.LoadTestResults.LoadStage
+	35, // 49: alis.evals.v1.LoadTestResults.Summary.errors_by_code:type_name -> alis.evals.v1.LoadTestResults.Int64Entry
+	39, // 50: alis.evals.v1.LoadTestResults.Summary.stream:type_name -> alis.evals.v1.LoadTestResults.StreamSummary
+	38, // 51: alis.evals.v1.LoadTestResults.Summary.qps_stages:type_name -> alis.evals.v1.LoadTestResults.LoadStage
+	38, // 52: alis.evals.v1.LoadTestResults.Summary.concurrency_stages:type_name -> alis.evals.v1.LoadTestResults.LoadStage
 	48, // 53: alis.evals.v1.LoadTestResults.LoadStage.duration:type_name -> google.protobuf.Duration
 	8,  // 54: alis.evals.v1.LoadTestResults.StreamSummary.ttfb:type_name -> alis.evals.v1.LatencyPercentiles
 	8,  // 55: alis.evals.v1.LoadTestResults.StreamSummary.response_latency:type_name -> alis.evals.v1.LatencyPercentiles
@@ -4046,7 +4153,7 @@ func file_alis_evals_v1_evaluation_proto_init() {
 	file_alis_evals_v1_evaluation_proto_msgTypes[13].OneofWrappers = []any{}
 	file_alis_evals_v1_evaluation_proto_msgTypes[16].OneofWrappers = []any{}
 	file_alis_evals_v1_evaluation_proto_msgTypes[22].OneofWrappers = []any{}
-	file_alis_evals_v1_evaluation_proto_msgTypes[29].OneofWrappers = []any{}
+	file_alis_evals_v1_evaluation_proto_msgTypes[31].OneofWrappers = []any{}
 	file_alis_evals_v1_evaluation_proto_msgTypes[35].OneofWrappers = []any{}
 	file_alis_evals_v1_evaluation_proto_msgTypes[37].OneofWrappers = []any{}
 	file_alis_evals_v1_evaluation_proto_msgTypes[38].OneofWrappers = []any{}
